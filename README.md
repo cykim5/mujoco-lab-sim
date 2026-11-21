@@ -3,6 +3,12 @@
 A simulated Franka Panda arm moves vials from a lab bench into a rack.
 Step 1 of a sim-to-real / real-to-sim project inspired by Gemini 4 Hydrogen for robotics.
 
+![Franka Panda placing three vials into a rack](outputs/pick_and_place.gif)
+
+| Before | After |
+|---|---|
+| ![Vials on the bench](outputs/before_lab_cam.png) | ![Vials in the rack](outputs/after_lab_cam.png) |
+
 ## Setup (already done on this Mac)
 
 The Python environment lives outside OneDrive so it does not sync thousands of files:
