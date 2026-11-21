@@ -1,0 +1,58 @@
+[panda]      6 s  picked up the printed nozzle
+[panda]     26 s  tip 1: nozzle in the collar, arm can press 162.1 N here (needs 4 N): sealed
+[panda]     61 s  added 79.2 uL water to the mix tube
+[panda]     76 s  flange caught under the plate, arm can lift 110.4 N (needs 3 N): tip stripped, landed in the waste cup
+[panda]     95 s  tip 2: nozzle in the collar, arm can press 162.1 N here (needs 4 N): sealed
+[panda]    131 s  added 88.0 uL premix to the mix tube
+[panda]    146 s  flange caught under the plate, arm can lift 110.4 N (needs 3 N): tip stripped, landed in the waste cup
+[panda]    165 s  tip 3: nozzle in the collar, arm can press 162.1 N here (needs 4 N): sealed
+[panda]    201 s  added 8.8 uL primers to the mix tube
+[panda]    222 s  mixed the master mix by pipetting (5 cycles)
+[panda]    521 s  aliquoted master mix into the 8 PCR tubes
+[panda]    537 s  flange caught under the plate, arm can lift 110.5 N (needs 3 N): tip stripped, landed in the waste cup
+{
+ "pcr_volumes_uL": [
+  20.07,
+  19.91,
+  20.08,
+  19.97,
+  20.03,
+  19.82,
+  19.71,
+  19.77
+ ],
+ "pcr_tubes_in_tolerance": 8,
+ "mix_fraction": {
+  "premix": 0.4996,
+  "primers": 0.0497,
+  "water": 0.4507
+ },
+ "mix_fraction_error_pct": {
+  "water": 0.2,
+  "premix": -0.1,
+  "primers": -0.7
+ },
+ "tips_sealed": 3,
+ "tip_attempts": 3,
+ "press_capacity_N": [
+  162.13,
+  162.13,
+  162.13
+ ],
+ "tips_stripped": 3,
+ "strip_attempts": 3,
+ "lift_capacity_N": [
+  110.37,
+  110.4,
+  110.46
+ ],
+ "tips_in_waste": 3,
+ "aspirations_immersed": true,
+ "time_s": 537.5,
+ "error_budget": {
+  "runs": 10000,
+  "mix_ratios_within_10pct": 1.0,
+  "pcr_tubes_within_10pct": 1.0
+ },
+ "robot": "panda"
+}

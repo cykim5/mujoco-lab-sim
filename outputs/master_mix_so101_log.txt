@@ -1,0 +1,59 @@
+[so101]    168 s  calibrated on 20 pin touches: fit error 0.46 mm -> 0.12 mm
+[so101]    179 s  picked up the printed nozzle
+[so101]    199 s  tip 1: nozzle in the collar, arm can press 25.2 N here (needs 4 N): sealed
+[so101]    231 s  added 79.2 uL water to the mix tube
+[so101]    249 s  flange caught under the plate, arm can lift 11.0 N (needs 3 N): tip stripped, landed in the waste cup
+[so101]    268 s  tip 2: nozzle in the collar, arm can press 25.3 N here (needs 4 N): sealed
+[so101]    301 s  added 88.0 uL premix to the mix tube
+[so101]    318 s  flange caught under the plate, arm can lift 11.0 N (needs 3 N): tip stripped, landed in the waste cup
+[so101]    338 s  tip 3: nozzle in the collar, arm can press 25.3 N here (needs 4 N): sealed
+[so101]    370 s  added 8.8 uL primers to the mix tube
+[so101]    390 s  mixed the master mix by pipetting (5 cycles)
+[so101]    689 s  aliquoted master mix into the 8 PCR tubes
+[so101]    705 s  flange caught under the plate, arm can lift 11.0 N (needs 3 N): tip stripped, landed in the waste cup
+{
+ "pcr_volumes_uL": [
+  20.22,
+  19.76,
+  20.2,
+  19.89,
+  20.1,
+  19.53,
+  19.24,
+  19.41
+ ],
+ "pcr_tubes_in_tolerance": 8,
+ "mix_fraction": {
+  "premix": 0.4991,
+  "primers": 0.049,
+  "water": 0.452
+ },
+ "mix_fraction_error_pct": {
+  "water": 0.4,
+  "premix": -0.2,
+  "primers": -2.0
+ },
+ "tips_sealed": 3,
+ "tip_attempts": 3,
+ "press_capacity_N": [
+  25.22,
+  25.3,
+  25.3
+ ],
+ "tips_stripped": 3,
+ "strip_attempts": 3,
+ "lift_capacity_N": [
+  11.01,
+  11.02,
+  11.03
+ ],
+ "tips_in_waste": 3,
+ "aspirations_immersed": true,
+ "time_s": 704.9,
+ "error_budget": {
+  "runs": 10000,
+  "mix_ratios_within_10pct": 1.0,
+  "pcr_tubes_within_10pct": 1.0
+ },
+ "robot": "so101"
+}

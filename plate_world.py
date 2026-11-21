@@ -225,7 +225,7 @@ def bin_xml():
 PCR_ORIGIN = (0.555, -0.0315)  # first PCR tube; the 8-tube strip runs along +y, between the plates and the parked lids
 
 
-def build_plate_scene(tool_name, seed, pcr=False, sectors=False, source_colonies=None):
+def build_plate_scene(tool_name, seed, pcr=False, sectors=False, source_colonies=None, liquid=False):
     """Write the scene XML and return (path, truth). truth holds the hidden facts we grade against."""
     rng = np.random.default_rng(seed)
     colonies = random_colonies(rng)
@@ -237,6 +237,10 @@ def build_plate_scene(tool_name, seed, pcr=False, sectors=False, source_colonies
     TOOL_LOCKS = "\n    ".join(
         f'<weld name="tool_lock_{i}" body1="hand" body2="tool_{i}" active="false" solref="0.002 1" solimp="0.99 0.999 0.0001"/>'
         for i in range(RACK_ROWS * RACK_COLS))
+    liquid_parts, liquid_welds, liquid_actuator = ("", "", "")
+    if liquid == True:
+        import liquid as lq
+        liquid_parts, liquid_welds, liquid_actuator = lq.liquid_xml("panda", "hand")
     xml = f"""<mujoco model="cyano plates">
   <include file="panda_lab.xml"/>
   <option timestep="0.001"/>
@@ -264,13 +268,16 @@ def build_plate_scene(tool_name, seed, pcr=False, sectors=False, source_colonies
     {sector_sticker_xml(DEST_XY, BENCH_Z + PLATE_FLOOR + agar_dest) if sectors == True else ''}
     {tool_xml(tool_name)}
     {bin_xml()}
+    {liquid_parts}
     {__import__('pcr').pcr_strip_xml(PCR_ORIGIN, 'y') if pcr == True else ''}
   </worldbody>
   <equality>
     <!-- Tool adapter: switched on when the gripper closes on the tool, so the tool cannot slip in the fingers. -->
     {TOOL_LOCKS}
+    {liquid_welds}
   </equality>
   <actuator>
+    {liquid_actuator}
     <!-- Lid lifting is modeled as a small suction pad at the fingertips (MuJoCo adhesion).
          A 90 mm lid is wider than the Panda gripper opens (80 mm), so real systems use suction too. -->
     <adhesion name="suction_left" body="left_finger" ctrlrange="0 1" gain="2"/>

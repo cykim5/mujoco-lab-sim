@@ -1,0 +1,245 @@
+{
+ "pcr_volumes_uL": [
+  20.22,
+  19.76,
+  20.2,
+  19.89,
+  20.1,
+  19.53,
+  19.24,
+  19.41
+ ],
+ "pcr_tubes_in_tolerance": 8,
+ "mix_fraction": {
+  "premix": 0.4991,
+  "primers": 0.049,
+  "water": 0.452
+ },
+ "mix_fraction_error_pct": {
+  "water": 0.4,
+  "premix": -0.2,
+  "primers": -2.0
+ },
+ "tips_sealed": 3,
+ "tip_attempts": 3,
+ "press_capacity_N": [
+  25.22,
+  25.3,
+  25.3
+ ],
+ "tips_stripped": 3,
+ "strip_attempts": 3,
+ "lift_capacity_N": [
+  11.01,
+  11.02,
+  11.03
+ ],
+ "tips_in_waste": 3,
+ "aspirations_immersed": true,
+ "time_s": 704.9,
+ "error_budget": [
+  {
+   "runs": 20000,
+   "tolerance_pct": 10,
+   "mix_ratios_within": 1.0,
+   "pcr_tubes_within": 1.0
+  },
+  {
+   "runs": 20000,
+   "tolerance_pct": 5,
+   "mix_ratios_within": 0.9651,
+   "pcr_tubes_within": 0.9972
+  },
+  {
+   "runs": 20000,
+   "tolerance_pct": 2,
+   "mix_ratios_within": 0.5597,
+   "pcr_tubes_within": 0.7661
+  }
+ ],
+ "robot": "so101",
+ "events": [
+  {
+   "step": "seat",
+   "tip": 1,
+   "press_capacity_N": 25.22,
+   "aligned": true,
+   "sealed": true
+  },
+  {
+   "step": "aspirate",
+   "from": "water",
+   "target_uL": 79.2,
+   "got_uL": 79.25,
+   "tip_immersed": true
+  },
+  {
+   "step": "dispense",
+   "into": "mix",
+   "uL": 79.25
+  },
+  {
+   "step": "strip",
+   "tip": 1,
+   "lift_capacity_N": 11.01,
+   "caught": true,
+   "stripped": true,
+   "in_waste": true
+  },
+  {
+   "step": "seat",
+   "tip": 2,
+   "press_capacity_N": 25.3,
+   "aligned": true,
+   "sealed": true
+  },
+  {
+   "step": "aspirate",
+   "from": "premix",
+   "target_uL": 88.0,
+   "got_uL": 87.5,
+   "tip_immersed": true
+  },
+  {
+   "step": "dispense",
+   "into": "mix",
+   "uL": 87.5
+  },
+  {
+   "step": "strip",
+   "tip": 2,
+   "lift_capacity_N": 11.02,
+   "caught": true,
+   "stripped": true,
+   "in_waste": true
+  },
+  {
+   "step": "seat",
+   "tip": 3,
+   "press_capacity_N": 25.3,
+   "aligned": true,
+   "sealed": true
+  },
+  {
+   "step": "aspirate",
+   "from": "primers",
+   "target_uL": 8.8,
+   "got_uL": 8.59,
+   "tip_immersed": true
+  },
+  {
+   "step": "dispense",
+   "into": "mix",
+   "uL": 8.59
+  },
+  {
+   "step": "mix",
+   "cycles": 5,
+   "tip_immersed": true
+  },
+  {
+   "step": "aspirate",
+   "from": "mix",
+   "target_uL": 20.0,
+   "got_uL": 20.22,
+   "tip_immersed": true
+  },
+  {
+   "step": "dispense_pcr",
+   "tube": 1,
+   "uL": 20.22
+  },
+  {
+   "step": "aspirate",
+   "from": "mix",
+   "target_uL": 20.0,
+   "got_uL": 19.76,
+   "tip_immersed": true
+  },
+  {
+   "step": "dispense_pcr",
+   "tube": 2,
+   "uL": 19.76
+  },
+  {
+   "step": "aspirate",
+   "from": "mix",
+   "target_uL": 20.0,
+   "got_uL": 20.2,
+   "tip_immersed": true
+  },
+  {
+   "step": "dispense_pcr",
+   "tube": 3,
+   "uL": 20.2
+  },
+  {
+   "step": "aspirate",
+   "from": "mix",
+   "target_uL": 20.0,
+   "got_uL": 19.89,
+   "tip_immersed": true
+  },
+  {
+   "step": "dispense_pcr",
+   "tube": 4,
+   "uL": 19.89
+  },
+  {
+   "step": "aspirate",
+   "from": "mix",
+   "target_uL": 20.0,
+   "got_uL": 20.1,
+   "tip_immersed": true
+  },
+  {
+   "step": "dispense_pcr",
+   "tube": 5,
+   "uL": 20.1
+  },
+  {
+   "step": "aspirate",
+   "from": "mix",
+   "target_uL": 20.0,
+   "got_uL": 19.53,
+   "tip_immersed": true
+  },
+  {
+   "step": "dispense_pcr",
+   "tube": 6,
+   "uL": 19.53
+  },
+  {
+   "step": "aspirate",
+   "from": "mix",
+   "target_uL": 20.0,
+   "got_uL": 19.24,
+   "tip_immersed": true
+  },
+  {
+   "step": "dispense_pcr",
+   "tube": 7,
+   "uL": 19.24
+  },
+  {
+   "step": "aspirate",
+   "from": "mix",
+   "target_uL": 20.0,
+   "got_uL": 19.41,
+   "tip_immersed": true
+  },
+  {
+   "step": "dispense_pcr",
+   "tube": 8,
+   "uL": 19.41
+  },
+  {
+   "step": "strip",
+   "tip": 3,
+   "lift_capacity_N": 11.03,
+   "caught": true,
+   "stripped": true,
+   "in_waste": true
+  }
+ ]
+}

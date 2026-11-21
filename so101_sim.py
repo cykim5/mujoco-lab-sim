@@ -78,9 +78,9 @@ class PickFailed(Exception):
 
 
 class So101CyanoSim(CyanoSim):
-    def __init__(self, tool_name="toothpick", seed=0, record_video=True, calibration_error_deg=0.5, holder="cup", pcr=False, sectors=False, source_colonies=None):
+    def __init__(self, tool_name="toothpick", seed=0, record_video=True, calibration_error_deg=0.5, holder="cup", pcr=False, sectors=False, source_colonies=None, liquid=False):
         self.holder = holder
-        scene_path, self.truth = sw.build_so101_scene(tool_name, seed, holder=holder, pcr=pcr, sectors=sectors, source_colonies=source_colonies)
+        scene_path, self.truth = sw.build_so101_scene(tool_name, seed, holder=holder, pcr=pcr, sectors=sectors, source_colonies=source_colonies, liquid=liquid)
         self.tool_name = tool_name
         self.tool = {"length": sw.TOOTHPICK_LENGTH, "tip_radius": sw.TOOTHPICK_TIP_RADIUS}
         self.source_xy = sw.SOURCE_XY
@@ -114,7 +114,7 @@ class So101CyanoSim(CyanoSim):
         self.moving_finger = {m.geom("moving_finger").id}
         self.hook = {m.geom("lid_hook_a").id, m.geom("lid_hook_b").id}
         self.finger_geoms = self.fixed_finger | self.moving_finger
-        self.tool_body_ids = [m.body(f"tool_{i}").id for i in range(sw.N_TOOLS)]
+        self.tool_body_ids = [m.body(f"tool_{i}").id for i in range(sw.N_TOOLS)] if holder != "none" else []
         self.robot_body_ids = set(range(m.body("base").id, m.body("moving_jaw_so101_v1").id + 1))
         self.target_body = None
         self.locked_body = None

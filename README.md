@@ -14,8 +14,9 @@ Commercial colony pickers (e.g. QPix) are optimized for *E. coli*, and no curren
 | Restreak success | 20/20 | Cup 2/8, rack **8/8** |
 | Colony PCR | 31/31 colonies | 31/31 colonies |
 | Segregation rounds (4 weeks) | All rounds completed | All rounds completed |
+| Master-mix preparation | 8/8 tubes within ±1.5% | 8/8 tubes within ±4% |
 
-Sections: [1. Reference version](#1-reference-version-franka-panda), [2. Build version](#2-build-version-so-101), [3. Colony PCR](#3-colony-pcr), [4. Connected lab version](#4-connected-lab-version-lab-protocol), [5. Segregation rounds](#5-segregation-rounds), [6. Vial pick-and-place](#6-vial-pick-and-place-warm-up).
+Sections: [1. Reference version](#1-reference-version-franka-panda), [2. Build version](#2-build-version-so-101), [3. Colony PCR](#3-colony-pcr), [4. Connected lab version](#4-connected-lab-version-lab-protocol), [5. Segregation rounds](#5-segregation-rounds), [6. Master-mix preparation](#6-master-mix-preparation), [7. Vial pick-and-place](#7-vial-pick-and-place-warm-up).
 
 ## 1. Reference version (Franka Panda)
 
@@ -312,7 +313,68 @@ Both robots completed every round without error (all picks single-colony, all st
 
 The robotics (picking the right colony each week, streaking, PCR setup) is what the simulation tests. The segregation rates are placeholders. Real rates per lineage, from the lab's gels, would calibrate the model and predict how many weeks a construct needs.
 
-## 6. Vial pick-and-place (warm-up)
+## 6. Master-mix preparation
+
+Before colony PCR, the master mix is prepared and dispensed into the PCR strip. This section tests whether each robot can do this with printable liquid-handling hardware.
+
+| Master mix aliquoted into the 8-tube strip (SO-101) | SO-101 preparing the master mix (accelerated) |
+|---|---|
+| ![PCR strip after aliquoting](outputs/master_mix_so101_strip.png) | ![SO-101 preparing master mix](outputs/master_mix_so101.gif) |
+
+### Hardware
+
+- **Syringe pump on the bench:** stepper motor, lead screw and 250 µL glass syringe, connected by a water-filled line to the nozzle. The pump stays on the bench, so the arm carries almost no added weight.
+- **Printed nozzle:** held by the gripper fingertips; its tapered end seals into a pipette tip.
+- **Tip box:** 200 µL tips held by their collars.
+- **Stripper plate:** a printed plate with a slot, covering half of the waste cup. The arm lowers the tip into the open half, slides it into the slot so the collar is under the plate, and lifts. The plate pulls the tip off and it falls into the cup.
+
+### Workflow
+
+Master mix for 8 reactions plus 10% excess (20 µL per reaction: 10 µL 2x premix, 1 µL primer mix, 9 µL water):
+
+1. Pick up the nozzle and check its position in the gripper with the camera.
+2. Seat a fresh tip; add 79.2 µL water to the mix tube; strip the tip.
+3. Fresh tip; add 88.0 µL 2x premix; strip the tip.
+4. Fresh tip; add 8.8 µL primer mix; mix by pipetting (5 cycles).
+5. With the same tip, dispense 20 µL into each PCR tube; strip the tip.
+
+Before each aspiration, the robot checks that the tip is below the liquid surface, calculated from the remaining volume.
+
+```bash
+~/.venvs/mujoco-lab/bin/python run_master_mix.py --robot so101
+~/.venvs/mujoco-lab/bin/python run_master_mix.py --robot panda
+```
+
+### Results
+
+| | Panda | SO-101 |
+|---|---|---|
+| Tips sealed | 3/3 | 3/3 |
+| Arm force available for sealing (needs 4 N) | 162 N | 25 N |
+| Tips stripped into the waste cup | 3/3 | 3/3 |
+| Arm force available for stripping (needs 3 N) | 110 N | 11 N |
+| Tip below liquid surface at every aspiration | yes | yes |
+| PCR tube volumes (target 20 µL) | 19.71 to 20.08 µL | 19.24 to 20.22 µL |
+| Mix composition error (water, premix, primers) | 0.2%, -0.1%, -0.7% | 0.4%, -0.2%, -2.0% |
+| Time | ~9 min | ~12 min (incl. 3 min calibration) |
+
+**Volume error budget.** Monte Carlo simulation of the same pipetting sequence (20,000 runs), using the pump error model only:
+
+| Tolerance | Panda: tubes in range | Panda: mixes in range | SO-101: tubes in range | SO-101: mixes in range |
+|---|---|---|---|---|
+| ±10% | 100% | 100% | 100% | 100% |
+| ±5% | 100% | 100% | 99.7% | 96.5% |
+| ±2% | 99.8% | 97.7% | 76.6% | 56.0% |
+
+Both pumps are accurate enough for colony PCR, which tolerates about ±10%. The printed pump falls short at ±2%; for precise assays (e.g. qPCR), the error is dominated by the 1 µL primer volume, and a primer stock diluted to 2 µL per reaction would reduce it.
+
+**Assumptions:**
+- Liquids are tracked as volumes; MuJoCo does not simulate fluids.
+- Pump error: dispensed volume = target × (1 + N(0, CV)) + N(0, σ). Printed pump CV 1.5%, σ 0.15 µL; lab-grade pump CV 0.6%, σ 0.05 µL. To be measured gravimetrically on the real pump.
+- A tip seals when the nozzle is aligned in the collar and the arm can press with at least 4 N; it strips when the collar is under the plate and the arm can lift with at least 3 N. Available force is calculated from motor torque limits minus the torque needed to hold the arm. Both thresholds are estimates to be measured on real tips.
+- Tips are modeled at 2 g (real: ~0.3 g) for stable contact; tubing is not modeled physically.
+
+## 7. Vial pick-and-place (warm-up)
 
 ![Franka Panda placing three vials into a rack](outputs/pick_and_place.gif)
 
@@ -353,6 +415,7 @@ The environment is kept outside the synced project folder. Interactive viewer fo
 | `pcr.py`, `run_pcr.py` | Colony PCR: pick, patch, resuspend in an 8-tube PCR strip |
 | `connected_lab.py`, `run_connected_lab.py` | Connected lab version: single pick, sector streak, resuspension, cell-amount model |
 | `segregation.py`, `run_segregation.py` | Weekly segregation rounds: colony growth on sector plates, genotype model, simulated gels |
+| `liquid.py`, `run_master_mix.py` | Master-mix preparation: nozzle, tip box, stripper plate, syringe pump, volume tracking, error budget |
 | `lab_sim.py` | Shared inverse kinematics, motion and rendering |
 | `pick_and_place.py`, `models/lab_scene.xml` | Vial demo |
 | `models/panda_lab.xml` | Menagerie Panda with a grip site and gravity compensation |
@@ -363,5 +426,6 @@ The environment is kept outside the synced project folder. Interactive viewer fo
 1. Build the SO-101 with the printed jaw and rack, and compare real and simulated success rates (sim-to-real gap).
 2. Measure cell depletion during streaking (tube tint after the single-pick protocol) to set the streak length.
 3. Analyze PCR results (gel images), then inoculate confirmed patches into liquid culture.
-4. Real-to-sim: evaluate colony detection on photographs of real cyanobacterial plates.
-5. Compare colony selection by `gemini-4-hydrogen` from camera images against the current detector.
+4. Build the syringe pump and stripper plate; measure pump accuracy by weighing dispensed water, and the force needed to seat and strip real tips.
+5. Real-to-sim: evaluate colony detection on photographs of real cyanobacterial plates.
+6. Compare colony selection by `gemini-4-hydrogen` from camera images against the current detector.
