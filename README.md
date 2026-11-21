@@ -98,7 +98,7 @@ Modeling choices worth knowing:
 
 ## 2. Build version (SO-101)
 
-![SO-101 with printed jaw: lid hook, shaking the toothpick cup, picking one toothpick, streaking](outputs/so101_toothpick.gif)
+![SO-101 with printed jaw: calibrating on pins, lid hook, picking one toothpick from the cup, streaking](outputs/so101_toothpick.gif)
 
 | Colony finder | Streak on the fresh plate |
 |---|---|
@@ -112,25 +112,27 @@ Modeling choices worth knowing:
 ### What is different
 
 1. **Our printed two-zone jaw** ([`build_so101_model.py`](build_so101_model.py)). Slim fingertips (4 mm thick, 6 mm wide) pick a single toothpick. A V-shaped hook on the swinging jaw grips the lid by its rim when the jaw is opened 1.70 rad. No suction.
-2. **Lids by touch.** The fixed fingertip comes down 4 mm outside the rim and slides in until it feels the rim (servo load), then the V-hook closes, which also centers the lid sideways. To put a lid back, the arm lowers it, and if it stops high (resting on the rim) it does a small spiral search until it drops in.
-3. **Toothpicks from a cup.** 24 toothpicks lean together in a 3.2 cm holder on a small vibrating base. The robot shakes the cup, a depth camera finds toothpick tops (local high points), and the robot works out each stick's lean from how high its top is. It picks one where the fingertips fit between the neighbors, with the jaw opening toward the cup center so the hook hangs outside. Then it pulls straight up and checks that no other toothpick came with it. If nothing fits, it shakes again (up to 10 times).
-4. **Look before touching.** A cheap arm misses by about 1 to 3 mm. The toothpick hovers 4.5 mm over the colony, the plate camera finds the tip's lowest point, the robot moves by the gap, then touches.
-5. **Realistic motors.** Menagerie's SO-101 servo strength (2.94 N*m), no gravity compensation, and a hidden calibration error of up to 0.5 degrees per joint, different for every seed. The robot reads its encoders, which carry the same error, so it does not know it is off.
+2. **Calibration by touch.** At startup the arm touches 4 pins at known spots (2 short, 2 tall), from the top and all four sides: 20 touches. It then solves for each joint's error. This cut the tool error from 0.4 to 2.3 mm down to 0.07 to 0.16 mm. It takes about 3 minutes, once per session.
+3. **Lids by touch.** The fixed fingertip comes down 4 mm outside the rim and slides in until it feels the rim (servo load). Then the V-hook closes, which also centers the lid sideways. To put a lid back, the arm lowers it, and if it stops high (resting on the rim) it does a small spiral search until it drops in.
+4. **Toothpicks from a cup, the way a person keeps them.** 24 toothpicks lean together in a 3.2 cm holder with a printed grab tab. A depth camera finds toothpick tops (local high points) and works out each stick's lean and direction. The robot picks one where the fingertips fit between the neighbors, pulls straight up, and checks that no other toothpick came with it. **If none has room, the arm pinches the cup's tab and swirls it gently**, a little stronger each round (1.5 to 3.5 mm), then looks again.
+5. **Never sweep low.** Every sideways move first rises to a safe height, higher when carrying a toothpick, and arcs around the robot base. Before this, the open lid hook was knocking 1 to 3 toothpicks out of the cup every run.
+6. **Look before touching.** The toothpick hovers 4.5 mm over the colony, the plate camera finds the tip's lowest point, and the robot corrects before it touches.
+7. **Realistic motors.** Menagerie's SO-101 servo strength (2.94 N*m), no gravity compensation, and a hidden calibration error of up to 0.5 degrees per joint, different for every seed.
 
-### Results
+### Results (cup version)
 
-8 random plates. Each seed changes the colonies, agar, how the toothpicks fall, and the arm's hidden calibration error. Full table: [`outputs/so101_trials.csv`](outputs/so101_trials.csv).
+8 random plates. Each seed changes the colonies, agar, how the toothpicks fall, and the arm's hidden calibration error. Full table: [`outputs/so101_trials.csv`](outputs/so101_trials.csv). Watch a run step by step with `run_so101_trials.py`: it prints every action live.
 
 | Step | Success | Notes |
 |---|---|---|
-| Lids off (printed hook) | 6/8 | The 2 misses are plates where no toothpick was ever picked, so the run stopped there |
-| One toothpick out of the cup | 6/8 | 1 to 4 shakes when it works. 2 plates never had a toothpick with room for the fingers in 10 shakes |
-| Clean colony touch | 5/6 picked | Misses 0.14 to 1.0 mm. With the camera correction: 0.14 and 0.35 mm. One plate missed by 3.5 mm (largest calibration error, tip hidden from the camera) |
-| Streak (no gouging, limit 1 mm) | 4/6 | 100% contact, but two plates pressed 1.16 and 1.33 mm deep, from calibration error in height |
-| Lids back on | 4/6 | Same two plates with the largest calibration error |
-| **Full workflow** | **4/8** | About 3.5 minutes per plate |
+| Calibration | 8/8 | Tool error 0.4 to 2.3 mm before, 0.07 to 0.16 mm after |
+| One toothpick out of the cup | 5/8 | 0 to 7 gentle shakes when it works. 3 plates had no free toothpick even after 14 shakes |
+| Clean colony touch | 5/5 picked | **0.08 to 0.33 mm** from the colony center (was up to 3.5 mm before calibration) |
+| Streak (no gouging, limit 1 mm) | 5/5 | 100% contact, deepest 0.86 mm |
+| Lids back on | 2/5 | The lid could not be picked back up from its parking spot ("hook never closed"). Not yet diagnosed |
+| **Full workflow** | **2/8** | About 7 minutes per plate including calibration |
 
-**What this means:** a cheap printed arm *can* do every step of plate-to-plate cyano restreaking in simulation, including the lid, the toothpick from a jumbled cup, and the streak. But right now only about half of plates succeed end to end. The failures cluster in two places: **calibration error** (lid seating, streak depth, colony aim when the camera can't see the tip) and **toothpick separation** in the cup. Both have clear fixes to test next: a camera check for height and lid placement, and a better toothpick holder or a simple one-at-a-time dispenser. The Panda reference (20/20) shows the workflow itself is sound. The gap is the cheap hardware.
+**What this means:** calibration fixed the cheap arm's accuracy. Colony touches and streaks are now as good as the Panda's. What's left is the cup itself: **in a jumbled cup the toothpick tops stay crowded together, and gentle shaking rarely frees one** (side-to-side, tapping and swirling were tested; none reliably did). That's the motivation for the rack variant: a printed rack that holds each toothpick on its own, the same idea as the Panda's tool rack.
 
 ### What building it in the sim taught us
 
@@ -144,13 +146,16 @@ Every one of these came from the sim failing first:
 - **Where the lid hook sits matters.** The hook swings down as the jaw opens a little, so with the jaw gripping a toothpick it hangs 5.7 cm behind the fingertips at fingertip height. It must face away from the cup, or it lands on the toothpicks and blocks the jaw.
 - **Remove the wrist camera mount.** It hits the SO-101's shoulder when the arm folds in to reach colonies near the base.
 - **Use a V-shaped hook.** A flat hook holds the round lid wherever it lands, up to 7 mm sideways. A V centers it.
-- **Calibration error is the cheap arm's real problem.** 0.5 degrees per joint becomes 1 to 3 mm at the tool tip. That's enough to miss a 1 mm colony or put a lid down on its rim. Camera checks and touch sensing fix most of it.
+- **Calibration error is the cheap arm's real problem**, and touch calibration fixes it. 0.5 degrees per joint becomes 1 to 3 mm at the tool tip. Touching 4 pins brings it under 0.2 mm. Use pins of different heights: with same-height pins the shoulder, elbow and wrist errors look alike and cannot be separated.
+- **Travel high.** An open lid hook reaches 10 cm past the fingertips. Moving low across the bench, it knocked toothpicks out of the cup every run.
+- **Give the cup a grab tab, and keep the bench ring low.** The fingertips cannot reach the cup wall through the fanned-out toothpicks, so the arm shakes the cup by a tab sticking out toward it. A tab resting on the ring tilted the cup 4.6 degrees.
+- **Shaking does not spread a crowded cup.** Side-to-side, tapping and swirling all left about one pickable toothpick per look, often none.
 
 ### Known limits
 
-- Lid re-seating fails on plates where the calibration error is largest (the lid ends 3 to 4 mm off, on the rim). A camera check when placing, or a plate holder with a lead-in edge, would fix it.
-- When the gripper blocks the camera's view of the toothpick tip, the robot skips the camera correction and touches with its own aim (about 1 mm off).
-- Some shakes leave no toothpick with room for the fingers. More shakes, fewer toothpicks, or a different cup would raise the pick rate.
+- Picking a lid back up from its parking spot fails on some plates (under investigation).
+- The waste bin sits too close to the robot base to reach at travel height, so the used toothpick sometimes lands next to the bin.
+- When the gripper blocks the camera's view of the toothpick tip, the robot skips the camera correction. With calibration this matters much less (touches still within 0.33 mm).
 
 ## 3. Vial rack pick-and-place (warm-up)
 
@@ -199,7 +204,7 @@ Interactive 3D viewer for the vial scene (drag to rotate, Ctrl+drag to push thin
 
 ## Next steps
 
-1. SO-101: camera check for lid placement and streak height, and a better toothpick holder or dispenser, to raise 4/8 toward the Panda's 20/20.
+1. SO-101: printed toothpick rack variant (in progress), fix lid pickup from parking, move the waste bin within reach.
 2. Colony PCR: pick colonies into a 96-well PCR plate.
 3. Real-to-sim: run the colony finder on photos of real cyano plates.
 4. Gemini in the loop: let `gemini-4-hydrogen` choose colonies from the camera image and compare with the hand-written finder.

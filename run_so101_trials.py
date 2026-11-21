@@ -13,7 +13,7 @@ from multiprocessing import Pool
 
 from lab_sim import OUTPUT_DIR
 
-COLUMNS = ["seed", "success", "lids_off", "pick_attempts", "toothpick_tilt_deg", "picked", "clean_pick", "miss_mm",
+COLUMNS = ["seed", "success", "lids_off", "pick_attempts", "cup_shakes", "cal_error_before_mm", "cal_error_after_mm", "toothpick_tilt_deg", "picked", "clean_pick", "miss_mm",
            "camera_corrections_mm", "streak_ok", "contact_pct", "max_depth_mm", "lids_back", "hit_plate_wall",
            "cycle_time_s", "calibration_error_deg"]
 
@@ -21,7 +21,11 @@ COLUMNS = ["seed", "success", "lids_off", "pick_attempts", "toothpick_tilt_deg",
 def one_run(seed):
     from so101_sim import So101CyanoSim
     sim = So101CyanoSim("toothpick", seed=seed, record_video=False)
+    # live progress: every step the robot announces is printed with its plate number
+    sim.say = lambda text: print(f"[plate {seed}] {sim.data.time:6.0f} s  {text}", flush=True)
+    print(f"[plate {seed}] starting", flush=True)
     report = sim.run()[0]
+    print(f"[plate {seed}] DONE: {'SUCCESS' if report.get('success') == True else 'failed'}", flush=True)
     return {key: report.get(key) for key in COLUMNS}
 
 

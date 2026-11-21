@@ -1,69 +1,284 @@
-WARNING: ARB_clip_control unavailable while mjDEPTH_ZEROFAR requested, depth accuracy will be limited
+[plate 3] starting
+[plate 0] starting
+[plate 1] starting
+[plate 2] starting
+[plate 3]    171 s  calibrated on 20 pin touches: fit error 0.80 mm -> 0.07 mm
+[plate 3]    174 s  taking lids off
+[plate 0]    168 s  calibrated on 20 pin touches: fit error 0.46 mm -> 0.12 mm
+[plate 0]    171 s  taking lids off
+[plate 2]    168 s  calibrated on 20 pin touches: fit error 0.37 mm -> 0.11 mm
+[plate 1]    176 s  calibrated on 20 pin touches: fit error 1.46 mm -> 0.08 mm
+[plate 2]    171 s  taking lids off
+[plate 1]    179 s  taking lids off
+[plate 3]    221 s  found 21 colonies (21 on the plate)
+[plate 3]    221 s  chose a 1.4 mm colony with 11.3 mm clear around it
 
-WARNING: ARB_clip_control unavailable while mjDEPTH_ZEROFAR requested, depth accuracy will be limited
+[plate 3]    223 s  attempt 1: 1 toothpick tops seen, none with room for the fingers
+  warning: IK could not reach [ 0.042 -0.139  0.21 ] (error 0.1975)
+[plate 3]    231 s  shook the cup gently (round 1, 1.5 mm)
+[plate 3]    233 s  attempt 2: 1 toothpick tops seen, none with room for the fingers
+[plate 0]    218 s  found 25 colonies (28 on the plate)
+[plate 0]    218 s  chose a 1.4 mm colony with 11.6 mm clear around it
 
-WARNING: ARB_clip_control unavailable while mjDEPTH_ZEROFAR requested, depth accuracy will be limited
+[plate 0]    220 s  attempt 1: 0 toothpick tops seen, none with room for the fingers
+  warning: IK could not reach [ 0.042 -0.139  0.21 ] (error 0.3076)
+[plate 3]    241 s  shook the cup gently (round 2, 2.0 mm)
+[plate 3]    243 s  attempt 3: 1 toothpick tops seen, none with room for the fingers
+  warning: IK could not reach [ 0.042 -0.139  0.21 ] (error 0.3211)
+[plate 0]    228 s  shook the cup gently (round 1, 1.5 mm)
+[plate 0]    230 s  attempt 2: 0 toothpick tops seen, none with room for the fingers
+  warning: IK could not reach [ 0.041 -0.14   0.21 ] (error 0.1980)
+  warning: IK could not reach [ 0.082 -0.121  0.21 ] (error 0.0501)
+[plate 3]    251 s  shook the cup gently (round 3, 2.5 mm)
+[plate 3]    253 s  attempt 4: 1 toothpick tops seen, none with room for the fingers
+  warning: IK could not reach [ 0.041 -0.14   0.21 ] (error 0.3235)
+  warning: IK could not reach [ 0.082 -0.121  0.21 ] (error 0.0129)
+[plate 0]    238 s  shook the cup gently (round 2, 2.0 mm)
+[plate 0]    240 s  attempt 3: 0 toothpick tops seen, none with room for the fingers
+[plate 1]    226 s  found 22 colonies (25 on the plate)
+[plate 1]    226 s  chose a 1.9 mm colony with 10.4 mm clear around it
+  warning: IK could not reach [ 0.041 -0.14   0.21 ] (error 0.2483)
+  warning: IK could not reach [ 0.081 -0.122  0.21 ] (error 0.1112)
+[plate 3]    261 s  shook the cup gently (round 4, 3.0 mm)
 
-WARNING: ARB_clip_control unavailable while mjDEPTH_ZEROFAR requested, depth accuracy will be limited
+[plate 1]    228 s  attempt 1: 2 toothpick tops seen, none with room for the fingers
+[plate 3]    263 s  attempt 5: 1 toothpick tops seen, none with room for the fingers
+[plate 2]    219 s  found 21 colonies (24 on the plate)
+[plate 2]    219 s  chose a 1.6 mm colony with 13.8 mm clear around it
 
-  [   2.2 s] taking lids off
-  [  37.9 s] found 21 colonies (21 on the plate)
-  [  37.9 s] chose a 1.4 mm colony with 11.3 mm clear around it
-  [  41.7 s] attempt 1: 11 toothpick tops seen, none with room for the fingers, shaking again
-  [  45.5 s] attempt 2: 10 toothpick tops seen, none with room for the fingers, shaking again
-  [  49.3 s] attempt 3: found a toothpick the fingers fit around (wrist turned 134 deg)
-  [  54.1 s] attempt 3: fingers closed on nothing, retrying
-  [  59.5 s] attempt 4: found a toothpick the fingers fit around (wrist turned -76 deg)
-  [  67.4 s] picked one toothpick on attempt 4 (tilt in fingers 15.3 deg)
-  [  80.6 s] touched colony: yes, 1.0 mm from its center, clean single colony: True
-  [  93.4 s] fresh plate agar found at 7.1 mm above the bench
-  [ 181.9 s] dropped toothpick in waste bin
-  [ 181.9 s] putting lids back
-  [   2.2 s] taking lids off
-  [  36.1 s] found 19 colonies (23 on the plate)
-  [  36.1 s] chose a 1.2 mm colony with 18.2 mm clear around it
-  [  39.9 s] attempt 1: 9 toothpick tops seen, none with room for the fingers, shaking again
-  [  43.7 s] attempt 2: 10 toothpick tops seen, none with room for the fingers, shaking again
-  [  47.5 s] attempt 3: 10 toothpick tops seen, none with room for the fingers, shaking again
-  [  51.3 s] attempt 4: 10 toothpick tops seen, none with room for the fingers, shaking again
-  [  55.1 s] attempt 5: 9 toothpick tops seen, none with room for the fingers, shaking again
-  [  58.9 s] attempt 6: 9 toothpick tops seen, none with room for the fingers, shaking again
-  [  62.7 s] attempt 7: 9 toothpick tops seen, none with room for the fingers, shaking again
-  [  66.5 s] attempt 8: 9 toothpick tops seen, none with room for the fingers, shaking again
-  [  70.3 s] attempt 9: 9 toothpick tops seen, none with room for the fingers, shaking again
-  [  74.1 s] attempt 10: 9 toothpick tops seen, none with room for the fingers, shaking again
-  [   2.2 s] taking lids off
-  [  37.6 s] found 25 colonies (28 on the plate)
-  [  37.6 s] chose a 1.4 mm colony with 11.6 mm clear around it
-  [  41.4 s] attempt 1: found a toothpick the fingers fit around (wrist turned -34 deg)
-  [  46.1 s] attempt 1: fingers closed on nothing, retrying
-  [  51.5 s] attempt 2: found a toothpick the fingers fit around (wrist turned 37 deg)
-  [  59.5 s] picked one toothpick on attempt 2 (tilt in fingers 14.9 deg)
-  [  73.0 s] touched colony: yes, 1.01 mm from its center, clean single colony: True
-  [  84.8 s] fresh plate agar found at 8.0 mm above the bench
-  [ 171.1 s] dropped toothpick in waste bin
-  [ 171.1 s] putting lids back
-  [   2.2 s] taking lids off
-  [  39.4 s] found 25 colonies (29 on the plate)
-  [  39.4 s] chose a 1.4 mm colony with 10.3 mm clear around it
-  [  43.2 s] attempt 1: found a toothpick the fingers fit around (wrist turned 85 deg)
-  [  48.0 s] attempt 1: fingers closed on nothing, retrying
-  [  53.4 s] attempt 2: 5 toothpick tops seen, none with room for the fingers, shaking again
-  [  57.2 s] attempt 3: 6 toothpick tops seen, none with room for the fingers, shaking again
-  [  61.0 s] attempt 4: 8 toothpick tops seen, none with room for the fingers, shaking again
-  [  64.8 s] attempt 5: 8 toothpick tops seen, none with room for the fingers, shaking again
-  [  68.6 s] attempt 6: 9 toothpick tops seen, none with room for the fingers, shaking again
-  [  72.4 s] attempt 7: found a toothpick the fingers fit around (wrist turned 124 deg)
-  [  77.1 s] attempt 7: fingers closed on nothing, retrying
-  [  82.5 s] attempt 8: 8 toothpick tops seen, none with room for the fingers, shaking again
-  [  86.3 s] attempt 9: 7 toothpick tops seen, none with room for the fingers, shaking again
-  [  90.1 s] attempt 10: 7 toothpick tops seen, none with room for the fingers, shaking again
+[plate 2]    220 s  attempt 1: 1 toothpick tops seen, none with room for the fingers
+  warning: IK could not reach [ 0.041 -0.14   0.21 ] (error 0.2497)
+  warning: IK could not reach [ 0.081 -0.121  0.21 ] (error 0.0700)
+[plate 0]    248 s  shook the cup gently (round 3, 2.5 mm)
+[plate 0]    250 s  attempt 4: 0 toothpick tops seen, none with room for the fingers
+  warning: IK could not reach [ 0.051 -0.137  0.21 ] (error 0.2711)
+[plate 3]    271 s  shook the cup gently (round 5, 3.5 mm)
+  warning: IK could not reach [ 0.042 -0.139  0.21 ] (error 0.2496)
+[plate 1]    236 s  shook the cup gently (round 1, 1.5 mm)
+[plate 3]    272 s  attempt 6: 1 toothpick tops seen, none with room for the fingers
+[plate 1]    238 s  attempt 2: 2 toothpick tops seen, none with room for the fingers
+  warning: IK could not reach [ 0.042 -0.139  0.21 ] (error 0.3111)
+[plate 2]    229 s  shook the cup gently (round 1, 1.5 mm)
+[plate 2]    230 s  attempt 2: 0 toothpick tops seen, none with room for the fingers
+  warning: IK could not reach [ 0.041 -0.14   0.21 ] (error 0.2257)
+  warning: IK could not reach [ 0.081 -0.122  0.21 ] (error 0.1347)
+[plate 0]    258 s  shook the cup gently (round 4, 3.0 mm)
+[plate 0]    260 s  attempt 5: 3 toothpick tops seen, none with room for the fingers
+  warning: IK could not reach [ 0.05  -0.137  0.21 ] (error 0.1943)
+  warning: IK could not reach [ 0.097 -0.111  0.21 ] (error 0.0739)
+[plate 3]    280 s  shook the cup gently (round 6, 3.5 mm)
+  warning: IK could not reach [ 0.042 -0.139  0.21 ] (error 0.3073)
+[plate 1]    246 s  shook the cup gently (round 2, 2.0 mm)
+[plate 3]    282 s  attempt 7: 2 toothpick tops seen, none with room for the fingers
+[plate 1]    248 s  attempt 3: 2 toothpick tops seen, none with room for the fingers
+  warning: IK could not reach [ 0.042 -0.139  0.21 ] (error 0.2496)
+[plate 2]    238 s  shook the cup gently (round 2, 2.0 mm)
+[plate 2]    240 s  attempt 3: 0 toothpick tops seen, none with room for the fingers
+  warning: IK could not reach [ 0.04  -0.141  0.21 ] (error 0.2001)
+  warning: IK could not reach [ 0.08  -0.124  0.21 ] (error 0.1646)
+[plate 0]    268 s  shook the cup gently (round 5, 3.5 mm)
+[plate 0]    270 s  attempt 6: 0 toothpick tops seen, none with room for the fingers
+  warning: IK could not reach [ 0.05  -0.138  0.21 ] (error 0.1840)
+  warning: IK could not reach [ 0.097 -0.113  0.21 ] (error 0.1009)
+[plate 3]    290 s  shook the cup gently (round 7, 3.5 mm)
+[plate 3]    292 s  attempt 8: 4 toothpick tops seen, none with room for the fingers
+  warning: IK could not reach [ 0.041 -0.14   0.21 ] (error 0.2497)
+  warning: IK could not reach [ 0.082 -0.121  0.21 ] (error 0.0535)
+[plate 1]    256 s  shook the cup gently (round 3, 2.5 mm)
+[plate 1]    258 s  attempt 4: 1 toothpick tops seen, none with room for the fingers
+  warning: IK could not reach [ 0.041 -0.14   0.21 ] (error 0.2497)
+  warning: IK could not reach [ 0.082 -0.121  0.21 ] (error 0.0422)
+[plate 2]    248 s  shook the cup gently (round 3, 2.5 mm)
+  warning: IK could not reach [ 0.05  -0.137  0.21 ] (error 0.1228)
+  warning: IK could not reach [ 0.096 -0.111  0.21 ] (error 0.1611)
+[plate 0]    277 s  shook the cup gently (round 6, 3.5 mm)
+[plate 2]    250 s  attempt 4: 0 toothpick tops seen, none with room for the fingers
+[plate 0]    279 s  attempt 7: 2 toothpick tops seen, none with room for the fingers
+  warning: IK could not reach [ 0.049 -0.139  0.21 ] (error 0.2033)
+  warning: IK could not reach [ 0.096 -0.114  0.21 ] (error 0.0868)
+[plate 3]    299 s  shook the cup gently (round 8, 3.5 mm)
+  warning: IK could not reach [ 0.041 -0.14   0.21 ] (error 0.2472)
+  warning: IK could not reach [ 0.081 -0.122  0.21 ] (error 0.1127)
+[plate 1]    266 s  shook the cup gently (round 4, 3.0 mm)
+[plate 3]    301 s  attempt 9: 2 toothpick tops seen, none with room for the fingers
+[plate 1]    268 s  attempt 5: 1 toothpick tops seen, none with room for the fingers
+  warning: IK could not reach [ 0.05  -0.138  0.21 ] (error 0.1294)
+  warning: IK could not reach [ 0.097 -0.113  0.21 ] (error 0.1560)
+[plate 0]    287 s  shook the cup gently (round 7, 3.5 mm)
+  warning: IK could not reach [ 0.041 -0.14   0.21 ] (error 0.2654)
+  warning: IK could not reach [ 0.081 -0.122  0.21 ] (error 0.0924)
+[plate 2]    258 s  shook the cup gently (round 4, 3.0 mm)
+[plate 0]    289 s  attempt 8: found a toothpick the fingers fit around (wrist turned -150 deg)
+[plate 2]    260 s  attempt 5: found a toothpick the fingers fit around (wrist turned 62 deg)
+  warning: IK could not reach [ 0.049 -0.14   0.21 ] (error 0.2409)
+  warning: IK could not reach [ 0.096 -0.116  0.21 ] (error 0.0528)
+[plate 3]    309 s  shook the cup gently (round 9, 3.5 mm)
+  warning: IK could not reach [ 0.04 -0.14  0.21] (error 0.1922)
+  warning: IK could not reach [ 0.08  -0.123  0.21 ] (error 0.1713)
+[plate 1]    276 s  shook the cup gently (round 5, 3.5 mm)
+[plate 3]    311 s  attempt 10: 2 toothpick tops seen, none with room for the fingers
+[plate 1]    278 s  attempt 6: 1 toothpick tops seen, none with room for the fingers
+[plate 0]    300 s  picked one toothpick on attempt 8 (tilt in fingers 28.1 deg)
+[plate 2]    271 s  picked one toothpick on attempt 5 (tilt in fingers 25.9 deg)
+  warning: IK could not reach [ 0.048 -0.14   0.21 ] (error 0.2329)
+  warning: IK could not reach [ 0.095 -0.117  0.21 ] (error 0.0660)
+[plate 3]    319 s  shook the cup gently (round 10, 3.5 mm)
+  warning: IK could not reach [ 0.05  -0.138  0.21 ] (error 0.2068)
+  warning: IK could not reach [ 0.097 -0.112  0.21 ] (error 0.0736)
+[plate 1]    286 s  shook the cup gently (round 6, 3.5 mm)
+[plate 3]    320 s  attempt 11: 2 toothpick tops seen, none with room for the fingers
+[plate 1]    287 s  attempt 7: 1 toothpick tops seen, none with room for the fingers
+[plate 0]    315 s  touched colony: yes, 0.33 mm from its center, clean single colony: True
+[plate 2]    284 s  touched colony: yes, 0.15 mm from its center, clean single colony: True
+  warning: IK could not reach [ 0.048 -0.14   0.21 ] (error 0.2260)
+  warning: IK could not reach [ 0.095 -0.118  0.21 ] (error 0.0780)
+[plate 3]    328 s  shook the cup gently (round 11, 3.5 mm)
+[plate 3]    330 s  attempt 12: 1 toothpick tops seen, none with room for the fingers
+  warning: IK could not reach [ 0.05  -0.139  0.21 ] (error 0.1953)
+  warning: IK could not reach [ 0.097 -0.113  0.21 ] (error 0.0768)
+[plate 1]    295 s  shook the cup gently (round 7, 3.5 mm)
+[plate 1]    297 s  attempt 8: 1 toothpick tops seen, none with room for the fingers
+[plate 0]    333 s  fresh plate agar found at 7.8 mm above the bench
+  warning: IK could not reach [ 0.048 -0.14   0.21 ] (error 0.2500)
+[plate 3]    339 s  shook the cup gently (round 12, 3.5 mm)
+[plate 2]    302 s  fresh plate agar found at 7.1 mm above the bench
+[plate 3]    340 s  attempt 13: 0 toothpick tops seen, none with room for the fingers
+  warning: IK could not reach [ 0.049 -0.139  0.21 ] (error 0.1959)
+  warning: IK could not reach [ 0.097 -0.115  0.21 ] (error 0.0423)
+[plate 1]    305 s  shook the cup gently (round 8, 3.5 mm)
+[plate 1]    307 s  attempt 9: 1 toothpick tops seen, none with room for the fingers
+[plate 3]    349 s  shook the cup gently (round 13, 3.5 mm)
+[plate 3]    351 s  attempt 14: 0 toothpick tops seen, none with room for the fingers
+  warning: IK could not reach [ 0.04  -0.144  0.21 ] (error 0.2169)
+  warning: IK could not reach [ 0.083 -0.13   0.21 ] (error 0.1471)
+[plate 1]    315 s  shook the cup gently (round 9, 3.5 mm)
+[plate 1]    317 s  attempt 10: 1 toothpick tops seen, none with room for the fingers
+[plate 3]    360 s  shook the cup gently (round 14, 3.5 mm)
+[plate 3] DONE: failed
+[plate 4] starting
+  warning: IK could not reach [ 0.04  -0.143  0.21 ] (error 0.2514)
+  warning: IK could not reach [ 0.081 -0.129  0.21 ] (error 0.1150)
+[plate 1]    325 s  shook the cup gently (round 10, 3.5 mm)
+[plate 1]    326 s  attempt 11: 0 toothpick tops seen, none with room for the fingers
+  warning: IK could not reach [ 0.039 -0.143  0.21 ] (error 0.2513)
+  warning: IK could not reach [ 0.08  -0.129  0.21 ] (error 0.0806)
+[plate 1]    335 s  shook the cup gently (round 11, 3.5 mm)
+[plate 1]    336 s  attempt 12: 0 toothpick tops seen, none with room for the fingers
+  warning: IK could not reach [ 0.039 -0.143  0.21 ] (error 0.2017)
+  warning: IK could not reach [ 0.08  -0.129  0.21 ] (error 0.0192)
+[plate 1]    345 s  shook the cup gently (round 12, 3.5 mm)
+[plate 1]    346 s  attempt 13: 0 toothpick tops seen, none with room for the fingers
+  warning: IK could not reach [ 0.039 -0.143  0.21 ] (error 0.2222)
+[plate 1]    354 s  shook the cup gently (round 13, 3.5 mm)
+[plate 1]    356 s  attempt 14: 0 toothpick tops seen, none with room for the fingers
+  warning: IK could not reach [0.083 0.014 0.235] (error 0.3138)
+  warning: IK could not reach [0.083 0.014 0.197] (error 0.1330)
+[plate 2]    392 s  toothpick missed the waste bin
+[plate 2]    392 s  putting lids back
+  warning: IK could not reach [ 0.078 -0.01   0.235] (error 0.2918)
+  warning: IK could not reach [ 0.078 -0.01   0.196] (error 0.2115)
+[plate 0]    422 s  toothpick missed the waste bin
+[plate 0]    422 s  putting lids back
+  warning: IK could not reach [ 0.039 -0.143  0.21 ] (error 0.1368)
+[plate 1]    364 s  shook the cup gently (round 14, 3.5 mm)
+[plate 1] DONE: failed
+[plate 2]    407 s  hook never closed on the dest lid
+[plate 5] starting
+[plate 0] DONE: SUCCESS
+[plate 6] starting
+[plate 2] DONE: failed
+[plate 7] starting
+[plate 4]    175 s  calibrated on 20 pin touches: fit error 2.26 mm -> 0.16 mm
+[plate 4]    178 s  taking lids off
+[plate 4]    225 s  found 25 colonies (28 on the plate)
+[plate 4]    225 s  chose a 1.0 mm colony with 9.6 mm clear around it
+[plate 4]    227 s  attempt 1: 1 toothpick tops seen, none with room for the fingers
+  warning: IK could not reach [ 0.042 -0.139  0.21 ] (error 0.3177)
+[plate 4]    235 s  shook the cup gently (round 1, 1.5 mm)
+[plate 4]    237 s  attempt 2: found a toothpick the fingers fit around (wrist turned -16 deg)
+[plate 4]    248 s  picked one toothpick on attempt 2 (tilt in fingers 19.2 deg)
+[plate 4]    261 s  touched colony: yes, 0.08 mm from its center, clean single colony: True
+[plate 5]    163 s  calibrated on 20 pin touches: fit error 1.12 mm -> 0.08 mm
+[plate 5]    166 s  taking lids off
+[plate 6]    168 s  calibrated on 20 pin touches: fit error 0.93 mm -> 0.07 mm
+[plate 6]    171 s  taking lids off
+[plate 7]    163 s  calibrated on 20 pin touches: fit error 1.19 mm -> 0.09 mm
+[plate 4]    279 s  fresh plate agar found at 6.5 mm above the bench
+[plate 7]    165 s  taking lids off
+[plate 6]    218 s  found 19 colonies (23 on the plate)
+[plate 6]    218 s  chose a 1.2 mm colony with 18.2 mm clear around it
+[plate 5]    213 s  found 25 colonies (29 on the plate)
+[plate 5]    213 s  chose a 1.4 mm colony with 10.3 mm clear around it
+[plate 6]    220 s  attempt 1: 1 toothpick tops seen, none with room for the fingers
+[plate 5]    215 s  attempt 1: found a toothpick the fingers fit around (wrist turned 157 deg)
+  warning: IK could not reach [ 0.042 -0.139  0.21 ] (error 0.3065)
+[plate 6]    228 s  shook the cup gently (round 1, 1.5 mm)
+[plate 6]    230 s  attempt 2: 1 toothpick tops seen, none with room for the fingers
+[plate 7]    213 s  found 24 colonies (26 on the plate)
+[plate 7]    213 s  chose a 1.3 mm colony with 14.5 mm clear around it
+[plate 7]    215 s  attempt 1: found a toothpick the fingers fit around (wrist turned -114 deg)
+  warning: IK could not reach [ 0.159 -0.094  0.21 ] (error 0.0807)
+  warning: IK could not reach [ 0.187 -0.052  0.21 ] (error 0.2747)
+[plate 5]    227 s  picked one toothpick on attempt 1 (tilt in fingers 13.5 deg)
+  warning: IK could not reach [ 0.042 -0.139  0.21 ] (error 0.2496)
+[plate 6]    238 s  shook the cup gently (round 2, 2.0 mm)
+[plate 6]    240 s  attempt 3: 1 toothpick tops seen, none with room for the fingers
+[plate 7]    226 s  picked one toothpick on attempt 1 (tilt in fingers 20.6 deg)
+  warning: IK could not reach [ 0.041 -0.14   0.21 ] (error 0.2497)
+  warning: IK could not reach [ 0.082 -0.121  0.21 ] (error 0.0483)
+[plate 6]    248 s  shook the cup gently (round 3, 2.5 mm)
+[plate 5]    239 s  touched colony: yes, 0.13 mm from its center, clean single colony: True
+[plate 6]    250 s  attempt 4: 0 toothpick tops seen, none with room for the fingers
+[plate 7]    240 s  touched colony: yes, 0.12 mm from its center, clean single colony: True
+  warning: IK could not reach [ 0.041 -0.14   0.21 ] (error 0.2503)
+  warning: IK could not reach [ 0.081 -0.122  0.21 ] (error 0.1097)
+[plate 6]    258 s  shook the cup gently (round 4, 3.0 mm)
+[plate 6]    259 s  attempt 5: 6 toothpick tops seen, none with room for the fingers
+  warning: IK could not reach [ 0.05  -0.137  0.21 ] (error 0.2488)
+[plate 6]    268 s  shook the cup gently (round 5, 3.5 mm)
+  warning: IK could not reach [0.09  0.014 0.235] (error 0.2410)
+  warning: IK could not reach [0.09  0.014 0.199] (error 0.0599)
+[plate 4]    373 s  toothpick missed the waste bin
+[plate 4]    373 s  putting lids back
+[plate 6]    270 s  attempt 6: 0 toothpick tops seen, none with room for the fingers
+[plate 5]    258 s  fresh plate agar found at 6.2 mm above the bench
+[plate 7]    258 s  fresh plate agar found at 6.8 mm above the bench
+[plate 6]    279 s  shook the cup gently (round 6, 3.5 mm)
+[plate 6]    281 s  attempt 7: 0 toothpick tops seen, none with room for the fingers
+[plate 4]    388 s  hook never closed on the dest lid
+[plate 6]    290 s  shook the cup gently (round 7, 3.5 mm)
+[plate 6]    293 s  attempt 8: 0 toothpick tops seen, none with room for the fingers
+[plate 6]    302 s  shook the cup gently (round 8, 3.5 mm)
+[plate 6]    305 s  attempt 9: 0 toothpick tops seen, none with room for the fingers
+[plate 6]    313 s  shook the cup gently (round 9, 3.5 mm)
+[plate 6]    316 s  attempt 10: 0 toothpick tops seen, none with room for the fingers
+[plate 4] DONE: failed
+[plate 6]    325 s  shook the cup gently (round 10, 3.5 mm)
+[plate 6]    328 s  attempt 11: 0 toothpick tops seen, none with room for the fingers
+[plate 6]    337 s  shook the cup gently (round 11, 3.5 mm)
+[plate 6]    339 s  attempt 12: 0 toothpick tops seen, none with room for the fingers
+[plate 6]    348 s  shook the cup gently (round 12, 3.5 mm)
+[plate 6]    351 s  attempt 13: 0 toothpick tops seen, none with room for the fingers
+[plate 6]    360 s  shook the cup gently (round 13, 3.5 mm)
+  warning: IK could not reach [0.088 0.014 0.235] (error 0.2560)
+  warning: IK could not reach [0.088 0.014 0.199] (error 0.0753)
+[plate 7]    350 s  toothpick missed the waste bin
+[plate 7]    350 s  putting lids back
+[plate 6]    363 s  attempt 14: 0 toothpick tops seen, none with room for the fingers
+[plate 6]    371 s  shook the cup gently (round 14, 3.5 mm)
+[plate 6] DONE: failed
+[plate 7]    365 s  hook never closed on the dest lid
+[plate 7] DONE: failed
+  warning: IK could not reach [ 0.113 -0.011  0.235] (error 0.0491)
+[plate 5]    353 s  toothpick missed the waste bin
+[plate 5]    353 s  putting lids back
+[plate 5] DONE: SUCCESS
 
 SO-101 summary
-  lids off              6/8
-  single toothpick      6/8  (shakes needed: [2, 1, 2, 4, 1, 10, 10, 3])
-  clean colony touch    5/8  (misses mm: [1.01, 0.14, 0.35, 1.0, 3.46, None, None, 0.69])
-  streak ok             4/8
-  lids back on          4/8
-  full success          4/8
+  lids off              5/8
+  single toothpick      5/8  (shakes needed: [8, 14, 5, 14, 2, 1, 14, 1])
+  clean colony touch    5/8  (misses mm: [0.33, None, 0.15, None, 0.08, 0.13, None, 0.12])
+  streak ok             5/8
+  lids back on          2/8
+  full success          2/8
 Saved /Users/clairekim/Library/CloudStorage/OneDrive-Personal/Claire/8. Coding/mujoco-lab-sim/outputs/so101_trials.csv
