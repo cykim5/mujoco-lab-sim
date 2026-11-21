@@ -1,0 +1,391 @@
+[
+ {
+  "colonies_done": 8,
+  "colonies_tried": 8,
+  "lids_off": true,
+  "lids_back": true,
+  "time_s": 733.4,
+  "rows": [
+   {
+    "colony": 1,
+    "picked": true,
+    "clean_pick": true,
+    "miss_mm": 0.12,
+    "patch_contact": 1.0,
+    "dipped": true,
+    "depth_below_mix_mm": 2.72,
+    "touched_other_tubes": [],
+    "ok": true
+   },
+   {
+    "colony": 2,
+    "picked": true,
+    "clean_pick": true,
+    "miss_mm": 0.07,
+    "patch_contact": 1.0,
+    "dipped": true,
+    "depth_below_mix_mm": 2.73,
+    "touched_other_tubes": [],
+    "ok": true
+   },
+   {
+    "colony": 3,
+    "picked": true,
+    "clean_pick": true,
+    "miss_mm": 0.07,
+    "patch_contact": 1.0,
+    "dipped": true,
+    "depth_below_mix_mm": 2.74,
+    "touched_other_tubes": [],
+    "ok": true
+   },
+   {
+    "colony": 4,
+    "picked": true,
+    "clean_pick": true,
+    "miss_mm": 0.11,
+    "patch_contact": 1.0,
+    "dipped": true,
+    "depth_below_mix_mm": 2.75,
+    "touched_other_tubes": [],
+    "ok": true
+   },
+   {
+    "colony": 5,
+    "picked": true,
+    "clean_pick": true,
+    "miss_mm": 0.13,
+    "patch_contact": 1.0,
+    "dipped": true,
+    "depth_below_mix_mm": 2.76,
+    "touched_other_tubes": [],
+    "ok": true
+   },
+   {
+    "colony": 6,
+    "picked": true,
+    "clean_pick": true,
+    "miss_mm": 0.13,
+    "patch_contact": 1.0,
+    "dipped": true,
+    "depth_below_mix_mm": 2.78,
+    "touched_other_tubes": [],
+    "ok": true
+   },
+   {
+    "colony": 7,
+    "picked": true,
+    "clean_pick": true,
+    "miss_mm": 0.14,
+    "patch_contact": 1.0,
+    "dipped": true,
+    "depth_below_mix_mm": 2.79,
+    "touched_other_tubes": [],
+    "ok": true
+   },
+   {
+    "colony": 8,
+    "picked": true,
+    "clean_pick": true,
+    "miss_mm": 0.15,
+    "patch_contact": 1.0,
+    "dipped": true,
+    "depth_below_mix_mm": 2.8,
+    "touched_other_tubes": [],
+    "ok": true
+   }
+  ],
+  "robot": "so101",
+  "tool": "toothpick",
+  "seed": 0
+ },
+ {
+  "colonies_done": 7,
+  "colonies_tried": 7,
+  "lids_off": true,
+  "lids_back": true,
+  "time_s": 698.5,
+  "rows": [
+   {
+    "colony": 1,
+    "picked": true,
+    "clean_pick": true,
+    "miss_mm": 0.17,
+    "patch_contact": 1.0,
+    "dipped": true,
+    "depth_below_mix_mm": 2.71,
+    "touched_other_tubes": [],
+    "ok": true
+   },
+   {
+    "colony": 2,
+    "picked": true,
+    "clean_pick": true,
+    "miss_mm": 0.22,
+    "patch_contact": 1.0,
+    "dipped": true,
+    "depth_below_mix_mm": 2.71,
+    "touched_other_tubes": [],
+    "ok": true
+   },
+   {
+    "colony": 3,
+    "picked": true,
+    "clean_pick": true,
+    "miss_mm": 0.21,
+    "patch_contact": 1.0,
+    "dipped": true,
+    "depth_below_mix_mm": 2.72,
+    "touched_other_tubes": [],
+    "ok": true
+   },
+   {
+    "colony": 4,
+    "picked": true,
+    "clean_pick": true,
+    "miss_mm": 0.16,
+    "patch_contact": 1.0,
+    "dipped": true,
+    "depth_below_mix_mm": 2.73,
+    "touched_other_tubes": [],
+    "ok": true
+   },
+   {
+    "colony": 5,
+    "picked": true,
+    "clean_pick": true,
+    "miss_mm": 0.16,
+    "patch_contact": 1.0,
+    "dipped": true,
+    "depth_below_mix_mm": 2.74,
+    "touched_other_tubes": [],
+    "ok": true
+   },
+   {
+    "colony": 6,
+    "picked": true,
+    "clean_pick": true,
+    "miss_mm": 0.09,
+    "patch_contact": 1.0,
+    "dipped": true,
+    "depth_below_mix_mm": 2.74,
+    "touched_other_tubes": [],
+    "ok": true
+   },
+   {
+    "colony": 7,
+    "picked": true,
+    "clean_pick": true,
+    "miss_mm": 0.1,
+    "patch_contact": 1.0,
+    "dipped": true,
+    "depth_below_mix_mm": 2.75,
+    "touched_other_tubes": [],
+    "ok": true
+   }
+  ],
+  "robot": "so101",
+  "tool": "toothpick",
+  "seed": 1
+ },
+ {
+  "colonies_done": 8,
+  "colonies_tried": 8,
+  "lids_off": true,
+  "lids_back": true,
+  "time_s": 744.5,
+  "rows": [
+   {
+    "colony": 1,
+    "picked": true,
+    "clean_pick": true,
+    "miss_mm": 0.15,
+    "patch_contact": 1.0,
+    "dipped": true,
+    "depth_below_mix_mm": 2.69,
+    "touched_other_tubes": [],
+    "ok": true
+   },
+   {
+    "colony": 2,
+    "picked": true,
+    "clean_pick": true,
+    "miss_mm": 0.14,
+    "patch_contact": 1.0,
+    "dipped": true,
+    "depth_below_mix_mm": 2.7,
+    "touched_other_tubes": [],
+    "ok": true
+   },
+   {
+    "colony": 3,
+    "picked": true,
+    "clean_pick": true,
+    "miss_mm": 0.17,
+    "patch_contact": 1.0,
+    "dipped": true,
+    "depth_below_mix_mm": 2.71,
+    "touched_other_tubes": [],
+    "ok": true
+   },
+   {
+    "colony": 4,
+    "picked": true,
+    "clean_pick": true,
+    "miss_mm": 0.1,
+    "patch_contact": 1.0,
+    "dipped": true,
+    "depth_below_mix_mm": 2.72,
+    "touched_other_tubes": [],
+    "ok": true
+   },
+   {
+    "colony": 5,
+    "picked": true,
+    "clean_pick": true,
+    "miss_mm": 0.1,
+    "patch_contact": 1.0,
+    "dipped": true,
+    "depth_below_mix_mm": 2.73,
+    "touched_other_tubes": [],
+    "ok": true
+   },
+   {
+    "colony": 6,
+    "picked": true,
+    "clean_pick": true,
+    "miss_mm": 0.1,
+    "patch_contact": 1.0,
+    "dipped": true,
+    "depth_below_mix_mm": 2.74,
+    "touched_other_tubes": [],
+    "ok": true
+   },
+   {
+    "colony": 7,
+    "picked": true,
+    "clean_pick": true,
+    "miss_mm": 0.1,
+    "patch_contact": 1.0,
+    "dipped": true,
+    "depth_below_mix_mm": 2.75,
+    "touched_other_tubes": [],
+    "ok": true
+   },
+   {
+    "colony": 8,
+    "picked": true,
+    "clean_pick": true,
+    "miss_mm": 0.15,
+    "patch_contact": 1.0,
+    "dipped": true,
+    "depth_below_mix_mm": 2.76,
+    "touched_other_tubes": [],
+    "ok": true
+   }
+  ],
+  "robot": "so101",
+  "tool": "toothpick",
+  "seed": 2
+ },
+ {
+  "colonies_done": 8,
+  "colonies_tried": 8,
+  "lids_off": true,
+  "lids_back": true,
+  "time_s": 745.9,
+  "rows": [
+   {
+    "colony": 1,
+    "picked": true,
+    "clean_pick": true,
+    "miss_mm": 0.15,
+    "patch_contact": 1.0,
+    "dipped": true,
+    "depth_below_mix_mm": 2.67,
+    "touched_other_tubes": [],
+    "ok": true
+   },
+   {
+    "colony": 2,
+    "picked": true,
+    "clean_pick": true,
+    "miss_mm": 0.17,
+    "patch_contact": 1.0,
+    "dipped": true,
+    "depth_below_mix_mm": 2.68,
+    "touched_other_tubes": [],
+    "ok": true
+   },
+   {
+    "colony": 3,
+    "picked": true,
+    "clean_pick": true,
+    "miss_mm": 0.14,
+    "patch_contact": 1.0,
+    "dipped": true,
+    "depth_below_mix_mm": 2.69,
+    "touched_other_tubes": [],
+    "ok": true
+   },
+   {
+    "colony": 4,
+    "picked": true,
+    "clean_pick": true,
+    "miss_mm": 0.11,
+    "patch_contact": 1.0,
+    "dipped": true,
+    "depth_below_mix_mm": 2.71,
+    "touched_other_tubes": [],
+    "ok": true
+   },
+   {
+    "colony": 5,
+    "picked": true,
+    "clean_pick": true,
+    "miss_mm": 0.1,
+    "patch_contact": 1.0,
+    "dipped": true,
+    "depth_below_mix_mm": 2.72,
+    "touched_other_tubes": [],
+    "ok": true
+   },
+   {
+    "colony": 6,
+    "picked": true,
+    "clean_pick": true,
+    "miss_mm": 0.13,
+    "patch_contact": 1.0,
+    "dipped": true,
+    "depth_below_mix_mm": 2.73,
+    "touched_other_tubes": [],
+    "ok": true
+   },
+   {
+    "colony": 7,
+    "picked": true,
+    "clean_pick": true,
+    "miss_mm": 0.1,
+    "patch_contact": 1.0,
+    "dipped": true,
+    "depth_below_mix_mm": 2.74,
+    "touched_other_tubes": [],
+    "ok": true
+   },
+   {
+    "colony": 8,
+    "picked": true,
+    "clean_pick": true,
+    "miss_mm": 0.17,
+    "patch_contact": 1.0,
+    "dipped": true,
+    "depth_below_mix_mm": 2.75,
+    "touched_other_tubes": [],
+    "ok": true
+   }
+  ],
+  "robot": "so101",
+  "tool": "toothpick",
+  "seed": 3
+ }
+]

@@ -209,7 +209,10 @@ def bin_xml():
     </body>"""
 
 
-def build_plate_scene(tool_name, seed):
+PCR_ORIGIN = (0.555, -0.0315)  # first PCR tube; the 8-tube strip runs along +y, between the plates and the parked lids
+
+
+def build_plate_scene(tool_name, seed, pcr=False):
     """Write the scene XML and return (path, truth). truth holds the hidden facts we grade against."""
     rng = np.random.default_rng(seed)
     colonies = random_colonies(rng)
@@ -245,6 +248,7 @@ def build_plate_scene(tool_name, seed):
     {plate_xml("dest", DEST_XY, agar_dest, [], rng)}
     {tool_xml(tool_name)}
     {bin_xml()}
+    {__import__('pcr').pcr_strip_xml(PCR_ORIGIN, 'y') if pcr == True else ''}
   </worldbody>
   <equality>
     <!-- Tool adapter: switched on when the gripper closes on the tool, so the tool cannot slip in the fingers. -->

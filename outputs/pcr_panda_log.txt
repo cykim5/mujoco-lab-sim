@@ -1,0 +1,112 @@
+[panda plate 1]      0 s  taking lids off
+[panda plate 0]      0 s  taking lids off
+[panda plate 3]      0 s  taking lids off
+[panda plate 2]      0 s  taking lids off
+[panda plate 1]     26 s  found 22 colonies, 7 isolated enough for PCR
+[panda plate 3]     26 s  found 21 colonies, 8 isolated enough for PCR
+[panda plate 0]     26 s  found 25 colonies, 8 isolated enough for PCR
+[panda plate 2]     26 s  found 21 colonies, 8 isolated enough for PCR
+[panda plate 0]     32 s  picked up the toothpick from rack slot 1 of 24 (tilt 0.0 deg, neighbors bumped: 0)
+[panda plate 1]     32 s  picked up the toothpick from rack slot 1 of 24 (tilt 0.0 deg, neighbors bumped: 0)
+[panda plate 3]     32 s  picked up the toothpick from rack slot 1 of 24 (tilt 0.0 deg, neighbors bumped: 0)
+[panda plate 2]     32 s  picked up the toothpick from rack slot 1 of 24 (tilt 0.0 deg, neighbors bumped: 0)
+[panda plate 0]     79 s  dropped tool in waste bin
+[panda plate 0]     79 s  colony 1: clean pick True (0.13 mm), patch 100%, dipped True (2.51 mm into the mix), other tubes touched []
+[panda plate 3]     81 s  dropped tool in waste bin
+[panda plate 3]     81 s  colony 1: clean pick True (0.06 mm), patch 100%, dipped True (2.51 mm into the mix), other tubes touched []
+[panda plate 2]     80 s  dropped tool in waste bin
+[panda plate 2]     80 s  colony 1: clean pick True (0.07 mm), patch 100%, dipped True (2.51 mm into the mix), other tubes touched []
+[panda plate 1]     81 s  dropped tool in waste bin
+[panda plate 1]     81 s  colony 1: clean pick True (0.02 mm), patch 100%, dipped True (2.51 mm into the mix), other tubes touched []
+[panda plate 0]     85 s  picked up the toothpick from rack slot 2 of 24 (tilt 0.0 deg, neighbors bumped: 0)
+[panda plate 2]     86 s  picked up the toothpick from rack slot 2 of 24 (tilt 0.1 deg, neighbors bumped: 0)
+[panda plate 3]     87 s  picked up the toothpick from rack slot 2 of 24 (tilt 0.1 deg, neighbors bumped: 0)
+[panda plate 1]     87 s  picked up the toothpick from rack slot 2 of 24 (tilt 0.1 deg, neighbors bumped: 0)
+[panda plate 0]    133 s  dropped tool in waste bin
+[panda plate 0]    133 s  colony 2: clean pick True (0.04 mm), patch 100%, dipped True (2.51 mm into the mix), other tubes touched []
+[panda plate 2]    135 s  dropped tool in waste bin
+[panda plate 2]    135 s  colony 2: clean pick True (0.07 mm), patch 100%, dipped True (2.51 mm into the mix), other tubes touched []
+[panda plate 3]    136 s  dropped tool in waste bin
+[panda plate 3]    136 s  colony 2: clean pick True (0.05 mm), patch 100%, dipped True (2.51 mm into the mix), other tubes touched []
+[panda plate 0]    139 s  picked up the toothpick from rack slot 3 of 24 (tilt 0.0 deg, neighbors bumped: 0)
+[panda plate 1]    137 s  dropped tool in waste bin
+[panda plate 1]    137 s  colony 2: clean pick True (0.04 mm), patch 100%, dipped True (2.51 mm into the mix), other tubes touched []
+[panda plate 2]    141 s  picked up the toothpick from rack slot 3 of 24 (tilt 0.0 deg, neighbors bumped: 1)
+[panda plate 3]    142 s  picked up the toothpick from rack slot 3 of 24 (tilt 0.0 deg, neighbors bumped: 0)
+[panda plate 1]    143 s  picked up the toothpick from rack slot 3 of 24 (tilt 0.0 deg, neighbors bumped: 1)
+[panda plate 0]    186 s  dropped tool in waste bin
+[panda plate 0]    186 s  colony 3: clean pick True (0.06 mm), patch 100%, dipped True (2.51 mm into the mix), other tubes touched []
+[panda plate 2]    189 s  dropped tool in waste bin
+[panda plate 2]    189 s  colony 3: clean pick True (0.07 mm), patch 100%, dipped True (2.51 mm into the mix), other tubes touched []
+[panda plate 0]    192 s  picked up the toothpick from rack slot 4 of 24 (tilt 0.0 deg, neighbors bumped: 0)
+[panda plate 3]    192 s  dropped tool in waste bin
+[panda plate 3]    192 s  colony 3: clean pick True (0.04 mm), patch 100%, dipped True (2.51 mm into the mix), other tubes touched []
+[panda plate 1]    192 s  dropped tool in waste bin
+[panda plate 1]    192 s  colony 3: clean pick True (0.03 mm), patch 100%, dipped True (2.51 mm into the mix), other tubes touched []
+[panda plate 2]    195 s  picked up the toothpick from rack slot 4 of 24 (tilt 0.0 deg, neighbors bumped: 1)
+[panda plate 3]    198 s  picked up the toothpick from rack slot 4 of 24 (tilt 7.0 deg, neighbors bumped: 1)
+[panda plate 1]    198 s  picked up the toothpick from rack slot 4 of 24 (tilt 0.0 deg, neighbors bumped: 1)
+[panda plate 0]    239 s  dropped tool in waste bin
+[panda plate 0]    239 s  colony 4: clean pick True (0.1 mm), patch 100%, dipped True (2.51 mm into the mix), other tubes touched []
+[panda plate 0]    245 s  picked up the toothpick from rack slot 5 of 24 (tilt 0.0 deg, neighbors bumped: 0)
+[panda plate 2]    244 s  dropped tool in waste bin
+[panda plate 2]    244 s  colony 4: clean pick True (0.03 mm), patch 100%, dipped True (2.51 mm into the mix), other tubes touched []
+[panda plate 3]    247 s  dropped tool in waste bin
+[panda plate 3]    247 s  colony 4: clean pick True (0.02 mm), patch 100%, dipped True (2.5 mm into the mix), other tubes touched []
+[panda plate 1]    247 s  dropped tool in waste bin
+[panda plate 1]    247 s  colony 4: clean pick True (0.01 mm), patch 100%, dipped True (2.51 mm into the mix), other tubes touched []
+[panda plate 2]    250 s  picked up the toothpick from rack slot 5 of 24 (tilt 0.1 deg, neighbors bumped: 1)
+[panda plate 3]    253 s  picked up the toothpick from rack slot 5 of 24 (tilt 0.1 deg, neighbors bumped: 2)
+[panda plate 1]    253 s  picked up the toothpick from rack slot 5 of 24 (tilt 0.0 deg, neighbors bumped: 1)
+[panda plate 0]    293 s  dropped tool in waste bin
+[panda plate 0]    293 s  colony 5: clean pick True (0.05 mm), patch 100%, dipped True (2.51 mm into the mix), other tubes touched []
+[panda plate 0]    299 s  picked up the toothpick from rack slot 6 of 24 (tilt 15.9 deg, neighbors bumped: 0)
+[panda plate 2]    299 s  dropped tool in waste bin
+[panda plate 2]    299 s  colony 5: clean pick True (0.03 mm), patch 100%, dipped True (2.5 mm into the mix), other tubes touched []
+[panda plate 3]    302 s  dropped tool in waste bin
+[panda plate 3]    302 s  colony 5: clean pick True (0.03 mm), patch 100%, dipped True (2.51 mm into the mix), other tubes touched []
+[panda plate 1]    302 s  dropped tool in waste bin
+[panda plate 1]    302 s  colony 5: clean pick True (0.03 mm), patch 100%, dipped True (2.51 mm into the mix), other tubes touched []
+[panda plate 2]    305 s  picked up the toothpick from rack slot 6 of 24 (tilt 0.0 deg, neighbors bumped: 1)
+[panda plate 3]    308 s  picked up the toothpick from rack slot 6 of 24 (tilt 0.1 deg, neighbors bumped: 2)
+[panda plate 1]    308 s  picked up the toothpick from rack slot 6 of 24 (tilt 0.0 deg, neighbors bumped: 1)
+[panda plate 0]    346 s  tool missed the waste bin
+[panda plate 0]    346 s  colony 6: clean pick True (0.05 mm), patch 100%, dipped True (2.51 mm into the mix), other tubes touched []
+[panda plate 0]    352 s  picked up the toothpick from rack slot 7 of 24 (tilt 1.5 deg, neighbors bumped: 1)
+[panda plate 2]    354 s  dropped tool in waste bin
+[panda plate 2]    354 s  colony 6: clean pick True (0.04 mm), patch 100%, dipped True (2.5 mm into the mix), other tubes touched []
+[panda plate 1]    357 s  dropped tool in waste bin
+[panda plate 1]    357 s  colony 6: clean pick True (0.04 mm), patch 100%, dipped True (2.51 mm into the mix), other tubes touched []
+[panda plate 3]    358 s  dropped tool in waste bin
+[panda plate 3]    358 s  colony 6: clean pick True (0.01 mm), patch 100%, dipped True (2.51 mm into the mix), other tubes touched []
+[panda plate 2]    360 s  picked up the toothpick from rack slot 7 of 24 (tilt 0.1 deg, neighbors bumped: 3)
+[panda plate 1]    363 s  picked up the toothpick from rack slot 7 of 24 (tilt 0.0 deg, neighbors bumped: 1)
+[panda plate 3]    364 s  picked up the toothpick from rack slot 7 of 24 (tilt 0.1 deg, neighbors bumped: 4)
+[panda plate 0]    399 s  dropped tool in waste bin
+[panda plate 0]    399 s  colony 7: clean pick True (0.07 mm), patch 100%, dipped True (2.5 mm into the mix), other tubes touched []
+[panda plate 0]    405 s  picked up the toothpick from rack slot 8 of 24 (tilt 0.1 deg, neighbors bumped: 3)
+[panda plate 2]    409 s  dropped tool in waste bin
+[panda plate 2]    409 s  colony 7: clean pick True (0.08 mm), patch 100%, dipped True (2.51 mm into the mix), other tubes touched []
+[panda plate 1]    412 s  dropped tool in waste bin
+[panda plate 1]    412 s  colony 7: clean pick True (0.01 mm), patch 100%, dipped True (2.51 mm into the mix), other tubes touched []
+[panda plate 1]    412 s  putting lids back
+[panda plate 3]    413 s  dropped tool in waste bin
+[panda plate 3]    413 s  colony 7: clean pick True (0.06 mm), patch 100%, dipped True (2.5 mm into the mix), other tubes touched []
+[panda plate 2]    415 s  picked up the toothpick from rack slot 8 of 24 (tilt 0.0 deg, neighbors bumped: 3)
+[panda plate 3]    419 s  picked up the toothpick from rack slot 8 of 24 (tilt 0.0 deg, neighbors bumped: 4)
+[panda plate 1] DONE: 7/7 colonies fully done, lids back True, 437 s
+[panda plate 0]    453 s  dropped tool in waste bin
+[panda plate 0]    453 s  colony 8: clean pick True (0.03 mm), patch 100%, dipped True (2.51 mm into the mix), other tubes touched []
+[panda plate 0]    453 s  putting lids back
+[panda plate 3]    468 s  dropped tool in waste bin
+[panda plate 3]    468 s  colony 8: clean pick True (0.06 mm), patch 100%, dipped True (2.5 mm into the mix), other tubes touched []
+[panda plate 3]    468 s  putting lids back
+[panda plate 2]    463 s  dropped tool in waste bin
+[panda plate 2]    463 s  colony 8: clean pick True (0.03 mm), patch 100%, dipped True (2.5 mm into the mix), other tubes touched []
+[panda plate 2]    463 s  putting lids back
+[panda plate 3] DONE: 8/8 colonies fully done, lids back True, 493 s
+[panda plate 0] DONE: 8/8 colonies fully done, lids back True, 479 s
+[panda plate 2] DONE: 8/8 colonies fully done, lids back False, 489 s
+
+Colony PCR (panda): 31/31 colonies picked, patched and dipped correctly
+Saved /Users/clairekim/Library/CloudStorage/OneDrive-Personal/Claire/8. Coding/mujoco-lab-sim/outputs/pcr_panda_results.json

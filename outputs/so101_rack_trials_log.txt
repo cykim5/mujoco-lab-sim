@@ -1,0 +1,109 @@
+[plate 0] starting
+[plate 3] starting
+[plate 1] starting
+[plate 2] starting
+[plate 0]    168 s  calibrated on 20 pin touches: fit error 0.46 mm -> 0.12 mm
+[plate 2]    168 s  calibrated on 20 pin touches: fit error 0.37 mm -> 0.11 mm
+[plate 0]    171 s  taking lids off
+[plate 2]    171 s  taking lids off
+[plate 3]    171 s  calibrated on 20 pin touches: fit error 0.80 mm -> 0.07 mm
+[plate 3]    174 s  taking lids off
+[plate 1]    176 s  calibrated on 20 pin touches: fit error 1.46 mm -> 0.08 mm
+[plate 1]    179 s  taking lids off
+[plate 0]    218 s  found 25 colonies (28 on the plate)
+[plate 0]    218 s  chose a 1.4 mm colony with 11.6 mm clear around it
+[plate 2]    219 s  found 21 colonies (24 on the plate)
+[plate 2]    219 s  chose a 1.6 mm colony with 13.8 mm clear around it
+[plate 3]    221 s  found 21 colonies (21 on the plate)
+[plate 3]    221 s  chose a 1.4 mm colony with 11.3 mm clear around it
+[plate 1]    226 s  found 22 colonies (25 on the plate)
+[plate 1]    226 s  chose a 1.9 mm colony with 10.4 mm clear around it
+[plate 0]    228 s  took the toothpick from rack hole 1 (tilt 3.9 deg, neighbors bumped: 0)
+[plate 2]    228 s  took the toothpick from rack hole 15 (tilt 3.8 deg, neighbors bumped: 0)
+[plate 3]    231 s  took the toothpick from rack hole 22 (tilt 3.6 deg, neighbors bumped: 0)
+
+
+[plate 1]    236 s  took the toothpick from rack hole 8 (tilt 3.9 deg, neighbors bumped: 0)
+
+[plate 0]    240 s  touched colony: yes, 0.12 mm from its center, clean single colony: True
+[plate 2]    241 s  touched colony: yes, 0.15 mm from its center, clean single colony: True
+
+[plate 3]    243 s  touched colony: yes, 0.15 mm from its center, clean single colony: True
+[plate 1]    250 s  touched colony: yes, 0.17 mm from its center, clean single colony: True
+[plate 0]    257 s  fresh plate agar found at 7.7 mm above the bench
+[plate 2]    258 s  fresh plate agar found at 7.1 mm above the bench
+[plate 3]    261 s  fresh plate agar found at 7.1 mm above the bench
+[plate 1]    267 s  fresh plate agar found at 7.7 mm above the bench
+[plate 0]    348 s  dropped toothpick in waste bin
+[plate 0]    348 s  putting lids back
+[plate 2]    351 s  dropped toothpick in waste bin
+[plate 2]    351 s  putting lids back
+[plate 3]    354 s  dropped toothpick in waste bin
+[plate 3]    354 s  putting lids back
+[plate 1]    359 s  dropped toothpick in waste bin
+[plate 1]    359 s  putting lids back
+  warning: IK could not reach [ 0.117 -0.2    0.21 ] (error 0.0753)
+[plate 0] DONE: SUCCESS
+[plate 4] starting
+  warning: IK could not reach [ 0.117 -0.2    0.21 ] (error 0.0753)
+[plate 2] DONE: SUCCESS
+[plate 5] starting
+  warning: IK could not reach [ 0.117 -0.2    0.21 ] (error 0.0750)
+[plate 3] DONE: SUCCESS
+  warning: IK could not reach [ 0.117 -0.2    0.21 ] (error 0.0755)
+[plate 1] DONE: SUCCESS
+[plate 6] starting
+[plate 7] starting
+[plate 5]    163 s  calibrated on 20 pin touches: fit error 1.12 mm -> 0.08 mm
+[plate 5]    166 s  taking lids off
+[plate 7]    163 s  calibrated on 20 pin touches: fit error 1.19 mm -> 0.09 mm
+[plate 7]    165 s  taking lids off
+[plate 6]    168 s  calibrated on 20 pin touches: fit error 0.93 mm -> 0.07 mm
+[plate 4]    175 s  calibrated on 20 pin touches: fit error 2.26 mm -> 0.16 mm
+[plate 6]    171 s  taking lids off
+[plate 4]    178 s  taking lids off
+[plate 5]    213 s  found 25 colonies (29 on the plate)
+[plate 5]    213 s  chose a 1.4 mm colony with 10.3 mm clear around it
+[plate 7]    213 s  found 24 colonies (26 on the plate)
+[plate 7]    213 s  chose a 1.3 mm colony with 14.5 mm clear around it
+[plate 4]    225 s  found 25 colonies (28 on the plate)
+[plate 4]    225 s  chose a 1.0 mm colony with 9.6 mm clear around it
+[plate 6]    218 s  found 19 colonies (23 on the plate)
+[plate 6]    218 s  chose a 1.2 mm colony with 18.2 mm clear around it
+[plate 5]    223 s  took the toothpick from rack hole 12 (tilt 3.9 deg, neighbors bumped: 0)
+[plate 7]    222 s  took the toothpick from rack hole 2 (tilt 3.9 deg, neighbors bumped: 0)
+[plate 4]    234 s  took the toothpick from rack hole 5 (tilt 3.7 deg, neighbors bumped: 0)
+[plate 6]    228 s  took the toothpick from rack hole 19 (tilt 4.7 deg, neighbors bumped: 0)
+[plate 5]    236 s  touched colony: yes, 0.15 mm from its center, clean single colony: True
+[plate 7]    235 s  touched colony: yes, 0.11 mm from its center, clean single colony: True
+[plate 4]    247 s  touched colony: yes, 0.07 mm from its center, clean single colony: True
+[plate 6]    241 s  touched colony: yes, 0.15 mm from its center, clean single colony: True
+[plate 5]    255 s  fresh plate agar found at 6.2 mm above the bench
+[plate 7]    254 s  fresh plate agar found at 6.8 mm above the bench
+[plate 4]    265 s  fresh plate agar found at 6.5 mm above the bench
+[plate 6]    258 s  fresh plate agar found at 7.4 mm above the bench
+[plate 7]    348 s  dropped toothpick in waste bin
+[plate 7]    348 s  putting lids back
+[plate 5]    351 s  dropped toothpick in waste bin
+[plate 5]    351 s  putting lids back
+[plate 6]    350 s  dropped toothpick in waste bin
+[plate 6]    350 s  putting lids back
+[plate 4]    361 s  dropped toothpick in waste bin
+[plate 4]    361 s  putting lids back
+  warning: IK could not reach [ 0.117 -0.2    0.21 ] (error 0.0755)
+[plate 7] DONE: SUCCESS
+  warning: IK could not reach [ 0.117 -0.2    0.21 ] (error 0.0755)
+[plate 5] DONE: SUCCESS
+  warning: IK could not reach [ 0.117 -0.199  0.21 ] (error 0.0737)
+[plate 6] DONE: SUCCESS
+  warning: IK could not reach [ 0.117 -0.2    0.21 ] (error 0.0748)
+[plate 4] DONE: SUCCESS
+
+SO-101 summary (rack)
+  lids off              8/8
+  single toothpick      8/8  (shakes needed: [1, 1, 1, 1, 1, 1, 1, 1])
+  clean colony touch    8/8  (misses mm: [0.12, 0.17, 0.15, 0.15, 0.07, 0.15, 0.15, 0.11])
+  streak ok             8/8
+  lids back on          8/8
+  full success          8/8
+Saved /Users/clairekim/Library/CloudStorage/OneDrive-Personal/Claire/8. Coding/mujoco-lab-sim/outputs/so101_rack_trials.csv

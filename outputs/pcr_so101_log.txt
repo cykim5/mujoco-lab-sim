@@ -1,0 +1,139 @@
+[so101 plate 0]    168 s  calibrated on 20 pin touches: fit error 0.46 mm -> 0.12 mm
+[so101 plate 2]    168 s  calibrated on 20 pin touches: fit error 0.37 mm -> 0.11 mm
+[so101 plate 3]    171 s  calibrated on 20 pin touches: fit error 0.80 mm -> 0.07 mm
+[so101 plate 0]    171 s  taking lids off
+[so101 plate 2]    171 s  taking lids off
+[so101 plate 3]    174 s  taking lids off
+[so101 plate 1]    176 s  calibrated on 20 pin touches: fit error 1.46 mm -> 0.08 mm
+[so101 plate 1]    179 s  taking lids off
+[so101 plate 0]    218 s  found 25 colonies, 8 isolated enough for PCR
+[so101 plate 2]    219 s  found 21 colonies, 8 isolated enough for PCR
+[so101 plate 3]    221 s  found 21 colonies, 8 isolated enough for PCR
+[so101 plate 1]    226 s  found 22 colonies, 7 isolated enough for PCR
+[so101 plate 0]    228 s  took the toothpick from rack hole 1 (tilt 3.9 deg, neighbors bumped: 0)
+[so101 plate 2]    228 s  took the toothpick from rack hole 15 (tilt 3.8 deg, neighbors bumped: 0)
+[so101 plate 3]    231 s  took the toothpick from rack hole 22 (tilt 3.6 deg, neighbors bumped: 0)
+
+
+
+[so101 plate 1]    236 s  took the toothpick from rack hole 8 (tilt 3.9 deg, neighbors bumped: 0)
+
+[so101 plate 0]    275 s  dropped toothpick in waste bin
+[so101 plate 0]    275 s  colony 1: clean pick True (0.12 mm), patch 100%, dipped True (2.72 mm into the mix), other tubes touched []
+[so101 plate 2]    277 s  dropped toothpick in waste bin
+[so101 plate 2]    277 s  colony 1: clean pick True (0.15 mm), patch 100%, dipped True (2.69 mm into the mix), other tubes touched []
+[so101 plate 3]    279 s  dropped toothpick in waste bin
+[so101 plate 3]    279 s  colony 1: clean pick True (0.15 mm), patch 100%, dipped True (2.67 mm into the mix), other tubes touched []
+[so101 plate 1]    285 s  dropped toothpick in waste bin
+[so101 plate 1]    285 s  colony 1: clean pick True (0.17 mm), patch 100%, dipped True (2.71 mm into the mix), other tubes touched []
+[so101 plate 0]    285 s  took the toothpick from rack hole 2 (tilt 3.9 deg, neighbors bumped: 0)
+[so101 plate 2]    287 s  took the toothpick from rack hole 16 (tilt 3.8 deg, neighbors bumped: 0)
+[so101 plate 3]    290 s  took the toothpick from rack hole 23 (tilt 3.6 deg, neighbors bumped: 0)
+[so101 plate 1]    296 s  took the toothpick from rack hole 9 (tilt 3.9 deg, neighbors bumped: 0)
+[so101 plate 0]    333 s  dropped toothpick in waste bin
+[so101 plate 0]    333 s  colony 2: clean pick True (0.07 mm), patch 100%, dipped True (2.73 mm into the mix), other tubes touched []
+[so101 plate 2]    335 s  dropped toothpick in waste bin
+[so101 plate 2]    335 s  colony 2: clean pick True (0.14 mm), patch 100%, dipped True (2.7 mm into the mix), other tubes touched []
+[so101 plate 3]    339 s  dropped toothpick in waste bin
+[so101 plate 3]    339 s  colony 2: clean pick True (0.17 mm), patch 100%, dipped True (2.68 mm into the mix), other tubes touched []
+[so101 plate 1]    345 s  dropped toothpick in waste bin
+[so101 plate 1]    345 s  colony 2: clean pick True (0.22 mm), patch 100%, dipped True (2.71 mm into the mix), other tubes touched []
+[so101 plate 0]    343 s  took the toothpick from rack hole 3 (tilt 3.9 deg, neighbors bumped: 0)
+[so101 plate 2]    345 s  took the toothpick from rack hole 17 (tilt 3.8 deg, neighbors bumped: 0)
+[so101 plate 3]    349 s  took the toothpick from rack hole 24 (tilt 3.6 deg, neighbors bumped: 0)
+[so101 plate 1]    355 s  took the toothpick from rack hole 10 (tilt 3.7 deg, neighbors bumped: 0)
+[so101 plate 0]    390 s  dropped toothpick in waste bin
+[so101 plate 0]    390 s  colony 3: clean pick True (0.07 mm), patch 100%, dipped True (2.74 mm into the mix), other tubes touched []
+[so101 plate 2]    394 s  dropped toothpick in waste bin
+[so101 plate 2]    394 s  colony 3: clean pick True (0.17 mm), patch 100%, dipped True (2.71 mm into the mix), other tubes touched []
+[so101 plate 3]    398 s  dropped toothpick in waste bin
+[so101 plate 3]    398 s  colony 3: clean pick True (0.14 mm), patch 100%, dipped True (2.69 mm into the mix), other tubes touched []
+[so101 plate 1]    405 s  dropped toothpick in waste bin
+[so101 plate 1]    405 s  colony 3: clean pick True (0.21 mm), patch 100%, dipped True (2.72 mm into the mix), other tubes touched []
+[so101 plate 0]    400 s  took the toothpick from rack hole 4 (tilt 3.9 deg, neighbors bumped: 0)
+[so101 plate 2]    404 s  took the toothpick from rack hole 18 (tilt 4.7 deg, neighbors bumped: 0)
+[so101 plate 3]    408 s  took the toothpick from rack hole 1 (tilt 3.9 deg, neighbors bumped: 0)
+[so101 plate 1]    416 s  took the toothpick from rack hole 11 (tilt 3.9 deg, neighbors bumped: 0)
+[so101 plate 0]    448 s  dropped toothpick in waste bin
+[so101 plate 0]    448 s  colony 4: clean pick True (0.11 mm), patch 100%, dipped True (2.75 mm into the mix), other tubes touched []
+[so101 plate 2]    453 s  dropped toothpick in waste bin
+[so101 plate 2]    453 s  colony 4: clean pick True (0.1 mm), patch 100%, dipped True (2.72 mm into the mix), other tubes touched []
+[so101 plate 3]    457 s  dropped toothpick in waste bin
+[so101 plate 3]    457 s  colony 4: clean pick True (0.11 mm), patch 100%, dipped True (2.71 mm into the mix), other tubes touched []
+[so101 plate 0]    459 s  took the toothpick from rack hole 5 (tilt 3.9 deg, neighbors bumped: 0)
+[so101 plate 1]    466 s  dropped toothpick in waste bin
+[so101 plate 1]    466 s  colony 4: clean pick True (0.16 mm), patch 100%, dipped True (2.73 mm into the mix), other tubes touched []
+[so101 plate 2]    463 s  took the toothpick from rack hole 19 (tilt 4.7 deg, neighbors bumped: 0)
+[so101 plate 3]    467 s  took the toothpick from rack hole 2 (tilt 3.9 deg, neighbors bumped: 0)
+[so101 plate 1]    476 s  took the toothpick from rack hole 12 (tilt 3.9 deg, neighbors bumped: 0)
+[so101 plate 0]    506 s  dropped toothpick in waste bin
+[so101 plate 0]    506 s  colony 5: clean pick True (0.13 mm), patch 100%, dipped True (2.76 mm into the mix), other tubes touched []
+[so101 plate 2]    512 s  dropped toothpick in waste bin
+[so101 plate 2]    512 s  colony 5: clean pick True (0.1 mm), patch 100%, dipped True (2.73 mm into the mix), other tubes touched []
+[so101 plate 3]    515 s  dropped toothpick in waste bin
+[so101 plate 3]    515 s  colony 5: clean pick True (0.1 mm), patch 100%, dipped True (2.72 mm into the mix), other tubes touched []
+[so101 plate 0]    516 s  took the toothpick from rack hole 6 (tilt 4.7 deg, neighbors bumped: 0)
+[so101 plate 1]    526 s  dropped toothpick in waste bin
+[so101 plate 1]    526 s  colony 5: clean pick True (0.16 mm), patch 100%, dipped True (2.74 mm into the mix), other tubes touched []
+[so101 plate 2]    523 s  took the toothpick from rack hole 20 (tilt 3.8 deg, neighbors bumped: 0)
+[so101 plate 3]    525 s  took the toothpick from rack hole 3 (tilt 3.9 deg, neighbors bumped: 0)
+[so101 plate 1]    536 s  took the toothpick from rack hole 13 (tilt 3.7 deg, neighbors bumped: 0)
+[so101 plate 0]    563 s  dropped toothpick in waste bin
+[so101 plate 0]    563 s  colony 6: clean pick True (0.13 mm), patch 100%, dipped True (2.78 mm into the mix), other tubes touched []
+[so101 plate 2]    571 s  dropped toothpick in waste bin
+[so101 plate 2]    571 s  colony 6: clean pick True (0.1 mm), patch 100%, dipped True (2.74 mm into the mix), other tubes touched []
+[so101 plate 3]    573 s  dropped toothpick in waste bin
+[so101 plate 3]    573 s  colony 6: clean pick True (0.13 mm), patch 100%, dipped True (2.73 mm into the mix), other tubes touched []
+[so101 plate 0]    573 s  took the toothpick from rack hole 7 (tilt 4.7 deg, neighbors bumped: 0)
+[so101 plate 3]    583 s  took the toothpick from rack hole 4 (tilt 3.9 deg, neighbors bumped: 0)
+[so101 plate 2]    581 s  took the toothpick from rack hole 21 (tilt 3.8 deg, neighbors bumped: 0)
+[so101 plate 1]    584 s  dropped toothpick in waste bin
+[so101 plate 1]    584 s  colony 6: clean pick True (0.09 mm), patch 100%, dipped True (2.74 mm into the mix), other tubes touched []
+[so101 plate 1]    594 s  took the toothpick from rack hole 14 (tilt 3.7 deg, neighbors bumped: 0)
+  warning: IK could not reach [ 0.219 -0.17   0.235] (error 0.0121)
+  warning: IK could not reach [ 0.219 -0.17   0.235] (error 0.0119)
+[so101 plate 3]    631 s  dropped toothpick in waste bin
+[so101 plate 3]    631 s  colony 7: clean pick True (0.1 mm), patch 100%, dipped True (2.74 mm into the mix), other tubes touched []
+[so101 plate 3]    642 s  took the toothpick from rack hole 5 (tilt 3.9 deg, neighbors bumped: 0)
+[so101 plate 0]    620 s  dropped toothpick in waste bin
+[so101 plate 0]    620 s  colony 7: clean pick True (0.14 mm), patch 100%, dipped True (2.79 mm into the mix), other tubes touched []
+  warning: IK could not reach [ 0.219 -0.17   0.235] (error 0.0124)
+  warning: IK could not reach [ 0.219 -0.17   0.235] (error 0.0122)
+[so101 plate 2]    629 s  dropped toothpick in waste bin
+[so101 plate 2]    629 s  colony 7: clean pick True (0.1 mm), patch 100%, dipped True (2.75 mm into the mix), other tubes touched []
+[so101 plate 0]    631 s  took the toothpick from rack hole 8 (tilt 3.9 deg, neighbors bumped: 0)
+[so101 plate 2]    640 s  took the toothpick from rack hole 22 (tilt 3.8 deg, neighbors bumped: 0)
+  warning: IK could not reach [ 0.219 -0.17   0.235] (error 0.0128)
+  warning: IK could not reach [ 0.219 -0.17   0.235] (error 0.0125)
+[so101 plate 1]    643 s  dropped toothpick in waste bin
+[so101 plate 1]    643 s  colony 7: clean pick True (0.1 mm), patch 100%, dipped True (2.75 mm into the mix), other tubes touched []
+[so101 plate 1]    643 s  putting lids back
+  warning: IK could not reach [ 0.228 -0.17   0.235] (error 0.0715)
+  warning: IK could not reach [ 0.228 -0.17   0.235] (error 0.0710)
+  warning: IK could not reach [ 0.195 -0.192  0.235] (error 0.0106)
+[so101 plate 3]    691 s  dropped toothpick in waste bin
+[so101 plate 3]    691 s  colony 8: clean pick True (0.17 mm), patch 100%, dipped True (2.75 mm into the mix), other tubes touched []
+[so101 plate 3]    691 s  putting lids back
+  warning: IK could not reach [ 0.117 -0.2    0.21 ] (error 0.0755)
+[so101 plate 3] DONE: 8/8 colonies fully done, lids back True, 746 s
+  warning: IK could not reach [ 0.228 -0.17   0.235] (error 0.0718)
+  warning: IK could not reach [ 0.228 -0.17   0.235] (error 0.0713)
+  warning: IK could not reach [ 0.195 -0.192  0.235] (error 0.0114)
+[so101 plate 0]    678 s  dropped toothpick in waste bin
+[so101 plate 0]    678 s  colony 8: clean pick True (0.15 mm), patch 100%, dipped True (2.8 mm into the mix), other tubes touched []
+[so101 plate 0]    678 s  putting lids back
+  warning: IK could not reach [ 0.228 -0.17   0.235] (error 0.0719)
+  warning: IK could not reach [ 0.228 -0.17   0.235] (error 0.0714)
+  warning: IK could not reach [ 0.195 -0.192  0.235] (error 0.0113)
+[so101 plate 2]    689 s  dropped toothpick in waste bin
+[so101 plate 2]    689 s  colony 8: clean pick True (0.15 mm), patch 100%, dipped True (2.76 mm into the mix), other tubes touched []
+[so101 plate 2]    689 s  putting lids back
+  warning: IK could not reach [ 0.117 -0.2    0.21 ] (error 0.0749)
+[so101 plate 1] DONE: 7/7 colonies fully done, lids back True, 698 s
+  warning: IK could not reach [ 0.117 -0.2    0.21 ] (error 0.0754)
+[so101 plate 0] DONE: 8/8 colonies fully done, lids back True, 733 s
+  warning: IK could not reach [ 0.117 -0.2    0.21 ] (error 0.0754)
+[so101 plate 2] DONE: 8/8 colonies fully done, lids back True, 744 s
+
+Colony PCR (so101): 31/31 colonies picked, patched and dipped correctly
+Saved /Users/clairekim/Library/CloudStorage/OneDrive-Personal/Claire/8. Coding/mujoco-lab-sim/outputs/pcr_so101_results.json

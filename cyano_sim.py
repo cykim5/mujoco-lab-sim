@@ -24,6 +24,7 @@ from PIL import Image, ImageDraw
 import plate_world as pw
 from lab_sim import GRIPPER_CLOSED, GRIPPER_OPEN, OUTPUT_DIR, PARK_ARM, LabSim
 
+MAX_SINGLE_COLONY_R = 0.0011  # a blob bigger than this (2.2 mm across) is probably several colonies touching
 TOUCH_FORCE = 0.003  # newtons. Anything above this counts as "touching".
 PRESS_DEPTH = 0.0003  # while streaking, aim 0.3 mm below the agar surface for light, steady contact
 GOUGE_DEPTH = 0.001  # pressing more than 1 mm into the agar counts as digging in
@@ -33,8 +34,8 @@ STROKES_PER_QUADRANT = 6
 
 
 class CyanoSim(LabSim):
-    def __init__(self, tool_name, seed=0, record_video=True, slot=None):
-        scene_path, self.truth = pw.build_plate_scene(tool_name, seed)
+    def __init__(self, tool_name, seed=0, record_video=True, slot=None, pcr=False):
+        scene_path, self.truth = pw.build_plate_scene(tool_name, seed, pcr=pcr)
         self.set_panda_layout()
         # Which of the 24 rack slots to take the tool from. Different seeds use different slots.
         self.slot = (seed * 7) % (pw.RACK_ROWS * pw.RACK_COLS) if slot is None else slot
@@ -79,6 +80,24 @@ class CyanoSim(LabSim):
         self.tip_offset = None  # tool tip position relative to the grip point, measured after grasping
         self.hit_wall = False
         self.log = []
+
+    def select_slot(self, slot):
+        """Switch to another rack slot (for runs that use several tools, like colony PCR)."""
+        m = self.model
+        self.slot = slot
+        self.tool_body_name = f"tool_{slot}"
+        self.tool_tip_site = m.site(f"tool_tip_site_{slot}").id
+        body = m.body(self.tool_body_name).id
+        self.tool_geoms = set(g for g in range(m.ngeom) if m.geom_bodyid[g] == body)
+        robot_bodies = set(m.body(name).id for name in ["link6", "link7", "hand", "left_finger", "right_finger"])
+        self.robot_geoms = set(g for g in range(m.ngeom) if m.geom_bodyid[g] in robot_bodies) | self.tool_geoms
+        self.other_tool_geoms = {}
+        for i in range(pw.RACK_ROWS * pw.RACK_COLS):
+            if i != slot:
+                b = m.body(f"tool_{i}").id
+                self.other_tool_geoms[i] = set(g for g in range(m.ngeom) if m.geom_bodyid[g] == b)
+        self.all_other_tool_geoms = set().union(*self.other_tool_geoms.values())
+        self.tip_offset = None
 
     def set_panda_layout(self):
         self.source_xy = pw.SOURCE_XY
@@ -236,7 +255,12 @@ class CyanoSim(LabSim):
             x = cx + (col + 0.5 - size / 2) * meters_per_pixel
             y = cy - (row + 0.5 - size / 2) * meters_per_pixel
             radius = math.sqrt(len(pixels) / math.pi) * meters_per_pixel
-            detections.append({"x": x, "y": y, "r": radius, "px": (col, row), "r_px": radius / meters_per_pixel})
+            # Merged colonies show up as one blob that is stretched or too big. Mark round, single-sized blobs.
+            spread = np.linalg.eigvalsh(np.cov(pixels.T.astype(float))) if len(pixels) >= 5 else np.array([1.0, 1.0])
+            stretch = math.sqrt(max(spread[-1], 1e-9) / max(spread[0], 1e-9))
+            single = stretch < 1.3 and radius < MAX_SINGLE_COLONY_R
+            detections.append({"x": x, "y": y, "r": radius, "px": (col, row), "r_px": radius / meters_per_pixel,
+                               "single": bool(single)})
         return detections, image, meters_per_pixel
 
     def choose_colony(self, detections):
@@ -245,7 +269,7 @@ class CyanoSim(LabSim):
         best_gap = -1.0
         for d in detections:
             from_center = math.hypot(d["x"] - self.source_xy[0], d["y"] - self.source_xy[1])
-            if d["r"] < 0.0004 or from_center > 0.032:
+            if d["r"] < 0.0004 or from_center > 0.032 or d.get("single", True) == False:
                 continue
             gap = 1.0
             for other in detections:

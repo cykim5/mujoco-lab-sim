@@ -167,7 +167,10 @@ def bin_xml():
     </body>"""
 
 
-def build_so101_scene(tool_name, seed, holder="cup"):
+PCR_ORIGIN = (0.168, -0.17)  # first PCR tube; the strip runs along +x between the source plate and the bin side
+
+
+def build_so101_scene(tool_name, seed, holder="cup", pcr=False):
     if tool_name != "toothpick":
         raise ValueError("The SO-101 build version uses toothpicks only. A 12 cm loop held upright is too tall for "
                          "the SO-101 to lift out of a cup while pointing straight down.")
@@ -205,6 +208,7 @@ def build_so101_scene(tool_name, seed, holder="cup"):
     {pw.plate_xml("dest", DEST_XY, agar_dest, [], rng)}
     {cup_xml(rng) if holder == "cup" else rack_xml()}
     {bin_xml()}
+    {__import__('pcr').pcr_strip_xml(PCR_ORIGIN, 'x') if pcr == True else ''}
     {"".join(f'<geom name="cal_pin_{i}" type="cylinder" pos="{x} {y} {BENCH_Z + h / 2}" size="{PIN_RADIUS} {h / 2}" rgba="0.9 0.6 0.1 1"/>' for i, (x, y, h) in enumerate(CAL_PINS))}
   </worldbody>
   <equality>

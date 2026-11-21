@@ -32,6 +32,8 @@ def main():
     parser.add_argument("--no-video", action="store_true", help="skip the GIF (faster)")
     parser.add_argument("--robot", choices=["panda", "so101"], default="panda",
                         help="panda = lab-grade Reference version, so101 = cheap 3D-printed Build version")
+    parser.add_argument("--holder", choices=["cup", "rack"], default="cup",
+                        help="SO-101 only: toothpicks in a cup (shake to free one) or a printed rack")
     args = parser.parse_args()
 
     if args.robot == "so101":
@@ -40,8 +42,8 @@ def main():
             print("The SO-101 version uses toothpicks only (a 12 cm loop is too tall for it to lift out of a cup).")
         tool = "toothpick"
         print(f"\nRunning the SO-101 build version with a toothpick, seed {args.seed}")
-        sim = So101CyanoSim(tool, seed=args.seed, record_video=args.no_video == False)
-        name = "so101_toothpick"
+        sim = So101CyanoSim(tool, seed=args.seed, record_video=args.no_video == False, holder=args.holder)
+        name = "so101_toothpick" if args.holder == "cup" else "so101_rack"
     else:
         tool = args.tool
         if tool is None:

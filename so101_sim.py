@@ -78,9 +78,9 @@ class PickFailed(Exception):
 
 
 class So101CyanoSim(CyanoSim):
-    def __init__(self, tool_name="toothpick", seed=0, record_video=True, calibration_error_deg=0.5, holder="cup"):
+    def __init__(self, tool_name="toothpick", seed=0, record_video=True, calibration_error_deg=0.5, holder="cup", pcr=False):
         self.holder = holder
-        scene_path, self.truth = sw.build_so101_scene(tool_name, seed, holder=holder)
+        scene_path, self.truth = sw.build_so101_scene(tool_name, seed, holder=holder, pcr=pcr)
         self.tool_name = tool_name
         self.tool = {"length": sw.TOOTHPICK_LENGTH, "tip_radius": sw.TOOTHPICK_TIP_RADIUS}
         self.source_xy = sw.SOURCE_XY

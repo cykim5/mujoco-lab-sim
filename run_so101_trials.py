@@ -13,14 +13,18 @@ from multiprocessing import Pool
 
 from lab_sim import OUTPUT_DIR
 
-COLUMNS = ["seed", "success", "lids_off", "pick_attempts", "cup_shakes", "cal_error_before_mm", "cal_error_after_mm", "toothpick_tilt_deg", "picked", "clean_pick", "miss_mm",
+COLUMNS = ["seed", "success", "lids_off", "pick_attempts", "cup_shakes", "rack_hole", "rack_neighbors_bumped", "cal_error_before_mm", "cal_error_after_mm", "toothpick_tilt_deg", "picked", "clean_pick", "miss_mm",
            "camera_corrections_mm", "streak_ok", "contact_pct", "max_depth_mm", "lids_back", "hit_plate_wall",
            "cycle_time_s", "calibration_error_deg"]
 
 
-def one_run(seed):
+HOLDER = "cup"
+
+
+def one_run(args):
+    seed, holder = args
     from so101_sim import So101CyanoSim
-    sim = So101CyanoSim("toothpick", seed=seed, record_video=False)
+    sim = So101CyanoSim("toothpick", seed=seed, record_video=False, holder=holder)
     # live progress: every step the robot announces is printed with its plate number
     sim.say = lambda text: print(f"[plate {seed}] {sim.data.time:6.0f} s  {text}", flush=True)
     print(f"[plate {seed}] starting", flush=True)
@@ -33,13 +37,15 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--trials", type=int, default=8)
     parser.add_argument("--workers", type=int, default=4)
+    parser.add_argument("--holder", choices=["cup", "rack"], default="cup",
+                        help="cup = toothpicks jumbled in a cup (shake to free one), rack = printed rack, one per hole")
     args = parser.parse_args()
 
     with Pool(args.workers) as pool:
-        rows = pool.map(one_run, range(args.trials))
+        rows = pool.map(one_run, [(seed, args.holder) for seed in range(args.trials)])
 
     os.makedirs(OUTPUT_DIR, exist_ok=True)
-    path = os.path.join(OUTPUT_DIR, "so101_trials.csv")
+    path = os.path.join(OUTPUT_DIR, "so101_trials.csv" if args.holder == "cup" else "so101_rack_trials.csv")
     with open(path, "w", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=COLUMNS)
         writer.writeheader()
@@ -51,7 +57,7 @@ def main():
         return sum(1 for r in rows if r.get(key) == True)
 
     got_toothpick = sum(1 for r in rows if r.get("toothpick_tilt_deg") is not None)
-    print("\nSO-101 summary")
+    print(f"\nSO-101 summary ({args.holder})")
     print(f"  lids off              {count('lids_off')}/{n}")
     print(f"  single toothpick      {got_toothpick}/{n}  (shakes needed: {[r.get('pick_attempts') for r in rows]})")
     print(f"  clean colony touch    {count('clean_pick')}/{n}  (misses mm: {[r.get('miss_mm') for r in rows]})")

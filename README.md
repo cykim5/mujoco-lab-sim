@@ -9,11 +9,13 @@ Simulated lab automation in MuJoCo, part of a sim-to-real / real-to-sim project 
 | Robot | Franka Panda, a lab-grade 7-joint research arm | SO-101, a cheap 3D-printed 5-joint arm |
 | Question | Can a robot do this workflow at all? | Can something you could actually build do it? |
 | Lids | Suction pad | Our printed jaw with a V-shaped lid hook |
-| Tools | Loop or toothpick from a 24-slot rack | 24 toothpicks jumbled in a cup: shake, then pick a separated one |
-| Motors | Ideal (gravity compensated) | Realistic: weak servos, no gravity compensation, hidden calibration error |
+| Tools | Loop or toothpick from a 24-slot rack | Toothpicks jumbled in a cup (shake to free one), or a printed 24-hole rack |
+| Motors | Ideal (gravity compensated) | Realistic: weak servos, no gravity compensation, hidden calibration error fixed by touch calibration |
+| Full restreak success | 20/20 | Cup 2/8, **rack 8/8** |
+| Colony PCR (8 per plate) | 31/31 colonies | 31/31 colonies |
 | Sections | [1](#1-reference-version-panda) | [2](#2-build-version-so-101) |
 
-Plus a warm-up vial demo ([3](#3-vial-rack-pick-and-place-warm-up)).
+Then **colony PCR** on both robots ([3](#3-colony-pcr-both-robots)), and a warm-up vial demo ([4](#4-vial-rack-pick-and-place-warm-up)).
 
 ## 1. Reference version (Panda)
 
@@ -134,6 +136,28 @@ Modeling choices worth knowing:
 
 **What this means:** calibration fixed the cheap arm's accuracy. Colony touches and streaks are now as good as the Panda's. What's left is the cup itself: **in a jumbled cup the toothpick tops stay crowded together, and gentle shaking rarely frees one** (side-to-side, tapping and swirling were tested; none reliably did). That's the motivation for the rack variant: a printed rack that holds each toothpick on its own, the same idea as the Panda's tool rack.
 
+### Rack variant: a printed toothpick rack
+
+In a jumbled cup the toothpick tops stay crowded, so the robot often has nothing it can grab. The fix is the same idea as the Panda's tool rack: **print a rack that holds each toothpick on its own.** Two rows of 12 holes, 7 mm apart along a row (room for the 6 mm fingertips), rows 2.5 cm apart (the fingertip behind the toothpick and the lid hook clear the other row), holes 2.5 cm deep so 4 cm of each toothpick sticks up.
+
+![SO-101 taking toothpicks from the printed rack, touching a colony and streaking](outputs/so101_rack.gif)
+
+```bash
+~/.venvs/mujoco-lab/bin/python streak_plate.py --robot so101 --holder rack --seed 0
+~/.venvs/mujoco-lab/bin/python run_so101_trials.py --trials 8 --holder rack
+```
+
+| Step | Cup | **Rack** |
+|---|---|---|
+| Calibration (tool error after) | 0.07 to 0.16 mm | 0.07 to 0.16 mm |
+| One toothpick, first try | 2/8 (3 never) | **8/8**, zero neighbors touched |
+| Clean colony touch | 5/5 picked, 0.08 to 0.33 mm | **8/8, 0.07 to 0.17 mm** |
+| Streak (limit 1 mm deep) | 5/5 | **8/8**, deepest 0.92 mm |
+| Lids back on | 2/5 | **8/8** |
+| **Full workflow** | **2/8** | **8/8** |
+
+Full table: [`outputs/so101_rack_trials.csv`](outputs/so101_rack_trials.csv). With a rack, the cheap printed arm matches the lab-grade Panda on this workflow. The other change between the two runs was moving the waste bin within reach. Before that, the arm ended its drop in an awkward pose, and that also caused the lid failures.
+
 ### What building it in the sim taught us
 
 Every one of these came from the sim failing first:
@@ -153,11 +177,47 @@ Every one of these came from the sim failing first:
 
 ### Known limits
 
-- Picking a lid back up from its parking spot fails on some plates (under investigation).
-- The waste bin sits too close to the robot base to reach at travel height, so the used toothpick sometimes lands next to the bin.
+- Cup version: 3 of 8 cups never gave up a free toothpick. Use the rack variant.
 - When the gripper blocks the camera's view of the toothpick tip, the robot skips the camera correction. With calibration this matters much less (touches still within 0.33 mm).
 
-## 3. Vial rack pick-and-place (warm-up)
+## 3. Colony PCR (both robots)
+
+The third step of the cyano workflow. For each of up to 8 colonies, the robot:
+
+1. takes a fresh toothpick (Panda rack or SO-101 printed rack),
+2. touches a different isolated, single colony,
+3. **patches** it onto spot k of the fresh plate, so a living copy of that clone is kept,
+4. **dips** it into PCR tube k of an 8-tube strip and swirls three small circles in the master mix,
+5. drops the toothpick in the waste bin.
+
+Colony k -> patch k -> tube k, so every PCR result traces back to a clone you still have.
+
+![SO-101 doing colony PCR: pick, patch, dip into the PCR strip (sped up)](outputs/pcr_so101.gif)
+
+```bash
+~/.venvs/mujoco-lab/bin/python run_pcr.py --robot so101 --seeds 0 1 2 3
+~/.venvs/mujoco-lab/bin/python run_pcr.py --robot panda --seeds 0 1 2 3
+```
+
+| | Panda | SO-101 (rack) |
+|---|---|---|
+| Colonies done correctly (pick + patch + dip) | **31/31** | **31/31** |
+| Colony touch, distance from center | 0.01 to 0.13 mm | 0.07 to 0.22 mm |
+| Patch contact with the agar | 100% every time | 100% every time |
+| Tip below the master-mix level, right tube | 31/31, 2.5 mm deep | 31/31, 2.7 to 2.8 mm deep |
+| Touched another tube (cross-contamination) | never | never |
+| Lids back on | 3/4 plates | 4/4 plates |
+| Time for 8 colonies | about 8 minutes | about 12 minutes (incl. 3 min calibration) |
+
+4 random plates per robot. One plate had only 7 isolated single colonies, hence 31. Full results: [`outputs/pcr_panda_results.json`](outputs/pcr_panda_results.json), [`outputs/pcr_so101_results.json`](outputs/pcr_so101_results.json).
+
+The Panda's one lid miss: on one plate the source lid stuck to the fingertips as the suction let go at its parking spot, and it flipped over. It did not happen again on a rerun of the same plate, so it's an occasional flaw in the simple suction model, not the PCR steps.
+
+The master mix itself is not simulated (MuJoCo has no liquids). "Dipped" means the toothpick tip went at least 1 mm below the liquid level inside the right tube.
+
+**A fix this surfaced in colony picking:** the camera saw three touching colonies as one big blob, and the robot picked it, touching all three: a mixed clone. Colony detection now flags blobs that are stretched or bigger than a single colony (more than 2.2 mm across) and never picks them. Tested on 6 plates, it flagged 10/10 merged blobs and 0/129 true single colonies. (The restreak trials in sections 1 and 2 ran before this fix. They each pick only the single most isolated colony, which was never a merged blob in those runs.)
+
+## 4. Vial rack pick-and-place (warm-up)
 
 ![Franka Panda placing three vials into a rack](outputs/pick_and_place.gif)
 
@@ -196,7 +256,8 @@ Interactive 3D viewer for the vial scene (drag to rotate, Ctrl+drag to push thin
 | `so101_sim.py` | The SO-101 workflow: lid hook by touch, shake and pick, look before touching, calibration error |
 | `build_so101_model.py` | Builds `models/so101_lab.xml`: the Menagerie SO-101 with our printed jaw |
 | `streak_plate.py` | Runs one plate (`--robot panda` or `--robot so101`) and saves pictures and a GIF |
-| `run_trials.py`, `run_so101_trials.py` | Run many random plates and write `outputs/trials.csv` / `outputs/so101_trials.csv` |
+| `run_trials.py`, `run_so101_trials.py` | Run many random plates (`--holder cup` or `rack` for the SO-101) |
+| `pcr.py`, `run_pcr.py` | Colony PCR: pick, patch, dip into an 8-tube PCR strip, for either robot |
 | `lab_sim.py` | Shared helpers: inverse kinematics, smooth motion, images |
 | `pick_and_place.py`, `models/lab_scene.xml` | The vial demo |
 | `models/panda_lab.xml` | Menagerie's Panda with a `grip` site, gravity compensation, and its keyframe removed |
@@ -204,7 +265,7 @@ Interactive 3D viewer for the vial scene (drag to rotate, Ctrl+drag to push thin
 
 ## Next steps
 
-1. SO-101: printed toothpick rack variant (in progress), fix lid pickup from parking, move the waste bin within reach.
-2. Colony PCR: pick colonies into a 96-well PCR plate.
+1. Build the real SO-101 with the printed jaw and rack, and compare real success rates with the sim (the sim-to-real gap).
+2. After PCR: read results (gel or plate reader images), then pick the confirmed patches into liquid culture.
 3. Real-to-sim: run the colony finder on photos of real cyano plates.
 4. Gemini in the loop: let `gemini-4-hydrogen` choose colonies from the camera image and compare with the hand-written finder.
