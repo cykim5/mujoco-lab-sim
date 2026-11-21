@@ -4,3 +4,4 @@ mujoco-studio==4.0.1
 mujoco-studio-wasm==4.0.1
 numpy==2.5.5
 pillow==13.0.0
+manifold3d==3.5.5

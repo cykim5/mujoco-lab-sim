@@ -2,7 +2,16 @@
 
 Simulation of robotic colony picking, restreaking and colony PCR for cyanobacteria, built in MuJoCo as part of a sim-to-real / real-to-sim project inspired by Gemini 4 Hydrogen for robotics.
 
-Commercial colony pickers (e.g. QPix) are optimized for *E. coli*, and no current system restreaks from plate to plate. This project asks whether a robot can perform the cyanobacterial strain workflow, and what hardware it would need. Two robots are compared:
+Commercial colony pickers (e.g. QPix) are optimized for *E. coli* and are not built to restreak from plate to plate. This project asks whether a robot can perform the cyanobacterial strain workflow, and what hardware it would need.
+
+## Summary
+
+- **Both robots complete the full workflow in simulation:** colony picking, restreaking, colony PCR setup, weekly segregation rounds and master-mix preparation.
+- **A low-cost arm is sufficient with four additions:** a printed two-zone jaw with a lid hook, a printed toothpick rack, touch-calibration pins and an 8 cm riser. With these, the SO-101 matches the lab-grade arm (8/8 plates).
+- **Neither robot can invert a toothpick in-hand,** so the lab protocol (streak with one end, PCR with the other) is replaced by a single pick. Whether enough cells remain for the PCR must be measured.
+- **Biology and liquids are modeled, not simulated.** The results test the physical steps: finding the right colony, contacting it, streaking without gouging, and placing cells and reagents in the right tubes.
+
+Two robots are compared:
 
 | | **Reference** (Franka Panda) | **Build** (SO-101) |
 |---|---|---|
@@ -16,7 +25,7 @@ Commercial colony pickers (e.g. QPix) are optimized for *E. coli*, and no curren
 | Segregation rounds (4 weeks) | All rounds completed | All rounds completed |
 | Master-mix preparation | 8/8 tubes within ±1.5% | 8/8 tubes within ±4% |
 
-Sections: [1. Reference version](#1-reference-version-franka-panda), [2. Build version](#2-build-version-so-101), [3. Colony PCR](#3-colony-pcr), [4. Connected lab version](#4-connected-lab-version-lab-protocol), [5. Segregation rounds](#5-segregation-rounds), [6. Master-mix preparation](#6-master-mix-preparation), [7. Vial pick-and-place](#7-vial-pick-and-place-warm-up).
+Sections: [1. Reference version](#1-reference-version-franka-panda), [2. Build version](#2-build-version-so-101), [3. Colony PCR](#3-colony-pcr), [4. Connected lab version](#4-connected-lab-version-lab-protocol), [5. Segregation rounds](#5-segregation-rounds), [6. Master-mix preparation](#6-master-mix-preparation), [7. Vial pick-and-place](#7-vial-pick-and-place-warm-up), [Printable parts](#printable-parts).
 
 ## 1. Reference version (Franka Panda)
 
@@ -107,7 +116,7 @@ The simulation tests whether a robot can perform the physical steps reliably: lo
 1. **Two-zone printed jaw** ([`build_so101_model.py`](build_so101_model.py)). Slim fingertips (4 × 6 mm) pick a single toothpick; a V-shaped hook on the moving jaw grips the lid rim at a jaw angle of 1.70 rad. No suction.
 2. **Touch calibration.** At startup the arm touches 4 pins at known positions (2 short, 2 tall) from above and from four sides, 20 contacts in total, and solves for each joint's offset. Tool position error drops from 0.4 to 2.3 mm to 0.07 to 0.16 mm. Takes ~3 min per session.
 3. **Lid handling by touch.** The fixed fingertip descends 4 mm outside the rim and advances until contact is sensed (servo load); the V-hook then closes and centers the lid. On replacement, if the lid rests on the rim, a spiral search seats it.
-4. **Toothpicks from a cup**, as kept by hand. 24 toothpicks in a 3.2 cm holder with a printed tab. A depth camera locates toothpick tops and estimates each one's tilt; the robot picks one with clearance for the fingertips, lifts vertically and verifies that no neighbor came with it. If none has clearance, the arm grips the tab and swirls the cup gently (1.5 to 3.5 mm, increasing each round), then re-images.
+4. **Toothpicks from a cup**, as stored in the lab. 24 toothpicks in a 3.2 cm holder with a printed tab. A depth camera locates toothpick tops and estimates each one's tilt; the robot picks one with clearance for the fingertips, lifts vertically and verifies that no neighbor came with it. If none has clearance, the arm grips the tab and swirls the cup gently (1.5 to 3.5 mm, increasing each round), then re-images.
 5. **Safe travel height.** Lateral moves are made at a safe height (higher when holding a toothpick) along an arc around the base. Low moves previously let the open lid hook knock 1 to 3 toothpicks out of the cup per run.
 6. **Visual correction before contact.** The toothpick hovers 4.5 mm above the colony, the plate camera locates the tip, and the position is corrected before contact.
 7. **Realistic actuators.** SO-101 servo torque (2.94 Nm), no gravity compensation, and an unknown calibration error of up to 0.5° per joint, randomized per seed.
@@ -295,7 +304,7 @@ Cyanobacteria are polyploid, so a fresh transformant carries the insert on only 
 ~/.venvs/mujoco-lab/bin/python run_segregation.py --robot panda --seed 0 --rounds 4
 ```
 
-| Simulated colony PCR, weeks 1 to 4 (upper band: insert; lower band: wild type) | Week 2 plate: isolated colony selected in each sector (red); merged growth near the rim (gray) is excluded |
+| Gel illustration generated from the genotype model, not a real gel (upper band: insert; lower band: wild type) | Week 2 plate: isolated colony selected in each sector (red); merged growth near the rim (gray) is excluded |
 |---|---|
 | ![Simulated gel across four weeks](outputs/segregation_so101_gel.png) | ![Week 2 sector plate with selected colonies](outputs/segregation_so101_week2_plate.png) |
 
@@ -315,7 +324,7 @@ The robotics (picking the right colony each week, streaking, PCR setup) is what 
 
 ## 6. Master-mix preparation
 
-Before colony PCR, the master mix is prepared and dispensed into the PCR strip. This section tests whether each robot can do this with printable liquid-handling hardware.
+Before colony PCR, the master mix is prepared and aliquoted into the PCR strip. This section tests both robots with printable liquid-handling hardware.
 
 | Master mix aliquoted into the 8-tube strip (SO-101) | SO-101 preparing the master mix (accelerated) |
 |---|---|
@@ -388,6 +397,25 @@ Both pumps are accurate enough for colony PCR, which tolerates about ±10%. The 
 
 3/3 vials placed, each within 0.4 mm of the slot center.
 
+## Printable parts
+
+STL files for the SO-101 build, generated from the dimensions tested in simulation ([`make_print_parts.py`](make_print_parts.py)). Files are in [`print/`](print/), in millimeters.
+
+![Printable parts: toothpick rack, slot test card, waste cup, stripper lid](outputs/print_parts.png)
+
+| Part | Size | Notes |
+|---|---|---|
+| `toothpick_rack.stl` | 88 × 36 × 25 mm | 2 rows of 12 through-holes, 7 mm pitch, rows 25 mm apart; toothpicks stand on the bench |
+| `waste_cup.stl` | 53 × 53 × 80 mm | 48 mm inside, tall enough that discarded toothpicks cannot lean out |
+| `stripper_lid.stl` | 58 × 58 × 11 mm | Drops onto the waste cup; covers half the opening, 5 mm slot for stripping tips |
+| `slot_test.stl` | 96 × 30 × 3 mm | Slots from 4.0 to 7.0 mm in 0.5 mm steps (cut corner marks 4.0 mm) |
+
+Print in PLA or PETG, 0.2 mm layers, no supports; print the lid and test card plate side down. Before printing the lid, find the slot width on the test card that lets the tip body pass but catches the collar, then set `SLOT_WIDTH` and regenerate. Holes include 0.2 mm clearance for print shrinkage. The printed jaw and nozzle attach to the arm and are not included yet; they need the SO-101's mounting geometry from the official design files.
+
+```bash
+~/.venvs/mujoco-lab/bin/python make_print_parts.py
+```
+
 ## Setup
 
 ```bash
@@ -416,6 +444,7 @@ The environment is kept outside the synced project folder. Interactive viewer fo
 | `connected_lab.py`, `run_connected_lab.py` | Connected lab version: single pick, sector streak, resuspension, cell-amount model |
 | `segregation.py`, `run_segregation.py` | Weekly segregation rounds: colony growth on sector plates, genotype model, simulated gels |
 | `liquid.py`, `run_master_mix.py` | Master-mix preparation: nozzle, tip box, stripper plate, syringe pump, volume tracking, error budget |
+| `make_print_parts.py`, `print/` | STL files for the toothpick rack, waste cup, stripper lid and slot test card |
 | `lab_sim.py` | Shared inverse kinematics, motion and rendering |
 | `pick_and_place.py`, `models/lab_scene.xml` | Vial demo |
 | `models/panda_lab.xml` | Menagerie Panda with a grip site and gravity compensation |
@@ -423,7 +452,7 @@ The environment is kept outside the synced project folder. Interactive viewer fo
 
 ## Next steps
 
-1. Build the SO-101 with the printed jaw and rack, and compare real and simulated success rates (sim-to-real gap).
+1. Build the SO-101 with the printed jaw and rack, and compare real and simulated success rates for each step (sim-to-real gap).
 2. Measure cell depletion during streaking (tube tint after the single-pick protocol) to set the streak length.
 3. Analyze PCR results (gel images), then inoculate confirmed patches into liquid culture.
 4. Build the syringe pump and stripper plate; measure pump accuracy by weighing dispensed water, and the force needed to seat and strip real tips.
