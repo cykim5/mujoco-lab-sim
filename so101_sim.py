@@ -78,9 +78,9 @@ class PickFailed(Exception):
 
 
 class So101CyanoSim(CyanoSim):
-    def __init__(self, tool_name="toothpick", seed=0, record_video=True, calibration_error_deg=0.5, holder="cup", pcr=False):
+    def __init__(self, tool_name="toothpick", seed=0, record_video=True, calibration_error_deg=0.5, holder="cup", pcr=False, sectors=False):
         self.holder = holder
-        scene_path, self.truth = sw.build_so101_scene(tool_name, seed, holder=holder, pcr=pcr)
+        scene_path, self.truth = sw.build_so101_scene(tool_name, seed, holder=holder, pcr=pcr, sectors=sectors)
         self.tool_name = tool_name
         self.tool = {"length": sw.TOOTHPICK_LENGTH, "tip_radius": sw.TOOTHPICK_TIP_RADIUS}
         self.source_xy = sw.SOURCE_XY
@@ -771,13 +771,13 @@ class So101CyanoSim(CyanoSim):
 
     def drop_tool_in_bin(self):
         bx, by = self.bin_xy
-        self.travel_tip([bx, by], pw.BENCH_Z + 0.045)
+        self.travel_tip([bx, by], pw.BENCH_Z + 0.03)  # lower the toothpick well into the 8 cm waste cup before letting go
         self.unlock_all()
         self.holding_tool = False
         self.set_jaw(JAW_RELEASE)
         self.wait(0.6)
         pos = self.tip_pos()
-        in_bin = abs(pos[0] - bx) < 0.025 and abs(pos[1] - by) < 0.025
+        in_bin = abs(pos[0] - bx) < 0.026 and abs(pos[1] - by) < 0.026  # inside the walls (stick radius included)
         self.say("dropped toothpick in waste bin" if in_bin == True else "toothpick missed the waste bin")
 
     def tool_slip_mm(self):

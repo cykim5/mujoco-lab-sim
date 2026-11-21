@@ -1,0 +1,113 @@
+[panda plate 2]      0 s  taking lids off
+[panda plate 3]      0 s  taking lids off
+[panda plate 0]      0 s  taking lids off
+[panda plate 1]      0 s  taking lids off
+[panda plate 2]     26 s  found 21 colonies, 8 isolated single colonies to test
+[panda plate 0]     26 s  found 25 colonies, 8 isolated single colonies to test
+[panda plate 1]     26 s  found 22 colonies, 7 isolated single colonies to test
+[panda plate 3]     26 s  found 21 colonies, 8 isolated single colonies to test
+[panda plate 2]     32 s  picked up the toothpick from rack slot 1 of 24 (tilt 0.0 deg, neighbors bumped: 0)
+[panda plate 0]     32 s  picked up the toothpick from rack slot 1 of 24 (tilt 0.0 deg, neighbors bumped: 0)
+[panda plate 1]     32 s  picked up the toothpick from rack slot 1 of 24 (tilt 0.0 deg, neighbors bumped: 0)
+[panda plate 3]     32 s  picked up the toothpick from rack slot 1 of 24 (tilt 0.0 deg, neighbors bumped: 0)
+[panda plate 0]     84 s  dropped tool in waste bin
+[panda plate 0]     84 s  colony 1: clean poke True (0.13 mm), slice 1 zigzag 100% contact, 122 mm long, leftover 0.13, tube 1: slight green (0.11)
+[panda plate 3]     86 s  dropped tool in waste bin
+[panda plate 3]     86 s  colony 1: clean poke True (0.06 mm), slice 1 zigzag 100% contact, 122 mm long, leftover 0.13, tube 1: slight green (0.11)
+[panda plate 2]     85 s  dropped tool in waste bin
+[panda plate 2]     85 s  colony 1: clean poke True (0.07 mm), slice 1 zigzag 100% contact, 122 mm long, leftover 0.13, tube 1: slight green (0.11)
+[panda plate 1]     86 s  dropped tool in waste bin
+[panda plate 1]     86 s  colony 1: clean poke True (0.02 mm), slice 1 zigzag 100% contact, 122 mm long, leftover 0.13, tube 1: slight green (0.11)
+[panda plate 0]     90 s  picked up the toothpick from rack slot 2 of 24 (tilt 0.1 deg, neighbors bumped: 0)
+[panda plate 3]     92 s  picked up the toothpick from rack slot 2 of 24 (tilt 0.1 deg, neighbors bumped: 0)
+[panda plate 2]     91 s  picked up the toothpick from rack slot 2 of 24 (tilt 0.1 deg, neighbors bumped: 0)
+[panda plate 1]     92 s  picked up the toothpick from rack slot 2 of 24 (tilt 0.1 deg, neighbors bumped: 0)
+[panda plate 0]    144 s  dropped tool in waste bin
+[panda plate 0]    144 s  colony 2: clean poke True (0.04 mm), slice 2 zigzag 100% contact, 122 mm long, leftover 0.13, tube 2: slight green (0.11)
+[panda plate 1]    148 s  dropped tool in waste bin
+[panda plate 1]    148 s  colony 2: clean poke True (0.04 mm), slice 2 zigzag 100% contact, 122 mm long, leftover 0.13, tube 2: slight green (0.11)
+[panda plate 3]    147 s  dropped tool in waste bin
+[panda plate 3]    147 s  colony 2: clean poke True (0.05 mm), slice 2 zigzag 100% contact, 122 mm long, leftover 0.13, tube 2: slight green (0.11)
+[panda plate 2]    146 s  dropped tool in waste bin
+[panda plate 2]    146 s  colony 2: clean poke True (0.07 mm), slice 2 zigzag 100% contact, 122 mm long, leftover 0.13, tube 2: slight green (0.11)
+[panda plate 0]    150 s  picked up the toothpick from rack slot 3 of 24 (tilt 0.0 deg, neighbors bumped: 1)
+[panda plate 1]    154 s  picked up the toothpick from rack slot 3 of 24 (tilt 0.0 deg, neighbors bumped: 0)
+[panda plate 3]    153 s  picked up the toothpick from rack slot 3 of 24 (tilt 0.0 deg, neighbors bumped: 1)
+[panda plate 2]    152 s  picked up the toothpick from rack slot 3 of 24 (tilt 0.0 deg, neighbors bumped: 1)
+[panda plate 1]    207 s  dropped tool in waste bin
+[panda plate 1]    207 s  colony 3: clean poke True (0.02 mm), slice 3 zigzag 100% contact, 122 mm long, leftover 0.13, tube 3: slight green (0.11)
+[panda plate 1]    213 s  picked up the toothpick from rack slot 4 of 24 (tilt 0.0 deg, neighbors bumped: 0)
+[panda plate 0]    202 s  dropped tool in waste bin
+[panda plate 0]    202 s  colony 3: clean poke True (0.06 mm), slice 3 zigzag 100% contact, 122 mm long, leftover 0.13, tube 3: slight green (0.11)
+[panda plate 2]    205 s  dropped tool in waste bin
+[panda plate 2]    205 s  colony 3: clean poke True (0.07 mm), slice 3 zigzag 100% contact, 122 mm long, leftover 0.13, tube 3: slight green (0.11)
+[panda plate 3]    208 s  dropped tool in waste bin
+[panda plate 3]    208 s  colony 3: clean poke True (0.04 mm), slice 3 zigzag 100% contact, 122 mm long, leftover 0.13, tube 3: slight green (0.11)
+[panda plate 0]    208 s  picked up the toothpick from rack slot 4 of 24 (tilt 0.0 deg, neighbors bumped: 1)
+[panda plate 2]    211 s  picked up the toothpick from rack slot 4 of 24 (tilt 0.0 deg, neighbors bumped: 1)
+[panda plate 3]    214 s  picked up the toothpick from rack slot 4 of 24 (tilt 0.1 deg, neighbors bumped: 1)
+[panda plate 1]    267 s  dropped tool in waste bin
+[panda plate 1]    267 s  colony 4: clean poke True (0.0 mm), slice 4 zigzag 100% contact, 122 mm long, leftover 0.13, tube 4: slight green (0.11)
+[panda plate 1]    273 s  picked up the toothpick from rack slot 5 of 24 (tilt 0.0 deg, neighbors bumped: 0)
+[panda plate 0]    261 s  dropped tool in waste bin
+[panda plate 0]    261 s  colony 4: clean poke True (0.11 mm), slice 4 zigzag 100% contact, 122 mm long, leftover 0.13, tube 4: slight green (0.11)
+[panda plate 2]    265 s  dropped tool in waste bin
+[panda plate 2]    265 s  colony 4: clean poke True (0.04 mm), slice 4 zigzag 100% contact, 122 mm long, leftover 0.13, tube 4: slight green (0.11)
+[panda plate 3]    268 s  dropped tool in waste bin
+[panda plate 3]    268 s  colony 4: clean poke True (0.03 mm), slice 4 zigzag 100% contact, 122 mm long, leftover 0.13, tube 4: slight green (0.11)
+[panda plate 0]    267 s  picked up the toothpick from rack slot 5 of 24 (tilt 0.0 deg, neighbors bumped: 1)
+[panda plate 3]    274 s  picked up the toothpick from rack slot 5 of 24 (tilt 0.0 deg, neighbors bumped: 1)
+[panda plate 2]    271 s  picked up the toothpick from rack slot 5 of 24 (tilt 0.0 deg, neighbors bumped: 1)
+[panda plate 1]    327 s  dropped tool in waste bin
+[panda plate 1]    327 s  colony 5: clean poke True (0.03 mm), slice 5 zigzag 100% contact, 122 mm long, leftover 0.13, tube 5: slight green (0.11)
+[panda plate 1]    333 s  picked up the toothpick from rack slot 6 of 24 (tilt 0.0 deg, neighbors bumped: 2)
+[panda plate 3]    328 s  dropped tool in waste bin
+[panda plate 3]    328 s  colony 5: clean poke True (0.03 mm), slice 5 zigzag 100% contact, 122 mm long, leftover 0.13, tube 5: slight green (0.11)
+[panda plate 3]    334 s  picked up the toothpick from rack slot 6 of 24 (tilt 0.0 deg, neighbors bumped: 1)
+[panda plate 1]    387 s  dropped tool in waste bin
+[panda plate 1]    387 s  colony 6: clean poke True (0.05 mm), slice 6 zigzag 100% contact, 122 mm long, leftover 0.13, tube 6: slight green (0.11)
+[panda plate 0]    319 s  dropped tool in waste bin
+[panda plate 0]    319 s  colony 5: clean poke True (0.05 mm), slice 5 zigzag 100% contact, 122 mm long, leftover 0.13, tube 5: slight green (0.11)
+[panda plate 1]    393 s  picked up the toothpick from rack slot 7 of 24 (tilt 0.0 deg, neighbors bumped: 3)
+[panda plate 0]    325 s  picked up the toothpick from rack slot 6 of 24 (tilt 0.0 deg, neighbors bumped: 1)
+[panda plate 2]    326 s  dropped tool in waste bin
+[panda plate 2]    326 s  colony 5: clean poke True (0.02 mm), slice 5 zigzag 100% contact, 122 mm long, leftover 0.13, tube 5: slight green (0.11)
+[panda plate 2]    332 s  picked up the toothpick from rack slot 6 of 24 (tilt 0.1 deg, neighbors bumped: 1)
+[panda plate 3]    387 s  dropped tool in waste bin
+[panda plate 3]    387 s  colony 6: clean poke True (0.01 mm), slice 6 zigzag 100% contact, 122 mm long, leftover 0.13, tube 6: slight green (0.11)
+[panda plate 3]    393 s  picked up the toothpick from rack slot 7 of 24 (tilt 0.0 deg, neighbors bumped: 1)
+[panda plate 1]    447 s  dropped tool in waste bin
+[panda plate 1]    447 s  colony 7: clean poke True (0.02 mm), slice 7 zigzag 100% contact, 122 mm long, leftover 0.13, tube 7: slight green (0.11)
+[panda plate 1]    447 s  putting lids back
+[panda plate 0]    378 s  dropped tool in waste bin
+[panda plate 0]    378 s  colony 6: clean poke True (0.04 mm), slice 6 zigzag 100% contact, 122 mm long, leftover 0.13, tube 6: slight green (0.11)
+[panda plate 1] DONE: 7/7 colonies fully right, lids back True, 472 s
+[panda plate 0]    384 s  picked up the toothpick from rack slot 7 of 24 (tilt 0.1 deg, neighbors bumped: 1)
+[panda plate 2]    386 s  dropped tool in waste bin
+[panda plate 2]    386 s  colony 6: clean poke True (0.04 mm), slice 6 zigzag 100% contact, 122 mm long, leftover 0.13, tube 6: slight green (0.11)
+[panda plate 2]    392 s  picked up the toothpick from rack slot 7 of 24 (tilt 0.0 deg, neighbors bumped: 2)
+[panda plate 3]    447 s  dropped tool in waste bin
+[panda plate 3]    447 s  colony 7: clean poke True (0.05 mm), slice 7 zigzag 100% contact, 122 mm long, leftover 0.13, tube 7: slight green (0.11)
+[panda plate 3]    453 s  picked up the toothpick from rack slot 8 of 24 (tilt 0.1 deg, neighbors bumped: 1)
+[panda plate 0]    437 s  dropped tool in waste bin
+[panda plate 0]    437 s  colony 7: clean poke True (0.05 mm), slice 7 zigzag 100% contact, 122 mm long, leftover 0.13, tube 7: slight green (0.11)
+[panda plate 0]    443 s  picked up the toothpick from rack slot 8 of 24 (tilt 0.0 deg, neighbors bumped: 1)
+[panda plate 3]    508 s  dropped tool in waste bin
+[panda plate 3]    508 s  colony 8: clean poke True (0.12 mm), slice 8 zigzag 100% contact, 122 mm long, leftover 0.13, tube 8: slight green (0.11)
+[panda plate 3]    508 s  putting lids back
+[panda plate 2]    446 s  dropped tool in waste bin
+[panda plate 2]    446 s  colony 7: clean poke True (0.03 mm), slice 7 zigzag 100% contact, 122 mm long, leftover 0.13, tube 7: slight green (0.11)
+[panda plate 2]    452 s  picked up the toothpick from rack slot 8 of 24 (tilt 0.1 deg, neighbors bumped: 2)
+[panda plate 3] DONE: 8/8 colonies fully right, lids back True, 533 s
+[panda plate 0]    496 s  dropped tool in waste bin
+[panda plate 0]    496 s  colony 8: clean poke True (0.05 mm), slice 8 zigzag 100% contact, 122 mm long, leftover 0.13, tube 8: slight green (0.11)
+[panda plate 0]    496 s  putting lids back
+[panda plate 2]    506 s  dropped tool in waste bin
+[panda plate 2]    506 s  colony 8: clean poke True (0.04 mm), slice 8 zigzag 100% contact, 122 mm long, leftover 0.13, tube 8: slight green (0.11)
+[panda plate 2]    506 s  putting lids back
+[panda plate 0] DONE: 8/8 colonies fully right, lids back True, 521 s
+[panda plate 2] DONE: 8/8 colonies fully right, lids back True, 532 s
+
+Connected lab (panda): 31/31 colonies fully right
+  tube colors: {'slight green': 31}
+Saved /Users/clairekim/Library/CloudStorage/OneDrive-Personal/Claire/8. Coding/mujoco-lab-sim/outputs/connected_panda_results.json

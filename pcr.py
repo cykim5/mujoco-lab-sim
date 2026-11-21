@@ -42,7 +42,7 @@ def pcr_strip_xml(origin_xy, along="x"):
     lines = []
     for k, (x, y) in enumerate(tube_centers(origin_xy, along)):
         walls = pw.ring_walls(TUBE_INNER_R + 0.0003, TUBE_FLOOR_Z + TUBE_DEPTH / 2, TUBE_DEPTH / 2,
-                              "0.95 0.95 0.9 0.5", n_segments=16)
+                              "0.95 0.95 0.9 0.18", n_segments=16)
         walls = walls.replace("<geom ", f'<geom name="tube{k}_wall_SEG" ')
         # give each wall segment a unique name
         count = 0
@@ -63,6 +63,15 @@ def pcr_strip_xml(origin_xy, along="x"):
     length = (N_TUBES - 1) * TUBE_PITCH / 2 + 0.006
     size = f"{length:.4f} 0.006 0.0015" if along == "x" else f"0.006 {length:.4f} 0.0015"
     lines.append(f'<geom name="pcr_holder" type="box" pos="{cx:.4f} {cy:.4f} {pw.BENCH_Z + 0.0015}" size="{size}" rgba="0.2 0.55 0.9 1"/>')
+    # camera in front of and above the strip, to photograph the master-mix colors
+    side = np.array([0.0, -1.0, 0.0]) if along == "x" else np.array([1.0, 0.0, 0.0])
+    center = np.array([cx, cy, pw.BENCH_Z + TUBE_FLOOR_Z + LIQUID_HEIGHT])
+    cam = center + side * 0.04 + np.array([0, 0, 0.075])  # steep, to look down into the master mix
+    z_cam = (cam - center) / np.linalg.norm(cam - center)
+    x_cam = np.cross([0, 0, 1.0], z_cam)
+    x_cam = x_cam / np.linalg.norm(x_cam)
+    y_cam = np.cross(z_cam, x_cam)
+    lines.append(f'<camera name="pcr_cam" pos="{cam[0]:.4f} {cam[1]:.4f} {cam[2]:.4f}" xyaxes="{x_cam[0]:.4f} {x_cam[1]:.4f} {x_cam[2]:.4f} {y_cam[0]:.4f} {y_cam[1]:.4f} {y_cam[2]:.4f}" fovy="40"/>')
     return "\n".join(lines)
 
 

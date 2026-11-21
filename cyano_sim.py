@@ -34,8 +34,8 @@ STROKES_PER_QUADRANT = 6
 
 
 class CyanoSim(LabSim):
-    def __init__(self, tool_name, seed=0, record_video=True, slot=None, pcr=False):
-        scene_path, self.truth = pw.build_plate_scene(tool_name, seed, pcr=pcr)
+    def __init__(self, tool_name, seed=0, record_video=True, slot=None, pcr=False, sectors=False):
+        scene_path, self.truth = pw.build_plate_scene(tool_name, seed, pcr=pcr, sectors=sectors)
         self.set_panda_layout()
         # Which of the 24 rack slots to take the tool from. Different seeds use different slots.
         self.slot = (seed * 7) % (pw.RACK_ROWS * pw.RACK_COLS) if slot is None else slot

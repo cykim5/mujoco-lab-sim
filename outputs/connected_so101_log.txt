@@ -1,0 +1,140 @@
+[so101 plate 0]    168 s  calibrated on 20 pin touches: fit error 0.46 mm -> 0.12 mm
+[so101 plate 2]    168 s  calibrated on 20 pin touches: fit error 0.37 mm -> 0.11 mm
+[so101 plate 3]    171 s  calibrated on 20 pin touches: fit error 0.80 mm -> 0.07 mm
+[so101 plate 0]    171 s  taking lids off
+[so101 plate 2]    171 s  taking lids off
+[so101 plate 3]    174 s  taking lids off
+[so101 plate 1]    176 s  calibrated on 20 pin touches: fit error 1.46 mm -> 0.08 mm
+[so101 plate 1]    179 s  taking lids off
+[so101 plate 0]    218 s  found 25 colonies, 8 isolated single colonies to test
+[so101 plate 2]    219 s  found 21 colonies, 8 isolated single colonies to test
+[so101 plate 3]    221 s  found 21 colonies, 8 isolated single colonies to test
+[so101 plate 1]    226 s  found 22 colonies, 7 isolated single colonies to test
+[so101 plate 0]    228 s  took the toothpick from rack hole 1 (tilt 3.9 deg, neighbors bumped: 0)
+[so101 plate 2]    228 s  took the toothpick from rack hole 15 (tilt 3.8 deg, neighbors bumped: 0)
+[so101 plate 3]    231 s  took the toothpick from rack hole 22 (tilt 3.6 deg, neighbors bumped: 0)
+
+
+
+[so101 plate 1]    236 s  took the toothpick from rack hole 8 (tilt 3.9 deg, neighbors bumped: 0)
+
+[so101 plate 0]    281 s  dropped toothpick in waste bin
+[so101 plate 0]    281 s  colony 1: clean poke True (0.12 mm), slice 1 zigzag 100% contact, 122 mm long, leftover 0.13, tube 1: slight green (0.11)
+[so101 plate 2]    282 s  dropped toothpick in waste bin
+[so101 plate 2]    282 s  colony 1: clean poke True (0.15 mm), slice 1 zigzag 100% contact, 122 mm long, leftover 0.13, tube 1: slight green (0.11)
+[so101 plate 3]    285 s  dropped toothpick in waste bin
+[so101 plate 3]    285 s  colony 1: clean poke True (0.15 mm), slice 1 zigzag 100% contact, 122 mm long, leftover 0.13, tube 1: slight green (0.11)
+[so101 plate 1]    291 s  dropped toothpick in waste bin
+[so101 plate 1]    291 s  colony 1: clean poke True (0.17 mm), slice 1 zigzag 100% contact, 122 mm long, leftover 0.13, tube 1: slight green (0.11)
+[so101 plate 0]    291 s  took the toothpick from rack hole 2 (tilt 3.9 deg, neighbors bumped: 0)
+[so101 plate 2]    292 s  took the toothpick from rack hole 16 (tilt 3.8 deg, neighbors bumped: 0)
+[so101 plate 3]    296 s  took the toothpick from rack hole 23 (tilt 3.6 deg, neighbors bumped: 0)
+[so101 plate 1]    301 s  took the toothpick from rack hole 9 (tilt 3.9 deg, neighbors bumped: 0)
+[so101 plate 0]    344 s  dropped toothpick in waste bin
+[so101 plate 0]    344 s  colony 2: clean poke True (0.07 mm), slice 2 zigzag 100% contact, 122 mm long, leftover 0.13, tube 2: slight green (0.11)
+[so101 plate 2]    346 s  dropped toothpick in waste bin
+[so101 plate 2]    346 s  colony 2: clean poke True (0.14 mm), slice 2 zigzag 100% contact, 122 mm long, leftover 0.13, tube 2: slight green (0.11)
+[so101 plate 3]    350 s  dropped toothpick in waste bin
+[so101 plate 3]    350 s  colony 2: clean poke True (0.17 mm), slice 2 zigzag 100% contact, 122 mm long, leftover 0.13, tube 2: slight green (0.11)
+[so101 plate 1]    356 s  dropped toothpick in waste bin
+[so101 plate 1]    356 s  colony 2: clean poke True (0.22 mm), slice 2 zigzag 100% contact, 122 mm long, leftover 0.13, tube 2: slight green (0.11)
+[so101 plate 0]    354 s  took the toothpick from rack hole 3 (tilt 3.9 deg, neighbors bumped: 0)
+[so101 plate 2]    357 s  took the toothpick from rack hole 17 (tilt 3.8 deg, neighbors bumped: 0)
+[so101 plate 3]    361 s  took the toothpick from rack hole 24 (tilt 3.6 deg, neighbors bumped: 0)
+[so101 plate 1]    366 s  took the toothpick from rack hole 10 (tilt 3.7 deg, neighbors bumped: 0)
+[so101 plate 0]    407 s  dropped toothpick in waste bin
+[so101 plate 0]    407 s  colony 3: clean poke True (0.07 mm), slice 3 zigzag 100% contact, 122 mm long, leftover 0.13, tube 3: slight green (0.11)
+[so101 plate 2]    410 s  dropped toothpick in waste bin
+[so101 plate 2]    410 s  colony 3: clean poke True (0.17 mm), slice 3 zigzag 100% contact, 122 mm long, leftover 0.13, tube 3: slight green (0.11)
+[so101 plate 3]    416 s  dropped toothpick in waste bin
+[so101 plate 3]    416 s  colony 3: clean poke True (0.14 mm), slice 3 zigzag 100% contact, 122 mm long, leftover 0.13, tube 3: slight green (0.11)
+[so101 plate 1]    422 s  dropped toothpick in waste bin
+[so101 plate 1]    422 s  colony 3: clean poke True (0.21 mm), slice 3 zigzag 100% contact, 122 mm long, leftover 0.13, tube 3: slight green (0.11)
+[so101 plate 0]    418 s  took the toothpick from rack hole 4 (tilt 3.9 deg, neighbors bumped: 0)
+[so101 plate 2]    421 s  took the toothpick from rack hole 18 (tilt 4.7 deg, neighbors bumped: 0)
+[so101 plate 3]    426 s  took the toothpick from rack hole 1 (tilt 3.9 deg, neighbors bumped: 0)
+[so101 plate 1]    433 s  took the toothpick from rack hole 11 (tilt 3.9 deg, neighbors bumped: 0)
+[so101 plate 0]    471 s  dropped toothpick in waste bin
+[so101 plate 0]    471 s  colony 4: clean poke True (0.11 mm), slice 4 zigzag 99% contact, 121 mm long, leftover 0.13, tube 4: slight green (0.12)
+[so101 plate 2]    475 s  dropped toothpick in waste bin
+[so101 plate 2]    475 s  colony 4: clean poke True (0.1 mm), slice 4 zigzag 99% contact, 121 mm long, leftover 0.13, tube 4: slight green (0.12)
+[so101 plate 3]    480 s  dropped toothpick in waste bin
+[so101 plate 3]    480 s  colony 4: clean poke True (0.11 mm), slice 4 zigzag 99% contact, 121 mm long, leftover 0.13, tube 4: slight green (0.12)
+[so101 plate 1]    488 s  dropped toothpick in waste bin
+[so101 plate 1]    488 s  colony 4: clean poke True (0.16 mm), slice 4 zigzag 100% contact, 122 mm long, leftover 0.13, tube 4: slight green (0.11)
+[so101 plate 0]    481 s  took the toothpick from rack hole 5 (tilt 3.9 deg, neighbors bumped: 0)
+[so101 plate 3]    490 s  took the toothpick from rack hole 2 (tilt 3.9 deg, neighbors bumped: 0)
+[so101 plate 2]    486 s  took the toothpick from rack hole 19 (tilt 4.7 deg, neighbors bumped: 0)
+[so101 plate 1]    499 s  took the toothpick from rack hole 12 (tilt 3.9 deg, neighbors bumped: 0)
+[so101 plate 0]    534 s  dropped toothpick in waste bin
+[so101 plate 0]    534 s  colony 5: clean poke True (0.13 mm), slice 5 zigzag 100% contact, 122 mm long, leftover 0.13, tube 5: slight green (0.11)
+[so101 plate 3]    544 s  dropped toothpick in waste bin
+[so101 plate 3]    544 s  colony 5: clean poke True (0.1 mm), slice 5 zigzag 100% contact, 122 mm long, leftover 0.13, tube 5: slight green (0.11)
+[so101 plate 2]    540 s  dropped toothpick in waste bin
+[so101 plate 2]    540 s  colony 5: clean poke True (0.1 mm), slice 5 zigzag 100% contact, 122 mm long, leftover 0.13, tube 5: slight green (0.11)
+[so101 plate 0]    544 s  took the toothpick from rack hole 6 (tilt 4.7 deg, neighbors bumped: 0)
+[so101 plate 1]    554 s  dropped toothpick in waste bin
+[so101 plate 1]    554 s  colony 5: clean poke True (0.16 mm), slice 5 zigzag 100% contact, 122 mm long, leftover 0.13, tube 5: slight green (0.11)
+[so101 plate 3]    554 s  took the toothpick from rack hole 3 (tilt 3.9 deg, neighbors bumped: 0)
+[so101 plate 2]    551 s  took the toothpick from rack hole 20 (tilt 3.8 deg, neighbors bumped: 0)
+[so101 plate 1]    564 s  took the toothpick from rack hole 13 (tilt 3.7 deg, neighbors bumped: 0)
+[so101 plate 0]    597 s  dropped toothpick in waste bin
+[so101 plate 0]    597 s  colony 6: clean poke True (0.13 mm), slice 6 zigzag 100% contact, 122 mm long, leftover 0.13, tube 6: slight green (0.11)
+[so101 plate 0]    608 s  took the toothpick from rack hole 7 (tilt 4.7 deg, neighbors bumped: 0)
+[so101 plate 3]    608 s  dropped toothpick in waste bin
+[so101 plate 3]    608 s  colony 6: clean poke True (0.13 mm), slice 6 zigzag 100% contact, 122 mm long, leftover 0.13, tube 6: slight green (0.11)
+[so101 plate 2]    605 s  dropped toothpick in waste bin
+[so101 plate 2]    605 s  colony 6: clean poke True (0.1 mm), slice 6 zigzag 100% contact, 122 mm long, leftover 0.13, tube 6: slight green (0.11)
+[so101 plate 1]    619 s  dropped toothpick in waste bin
+[so101 plate 1]    619 s  colony 6: clean poke True (0.09 mm), slice 6 zigzag 100% contact, 122 mm long, leftover 0.13, tube 6: slight green (0.11)
+[so101 plate 3]    619 s  took the toothpick from rack hole 4 (tilt 3.9 deg, neighbors bumped: 0)
+[so101 plate 2]    616 s  took the toothpick from rack hole 21 (tilt 3.8 deg, neighbors bumped: 0)
+[so101 plate 1]    629 s  took the toothpick from rack hole 14 (tilt 3.7 deg, neighbors bumped: 0)
+[so101 plate 0]    660 s  dropped toothpick in waste bin
+[so101 plate 0]    660 s  colony 7: clean poke True (0.14 mm), slice 7 zigzag 100% contact, 122 mm long, leftover 0.13, tube 7: slight green (0.11)
+[so101 plate 0]    671 s  took the toothpick from rack hole 8 (tilt 3.9 deg, neighbors bumped: 0)
+  warning: IK could not reach [ 0.219 -0.17   0.235] (error 0.0121)
+  warning: IK could not reach [ 0.219 -0.17   0.235] (error 0.0119)
+[so101 plate 3]    673 s  dropped toothpick in waste bin
+[so101 plate 3]    673 s  colony 7: clean poke True (0.1 mm), slice 7 zigzag 100% contact, 122 mm long, leftover 0.13, tube 7: slight green (0.11)
+  warning: IK could not reach [ 0.219 -0.17   0.235] (error 0.0124)
+  warning: IK could not reach [ 0.219 -0.17   0.235] (error 0.0122)
+[so101 plate 2]    670 s  dropped toothpick in waste bin
+[so101 plate 2]    670 s  colony 7: clean poke True (0.1 mm), slice 7 zigzag 100% contact, 122 mm long, leftover 0.13, tube 7: slight green (0.11)
+  warning: IK could not reach [ 0.219 -0.17   0.235] (error 0.0128)
+  warning: IK could not reach [ 0.219 -0.17   0.235] (error 0.0125)
+[so101 plate 1]    683 s  dropped toothpick in waste bin
+[so101 plate 1]    683 s  colony 7: clean poke True (0.1 mm), slice 7 zigzag 100% contact, 122 mm long, leftover 0.13, tube 7: slight green (0.11)
+[so101 plate 1]    683 s  putting lids back
+[so101 plate 3]    683 s  took the toothpick from rack hole 5 (tilt 3.9 deg, neighbors bumped: 0)
+[so101 plate 2]    681 s  took the toothpick from rack hole 22 (tilt 3.8 deg, neighbors bumped: 0)
+  warning: IK could not reach [ 0.228 -0.17   0.235] (error 0.0718)
+  warning: IK could not reach [ 0.228 -0.17   0.235] (error 0.0713)
+  warning: IK could not reach [ 0.19  -0.203  0.235] (error 0.0612)
+[so101 plate 0]    724 s  dropped toothpick in waste bin
+[so101 plate 0]    724 s  colony 8: clean poke True (0.15 mm), slice 8 zigzag 100% contact, 122 mm long, leftover 0.13, tube 8: slight green (0.11)
+[so101 plate 0]    724 s  putting lids back
+  warning: IK could not reach [ 0.09  -0.226  0.21 ] (error 0.2061)
+[so101 plate 1] DONE: 7/7 colonies fully right, lids back True, 737 s
+  warning: IK could not reach [ 0.228 -0.17   0.235] (error 0.0715)
+  warning: IK could not reach [ 0.228 -0.17   0.235] (error 0.0710)
+  warning: IK could not reach [ 0.19  -0.203  0.235] (error 0.0602)
+[so101 plate 3]    737 s  dropped toothpick in waste bin
+[so101 plate 3]    737 s  colony 8: clean poke True (0.17 mm), slice 8 zigzag 100% contact, 122 mm long, leftover 0.13, tube 8: slight green (0.11)
+[so101 plate 3]    737 s  putting lids back
+  warning: IK could not reach [ 0.228 -0.17   0.235] (error 0.0719)
+  warning: IK could not reach [ 0.228 -0.17   0.235] (error 0.0714)
+  warning: IK could not reach [ 0.19  -0.203  0.235] (error 0.0611)
+[so101 plate 2]    735 s  dropped toothpick in waste bin
+[so101 plate 2]    735 s  colony 8: clean poke True (0.15 mm), slice 8 zigzag 100% contact, 122 mm long, leftover 0.13, tube 8: slight green (0.11)
+[so101 plate 2]    735 s  putting lids back
+  warning: IK could not reach [ 0.09  -0.226  0.21 ] (error 0.2061)
+[so101 plate 0] DONE: 8/8 colonies fully right, lids back True, 777 s
+  warning: IK could not reach [ 0.09  -0.226  0.21 ] (error 0.2061)
+[so101 plate 3] DONE: 8/8 colonies fully right, lids back True, 791 s
+  warning: IK could not reach [ 0.09  -0.226  0.21 ] (error 0.2061)
+[so101 plate 2] DONE: 8/8 colonies fully right, lids back True, 788 s
+
+Connected lab (so101): 31/31 colonies fully right
+  tube colors: {'slight green': 31}
+Saved /Users/clairekim/Library/CloudStorage/OneDrive-Personal/Claire/8. Coding/mujoco-lab-sim/outputs/connected_so101_results.json

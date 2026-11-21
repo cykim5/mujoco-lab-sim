@@ -5,7 +5,7 @@ The SO-101 is small, so everything sits 12 to 27 cm from its base (top view, rob
     lid parking (-0.02, -0.20)                       lid parking (-0.02, 0.20)
               source plate (0.142, -0.111)    fresh plate (0.142, 0.111)
                       toothpick cup (0.20, 0.0), grab tab pointing at the robot
-              waste bin (0.12, -0.20), beside the source plate
+              waste cup (0.10, -0.225), beside the source plate
     calibration pins at (0.08, +-0.17) short and (0.25, +-0.08) tall
 
 Toothpicks stand jumbled together in a cup with a printed grab tab. When no toothpick is free to pick,
@@ -29,7 +29,7 @@ SOURCE_XY = (0.142, -0.111)
 DEST_XY = (0.142, 0.111)
 LID_PARK_XY = {"source": (-0.02, -0.20), "dest": (-0.02, 0.20)}
 CUP_XY = (0.20, 0.0)
-BIN_XY = (0.12, -0.20)  # beside the source plate, 23 cm out, where the arm can reach at travel height
+BIN_XY = (0.10, -0.225)  # tall waste cup beside the source plate, kept clear of where the lid hook hangs while dipping
 
 N_TOOLS = 24
 CUP_INNER_R = 0.016  # a narrow 3.2 cm holder: toothpicks lean on the rim and their tops fan out
@@ -160,17 +160,18 @@ def bin_xml():
     bx, by = BIN_XY
     return f"""
     <body name="waste_bin" pos="{bx} {by} {BENCH_Z}">
-        <geom type="box" pos="0.022 0 0.015" size="0.002 0.024 0.015" rgba="0.75 0.2 0.2 1"/>
-        <geom type="box" pos="-0.022 0 0.015" size="0.002 0.024 0.015" rgba="0.75 0.2 0.2 1"/>
-        <geom type="box" pos="0 0.022 0.015" size="0.020 0.002 0.015" rgba="0.75 0.2 0.2 1"/>
-        <geom type="box" pos="0 -0.022 0.015" size="0.020 0.002 0.015" rgba="0.75 0.2 0.2 1"/>
+        <!-- tall narrow waste cup, 5 cm inside, 8 cm tall: a dropped 6.5 cm toothpick cannot lean out -->
+        <geom type="box" pos="0.026 0 0.04" size="0.002 0.028 0.04" rgba="0.75 0.2 0.2 1"/>
+        <geom type="box" pos="-0.026 0 0.04" size="0.002 0.028 0.04" rgba="0.75 0.2 0.2 1"/>
+        <geom type="box" pos="0 0.026 0.04" size="0.024 0.002 0.04" rgba="0.75 0.2 0.2 1"/>
+        <geom type="box" pos="0 -0.026 0.04" size="0.024 0.002 0.04" rgba="0.75 0.2 0.2 1"/>
     </body>"""
 
 
 PCR_ORIGIN = (0.168, -0.17)  # first PCR tube; the strip runs along +x between the source plate and the bin side
 
 
-def build_so101_scene(tool_name, seed, holder="cup", pcr=False):
+def build_so101_scene(tool_name, seed, holder="cup", pcr=False, sectors=False):
     if tool_name != "toothpick":
         raise ValueError("The SO-101 build version uses toothpicks only. A 12 cm loop held upright is too tall for "
                          "the SO-101 to lift out of a cup while pointing straight down.")
@@ -206,6 +207,7 @@ def build_so101_scene(tool_name, seed, holder="cup", pcr=False):
     </body>
     {pw.plate_xml("source", SOURCE_XY, agar_source, colonies, rng)}
     {pw.plate_xml("dest", DEST_XY, agar_dest, [], rng)}
+    {pw.sector_sticker_xml(DEST_XY, BENCH_Z + pw.PLATE_FLOOR + agar_dest) if sectors == True else ''}
     {cup_xml(rng) if holder == "cup" else rack_xml()}
     {bin_xml()}
     {__import__('pcr').pcr_strip_xml(PCR_ORIGIN, 'x') if pcr == True else ''}

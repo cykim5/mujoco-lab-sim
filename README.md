@@ -242,6 +242,57 @@ Human fingers are thin; robot hands aren't. Ways around it:
 - **A thinner gripper or a longer stick**, so the hand clears the bench while held sideways.
 - **Change the protocol** so no flip is needed (tested below).
 
+### Tested: one poke, no flip
+
+Your suggestion: poke the colony **once**, zigzag with that end, then swirl **the same end** in the PCR tube. Whatever cells are left on the tip after the streak go into the master mix. For each of 8 colonies:
+
+1. fresh toothpick from the rack,
+2. poke the colony once,
+3. zigzag inside pie slice k (between the sticker lines), **from the rim toward the center**,
+4. swirl the same end in PCR tube k (3 small circles in the master mix),
+5. discard.
+
+```bash
+~/.venvs/mujoco-lab/bin/python run_connected_lab.py --robot so101 --seeds 0 1 2 3
+~/.venvs/mujoco-lab/bin/python run_connected_lab.py --robot panda --seeds 0 1 2 3
+```
+
+| Fresh plate: 8 slices, each zigzag rim to center | PCR strip: master mix tinted by the cells released |
+|---|---|
+| ![Fresh plate with 8 pie-slice zigzags](outputs/connected_so101_plate.png) | ![PCR strip colors](outputs/connected_so101_tubes.png) |
+
+4 random plates per robot. One plate had only 7 isolated single colonies, hence 31 rather than 32. Full results: [`outputs/connected_so101_results.json`](outputs/connected_so101_results.json), [`outputs/connected_panda_results.json`](outputs/connected_panda_results.json).
+
+| | Panda | SO-101 (rack) |
+|---|---|---|
+| **Colonies fully right** (clean poke, zigzag in its own slice, slight-green tube, no other tube touched) | **31/31** | **31/31** |
+| Poke, distance from the colony center | 0 to 0.13 mm | 0.07 to 0.22 mm |
+| Zigzag contact with the agar | 100% | 99 to 100% |
+| Deepest press into the agar (limit 1 mm) | 0.38 mm | 0.92 mm |
+| Zigzag stayed inside its slice | 31/31 | 31/31 |
+| Tube color | 31/31 "slight green" | 31/31 "slight green" |
+| Lids back on | 4/4 | 4/4 |
+| Time for 8 colonies | about 9 minutes | about 13 minutes (incl. 3 min calibration) |
+
+![SO-101 running the connected lab version (sped up)](outputs/connected_so101.gif)
+
+**So the one-poke version works for the robot:** every step lands where it should, on both arms, with no flip needed.
+
+One thing these runs exposed: discarded toothpicks sometimes leaned out over the 3 cm waste bin and ended up on the bench. The SO-101 now lowers each toothpick deep into a **tall, narrow waste cup** (5 cm wide, 8 cm tall) before letting go. The cup also has to stay clear of where the lid hook hangs while dipping: the first spot tried blocked 7 of 8 dips. In the final SO-101 runs above, all 31 used toothpicks landed in the cup.
+
+**Is there enough left over?** Probably yes, but it depends on one number the sim cannot know: how fast the toothpick loses cells while it streaks. The sim models this as the tip keeping `exp(-streak length / d)` of its load. With the 122 mm zigzag:
+
+| Assumed d (how far the tip streaks before 63% of its cells are gone) | Cells into the tube | Tube | Zigzag length that would hit the middle of the "slight green" band |
+|---|---|---|---|
+| 30 mm | 0.01 | too little | 53 mm |
+| 40 mm | 0.04 | too little | 71 mm |
+| **60 mm (used in the runs)** | **0.11** | **slight green** | 106 mm |
+| 80 mm | 0.19 | slight green | 141 mm |
+| 100 mm | 0.26 | slight green | 176 mm |
+| 120 mm | 0.32 | too green | 212 mm |
+
+So the leftover lands in the "very slight green" band for a wide middle range, from about d = 45 mm to 115 mm. If the real tip loses cells faster, the fix is simply a **shorter zigzag** (fewer strokes), and the right zigzag length can be read off this table. **One real experiment would pin this down:** do the one-poke protocol on a few colonies, photograph the tubes, and compare their green with tubes made the normal way. The green level gives d, and the robot's zigzag length follows.
+
 ## 5. Vial rack pick-and-place (warm-up)
 
 ![Franka Panda placing three vials into a rack](outputs/pick_and_place.gif)
@@ -283,6 +334,7 @@ Interactive 3D viewer for the vial scene (drag to rotate, Ctrl+drag to push thin
 | `streak_plate.py` | Runs one plate (`--robot panda` or `--robot so101`) and saves pictures and a GIF |
 | `run_trials.py`, `run_so101_trials.py` | Run many random plates (`--holder cup` or `rack` for the SO-101) |
 | `pcr.py`, `run_pcr.py` | Colony PCR: pick, patch, dip into an 8-tube PCR strip, for either robot |
+| `connected_lab.py`, `run_connected_lab.py` | Connected lab version: one poke, zigzag in pie slice k, swirl leftover in tube k, with the cell-amount model |
 | `lab_sim.py` | Shared helpers: inverse kinematics, smooth motion, images |
 | `pick_and_place.py`, `models/lab_scene.xml` | The vial demo |
 | `models/panda_lab.xml` | Menagerie's Panda with a `grip` site, gravity compensation, and its keyframe removed |
@@ -291,6 +343,7 @@ Interactive 3D viewer for the vial scene (drag to rotate, Ctrl+drag to push thin
 ## Next steps
 
 1. Build the real SO-101 with the printed jaw and rack, and compare real success rates with the sim (the sim-to-real gap).
-2. After PCR: read results (gel or plate reader images), then pick the confirmed patches into liquid culture.
-3. Real-to-sim: run the colony finder on photos of real cyano plates.
-4. Gemini in the loop: let `gemini-4-hydrogen` choose colonies from the camera image and compare with the hand-written finder.
+2. Measure how fast a real toothpick loses cells while streaking (photograph the tubes after the one-poke protocol) and set the robot's zigzag length from it.
+3. After PCR: read results (gel or plate reader images), then pick the confirmed patches into liquid culture.
+4. Real-to-sim: run the colony finder on photos of real cyano plates.
+5. Gemini in the loop: let `gemini-4-hydrogen` choose colonies from the camera image and compare with the hand-written finder.

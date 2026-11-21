@@ -91,6 +91,19 @@ def ring_walls(radius_mid, center_z, half_height, rgba, n_segments=24, extra="")
     return "\n        ".join(lines)
 
 
+def sector_sticker_xml(dest_xy, agar_top):
+    """8 pie-slice lines, like the sticker under the plate that divides it for 8 colonies."""
+    lines = []
+    for k in range(8):
+        a = math.radians(45 * k)
+        r = AGAR_R / 2
+        x = dest_xy[0] + r * math.cos(a)
+        y = dest_xy[1] + r * math.sin(a)
+        lines.append(f'<geom name="sticker_line_{k}" type="box" pos="{x:.5f} {y:.5f} {agar_top + 0.00006:.5f}" '
+                     f'quat="{quat_z(a)}" size="{r:.5f} 0.0003 0.00005" rgba="0.15 0.15 0.2 1" contype="0" conaffinity="0"/>')
+    return "\n    ".join(lines)
+
+
 def random_colonies(rng):
     """Visible dots (0.8 to 2 mm across), some scattered and some in clumps, like a real plate."""
     colonies = []
@@ -212,7 +225,7 @@ def bin_xml():
 PCR_ORIGIN = (0.555, -0.0315)  # first PCR tube; the 8-tube strip runs along +y, between the plates and the parked lids
 
 
-def build_plate_scene(tool_name, seed, pcr=False):
+def build_plate_scene(tool_name, seed, pcr=False, sectors=False):
     """Write the scene XML and return (path, truth). truth holds the hidden facts we grade against."""
     rng = np.random.default_rng(seed)
     colonies = random_colonies(rng)
@@ -246,6 +259,7 @@ def build_plate_scene(tool_name, seed, pcr=False):
     </body>
     {plate_xml("source", SOURCE_XY, agar_source, colonies, rng)}
     {plate_xml("dest", DEST_XY, agar_dest, [], rng)}
+    {sector_sticker_xml(DEST_XY, BENCH_Z + PLATE_FLOOR + agar_dest) if sectors == True else ''}
     {tool_xml(tool_name)}
     {bin_xml()}
     {__import__('pcr').pcr_strip_xml(PCR_ORIGIN, 'y') if pcr == True else ''}
