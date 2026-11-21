@@ -43,6 +43,9 @@ SAFE_Z = 0.30  # height to travel at so we never hit anything
 class LabSim:
     def __init__(self, record_video=True, video_camera="lab_cam", video_size=(320, 240), video_fps=10, scene_path=SCENE_PATH):
         self.model = mujoco.MjModel.from_xml_path(scene_path)
+        if not hasattr(self, "n_arm"):
+            self.n_arm = 7  # Panda: 7 arm joints, then the gripper actuator
+            self.gripper_index = 7
         self.data = mujoco.MjData(self.model)
         self.ik_data = mujoco.MjData(self.model)  # scratch copy so IK never disturbs the real sim
 
@@ -64,14 +67,18 @@ class LabSim:
 
     def reset(self):
         mujoco.mj_resetData(self.model, self.data)
-        self.data.qpos[:7] = HOME_ARM
-        self.data.qpos[7:9] = 0.04  # fingers open
-        self.data.ctrl[:7] = HOME_ARM
-        self.data.ctrl[7] = GRIPPER_OPEN
+        self.reset_robot()
         mujoco.mj_forward(self.model, self.data)
         # Let the vials settle onto the bench.
         for _ in range(200):
             mujoco.mj_step(self.model, self.data)
+
+    def reset_robot(self):
+        """Put the arm in its home pose. Other robots override this."""
+        self.data.qpos[:self.n_arm] = HOME_ARM
+        self.data.qpos[7:9] = 0.04  # fingers open
+        self.data.ctrl[:self.n_arm] = HOME_ARM
+        self.data.ctrl[self.gripper_index] = GRIPPER_OPEN
 
     def get_grip_quat(self, data):
         quat = np.zeros(4)
@@ -91,7 +98,7 @@ class LabSim:
 
     # ---------- inverse kinematics ----------
 
-    def solve_ik(self, target_pos, start_arm=None, max_iters=300, tolerance=1e-4):
+    def solve_ik(self, target_pos, start_arm=None, max_iters=300, tolerance=1e-4, target_quat=None):
         """Find 7 arm joint angles that put the grip site at target_pos, pointing down.
 
         Uses damped least squares: repeatedly nudge the joints in the direction
@@ -100,15 +107,15 @@ class LabSim:
         d = self.ik_data
         d.qpos[:] = self.data.qpos
         if start_arm is None:
-            d.qpos[:7] = self.data.qpos[:7]
+            d.qpos[:self.n_arm] = self.data.qpos[:self.n_arm]
         else:
-            d.qpos[:7] = start_arm
+            d.qpos[:self.n_arm] = start_arm
 
         jac_pos = np.zeros((3, self.model.nv))
         jac_rot = np.zeros((3, self.model.nv))
         damping = 1e-3
-        low = self.model.jnt_range[:7, 0]
-        high = self.model.jnt_range[:7, 1]
+        low = self.model.jnt_range[:self.n_arm, 0]
+        high = self.model.jnt_range[:self.n_arm, 1]
 
         for _ in range(max_iters):
             mujoco.mj_kinematics(self.model, d)
@@ -121,7 +128,7 @@ class LabSim:
             current_conj = np.zeros(4)
             mujoco.mju_negQuat(current_conj, current_quat)
             error_quat = np.zeros(4)
-            mujoco.mju_mulQuat(error_quat, self.down_quat, current_conj)
+            mujoco.mju_mulQuat(error_quat, self.down_quat if target_quat is None else target_quat, current_conj)
             rot_error = np.zeros(3)
             mujoco.mju_quat2Vel(rot_error, error_quat, 1.0)
 
@@ -130,11 +137,11 @@ class LabSim:
                 break
 
             mujoco.mj_jacSite(self.model, d, jac_pos, jac_rot, self.grip_site)
-            J = np.vstack([jac_pos[:, :7], jac_rot[:, :7]])
+            J = np.vstack([jac_pos[:, :self.n_arm], jac_rot[:, :self.n_arm]])
             step = J.T @ np.linalg.solve(J @ J.T + damping * np.eye(6), error)
-            d.qpos[:7] = np.clip(d.qpos[:7] + step, low, high)
+            d.qpos[:self.n_arm] = np.clip(d.qpos[:self.n_arm] + step, low, high)
 
-        return d.qpos[:7].copy(), np.linalg.norm(error)
+        return d.qpos[:self.n_arm].copy(), np.linalg.norm(error)
 
     # ---------- motion ----------
 
@@ -148,26 +155,26 @@ class LabSim:
 
     def move_arm(self, target_arm, gripper, duration=1.5, settle=0.3):
         """Smoothly move the joint targets from where they are now to target_arm."""
-        start_arm = self.data.ctrl[:7].copy()
-        start_gripper = self.data.ctrl[7]
+        start_arm = self.data.ctrl[:self.n_arm].copy()
+        start_gripper = self.data.ctrl[self.gripper_index]
         n_steps = int(duration / self.model.opt.timestep)
         for i in range(n_steps):
             t = (i + 1) / n_steps
             s = t * t * (3 - 2 * t)  # smoothstep: slow start, slow stop
-            self.data.ctrl[:7] = start_arm + s * (target_arm - start_arm)
-            self.data.ctrl[7] = start_gripper + s * (gripper - start_gripper)
+            self.data.ctrl[:self.n_arm] = start_arm + s * (target_arm - start_arm)
+            self.data.ctrl[self.gripper_index] = start_gripper + s * (gripper - start_gripper)
             self.step()
         for _ in range(int(settle / self.model.opt.timestep)):
             self.step()
 
     def move_grip_to(self, target_pos, gripper, duration=1.5):
-        target_arm, error = self.solve_ik(target_pos, start_arm=self.data.ctrl[:7])
+        target_arm, error = self.solve_ik(target_pos, start_arm=self.data.ctrl[:self.n_arm])
         if error > 1e-2:
             print(f"  warning: IK could not reach {np.round(target_pos, 3)} (error {error:.4f})")
         self.move_arm(target_arm, gripper, duration)
 
     def set_gripper(self, gripper, duration=0.6):
-        self.move_arm(self.data.ctrl[:7].copy(), gripper, duration, settle=0.2)
+        self.move_arm(self.data.ctrl[:self.n_arm].copy(), gripper, duration, settle=0.2)
 
     # ---------- the task ----------
 

@@ -1,0 +1,69 @@
+WARNING: ARB_clip_control unavailable while mjDEPTH_ZEROFAR requested, depth accuracy will be limited
+
+WARNING: ARB_clip_control unavailable while mjDEPTH_ZEROFAR requested, depth accuracy will be limited
+
+WARNING: ARB_clip_control unavailable while mjDEPTH_ZEROFAR requested, depth accuracy will be limited
+
+WARNING: ARB_clip_control unavailable while mjDEPTH_ZEROFAR requested, depth accuracy will be limited
+
+  [   2.2 s] taking lids off
+  [  37.9 s] found 21 colonies (21 on the plate)
+  [  37.9 s] chose a 1.4 mm colony with 11.3 mm clear around it
+  [  41.7 s] attempt 1: 11 toothpick tops seen, none with room for the fingers, shaking again
+  [  45.5 s] attempt 2: 10 toothpick tops seen, none with room for the fingers, shaking again
+  [  49.3 s] attempt 3: found a toothpick the fingers fit around (wrist turned 134 deg)
+  [  54.1 s] attempt 3: fingers closed on nothing, retrying
+  [  59.5 s] attempt 4: found a toothpick the fingers fit around (wrist turned -76 deg)
+  [  67.4 s] picked one toothpick on attempt 4 (tilt in fingers 15.3 deg)
+  [  80.6 s] touched colony: yes, 1.0 mm from its center, clean single colony: True
+  [  93.4 s] fresh plate agar found at 7.1 mm above the bench
+  [ 181.9 s] dropped toothpick in waste bin
+  [ 181.9 s] putting lids back
+  [   2.2 s] taking lids off
+  [  36.1 s] found 19 colonies (23 on the plate)
+  [  36.1 s] chose a 1.2 mm colony with 18.2 mm clear around it
+  [  39.9 s] attempt 1: 9 toothpick tops seen, none with room for the fingers, shaking again
+  [  43.7 s] attempt 2: 10 toothpick tops seen, none with room for the fingers, shaking again
+  [  47.5 s] attempt 3: 10 toothpick tops seen, none with room for the fingers, shaking again
+  [  51.3 s] attempt 4: 10 toothpick tops seen, none with room for the fingers, shaking again
+  [  55.1 s] attempt 5: 9 toothpick tops seen, none with room for the fingers, shaking again
+  [  58.9 s] attempt 6: 9 toothpick tops seen, none with room for the fingers, shaking again
+  [  62.7 s] attempt 7: 9 toothpick tops seen, none with room for the fingers, shaking again
+  [  66.5 s] attempt 8: 9 toothpick tops seen, none with room for the fingers, shaking again
+  [  70.3 s] attempt 9: 9 toothpick tops seen, none with room for the fingers, shaking again
+  [  74.1 s] attempt 10: 9 toothpick tops seen, none with room for the fingers, shaking again
+  [   2.2 s] taking lids off
+  [  37.6 s] found 25 colonies (28 on the plate)
+  [  37.6 s] chose a 1.4 mm colony with 11.6 mm clear around it
+  [  41.4 s] attempt 1: found a toothpick the fingers fit around (wrist turned -34 deg)
+  [  46.1 s] attempt 1: fingers closed on nothing, retrying
+  [  51.5 s] attempt 2: found a toothpick the fingers fit around (wrist turned 37 deg)
+  [  59.5 s] picked one toothpick on attempt 2 (tilt in fingers 14.9 deg)
+  [  73.0 s] touched colony: yes, 1.01 mm from its center, clean single colony: True
+  [  84.8 s] fresh plate agar found at 8.0 mm above the bench
+  [ 171.1 s] dropped toothpick in waste bin
+  [ 171.1 s] putting lids back
+  [   2.2 s] taking lids off
+  [  39.4 s] found 25 colonies (29 on the plate)
+  [  39.4 s] chose a 1.4 mm colony with 10.3 mm clear around it
+  [  43.2 s] attempt 1: found a toothpick the fingers fit around (wrist turned 85 deg)
+  [  48.0 s] attempt 1: fingers closed on nothing, retrying
+  [  53.4 s] attempt 2: 5 toothpick tops seen, none with room for the fingers, shaking again
+  [  57.2 s] attempt 3: 6 toothpick tops seen, none with room for the fingers, shaking again
+  [  61.0 s] attempt 4: 8 toothpick tops seen, none with room for the fingers, shaking again
+  [  64.8 s] attempt 5: 8 toothpick tops seen, none with room for the fingers, shaking again
+  [  68.6 s] attempt 6: 9 toothpick tops seen, none with room for the fingers, shaking again
+  [  72.4 s] attempt 7: found a toothpick the fingers fit around (wrist turned 124 deg)
+  [  77.1 s] attempt 7: fingers closed on nothing, retrying
+  [  82.5 s] attempt 8: 8 toothpick tops seen, none with room for the fingers, shaking again
+  [  86.3 s] attempt 9: 7 toothpick tops seen, none with room for the fingers, shaking again
+  [  90.1 s] attempt 10: 7 toothpick tops seen, none with room for the fingers, shaking again
+
+SO-101 summary
+  lids off              6/8
+  single toothpick      6/8  (shakes needed: [2, 1, 2, 4, 1, 10, 10, 3])
+  clean colony touch    5/8  (misses mm: [1.01, 0.14, 0.35, 1.0, 3.46, None, None, 0.69])
+  streak ok             4/8
+  lids back on          4/8
+  full success          4/8
+Saved /Users/clairekim/Library/CloudStorage/OneDrive-Personal/Claire/8. Coding/mujoco-lab-sim/outputs/so101_trials.csv

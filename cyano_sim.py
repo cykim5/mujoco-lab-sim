@@ -35,6 +35,7 @@ STROKES_PER_QUADRANT = 6
 class CyanoSim(LabSim):
     def __init__(self, tool_name, seed=0, record_video=True, slot=None):
         scene_path, self.truth = pw.build_plate_scene(tool_name, seed)
+        self.set_panda_layout()
         # Which of the 24 rack slots to take the tool from. Different seeds use different slots.
         self.slot = (seed * 7) % (pw.RACK_ROWS * pw.RACK_COLS) if slot is None else slot
         self.tool_body_name = f"tool_{self.slot}"
@@ -79,7 +80,21 @@ class CyanoSim(LabSim):
         self.hit_wall = False
         self.log = []
 
+    def set_panda_layout(self):
+        self.source_xy = pw.SOURCE_XY
+        self.dest_xy = pw.DEST_XY
+        self.lid_park_xy = pw.LID_PARK_XY
+        self.bin_xy = pw.BIN_XY
+        self.park_arm = PARK_ARM
+        self.gripper_open = GRIPPER_OPEN
+        self.gripper_closed = GRIPPER_CLOSED
+        self.check_rack_bumps = True
+
     # ---------- sensing ----------
+
+    def robot_tip_estimate(self):
+        """Where the robot believes the tool tip is: its own kinematics plus the measured tip offset."""
+        return self.get_grip_pos() + self.tip_offset
 
     def contact(self, geoms_a, geoms_b):
         """Total normal force (N) and deepest penetration (m) between two groups of geoms."""
@@ -101,7 +116,7 @@ class CyanoSim(LabSim):
 
     def step(self):
         super().step()
-        for i in range(self.data.ncon):
+        for i in range(self.data.ncon if self.check_rack_bumps == True else 0):
             c = self.data.contact[i]
             for a, b in ((c.geom1, c.geom2), (c.geom2, c.geom1)):
                 if a in self.robot_geoms and b in self.all_other_tool_geoms:
@@ -128,11 +143,11 @@ class CyanoSim(LabSim):
 
     def move_tip_to(self, target, duration=1.0):
         target = np.array(target)
-        self.move_grip_to(target - self.tip_offset, self.data.ctrl[7], duration)
+        self.move_grip_to(target - self.tip_offset, self.data.ctrl[self.gripper_index], duration)
         # One correction: the robot reads its joint encoders, sees how far off it landed, and nudges.
         error = target - (self.get_grip_pos() + self.tip_offset)
         if np.linalg.norm(error) > 0.0001 and duration > 0.1:
-            self.move_grip_to(target - self.tip_offset + error, self.data.ctrl[7], duration=0.2)
+            self.move_grip_to(target - self.tip_offset + error, self.data.ctrl[self.gripper_index], duration=0.2)
 
     def touch_down(self, xy, start_z, contact_check, use_tip, step=0.0003, max_steps=80):
         """Lower in small steps until contact_check() reports a force. Returns the contact height or None."""
@@ -141,12 +156,12 @@ class CyanoSim(LabSim):
             if use_tip == True:
                 self.move_tip_to([xy[0], xy[1], z], duration=0.03)
             else:
-                self.move_grip_to([xy[0], xy[1], z], self.data.ctrl[7], duration=0.03)
+                self.move_grip_to([xy[0], xy[1], z], self.data.ctrl[self.gripper_index], duration=0.03)
             self.wait(0.02)
             force, _ = contact_check()
             if force > TOUCH_FORCE:
                 if use_tip == True:
-                    return self.tip_pos()[2]
+                    return self.robot_tip_estimate()[2]
                 return z
         return None
 
@@ -214,7 +229,7 @@ class CyanoSim(LabSim):
         agar_guess = pw.BENCH_Z + pw.PLATE_FLOOR + (pw.AGAR_MIN + pw.AGAR_MAX) / 2
         distance = pw.BENCH_Z + pw.CAMERA_HEIGHT - agar_guess
         meters_per_pixel = 2 * distance * math.tan(math.radians(pw.CAMERA_FOVY / 2)) / size
-        cx, cy = pw.SOURCE_XY
+        cx, cy = self.source_xy
         detections = []
         for pixels in blobs:
             row, col = pixels.mean(axis=0)
@@ -229,7 +244,7 @@ class CyanoSim(LabSim):
         best = None
         best_gap = -1.0
         for d in detections:
-            from_center = math.hypot(d["x"] - pw.SOURCE_XY[0], d["y"] - pw.SOURCE_XY[1])
+            from_center = math.hypot(d["x"] - self.source_xy[0], d["y"] - self.source_xy[1])
             if d["r"] < 0.0004 or from_center > 0.032:
                 continue
             gap = 1.0
@@ -304,7 +319,7 @@ class CyanoSim(LabSim):
         return len(self.bumped)
 
     def drop_tool_in_bin(self):
-        bx, by = pw.BIN_XY
+        bx, by = self.bin_xy
         self.move_tip_to([bx, by, pw.BENCH_Z + 0.09], duration=1.5)
         self.lock_tool(False)
         self.set_gripper(GRIPPER_OPEN)
@@ -331,7 +346,7 @@ class CyanoSim(LabSim):
     def streak_path(self):
         """Quadrant streak: in each quadrant, zigzag from the rim in toward the center.
         Each new quadrant starts inside the previous one (near the rim) and drags cells across."""
-        cx, cy = pw.DEST_XY
+        cx, cy = self.dest_xy
         quadrants = []
         for k in range(4):
             angle = math.radians(45 + 90 * k)
@@ -373,11 +388,11 @@ class CyanoSim(LabSim):
             if surface is None:
                 surface = found
                 self.say(f"fresh plate agar found at {(surface - pw.BENCH_Z) * 1000:.1f} mm above the bench")
-            arm = self.data.ctrl[:7].copy()
+            arm = self.data.ctrl[:self.n_arm].copy()
             for p in path:
                 target = np.array([p[0], p[1], surface - PRESS_DEPTH]) - self.tip_offset
                 arm, _ = self.solve_ik(target, start_arm=arm, max_iters=30)
-                self.data.ctrl[:7] = arm
+                self.data.ctrl[:self.n_arm] = arm
                 force_max = 0.0
                 depth_max = 0.0
                 for _ in range(steps_per_point):
@@ -398,10 +413,10 @@ class CyanoSim(LabSim):
         self.hit_wall = False
 
         self.say("taking lids off")
-        ok_source = self.lift_lid("source", pw.SOURCE_XY, pw.LID_PARK_XY["source"], put_back=False)
-        ok_dest = self.lift_lid("dest", pw.DEST_XY, pw.LID_PARK_XY["dest"], put_back=False)
+        ok_source = self.lift_lid("source", self.source_xy, self.lid_park_xy["source"], put_back=False)
+        ok_dest = self.lift_lid("dest", self.dest_xy, self.lid_park_xy["dest"], put_back=False)
         report["lids_off"] = ok_source == True and ok_dest == True
-        self.move_arm(PARK_ARM, GRIPPER_CLOSED, duration=1.5)
+        self.move_arm(self.park_arm, self.gripper_closed, duration=1.5)
 
         detections, image, _ = self.find_colonies()
         chosen = self.choose_colony(detections)
@@ -428,10 +443,10 @@ class CyanoSim(LabSim):
 
         self.drop_tool_in_bin()
         self.say("putting lids back")
-        back_dest = self.lift_lid("dest", pw.LID_PARK_XY["dest"], pw.DEST_XY, put_back=True)
-        back_source = self.lift_lid("source", pw.LID_PARK_XY["source"], pw.SOURCE_XY, put_back=True)
+        back_dest = self.lift_lid("dest", self.lid_park_xy["dest"], self.dest_xy, put_back=True)
+        back_source = self.lift_lid("source", self.lid_park_xy["source"], self.source_xy, put_back=True)
         report["lids_back"] = self.lids_seated() and back_dest == True and back_source == True
-        self.move_arm(PARK_ARM, GRIPPER_OPEN, duration=1.5)
+        self.move_arm(self.park_arm, self.gripper_open, duration=1.5)
 
         report["hit_plate_wall"] = self.hit_wall
         report["neighbors_bumped"] = self.neighbors_bumped()
@@ -491,7 +506,7 @@ class CyanoSim(LabSim):
 
     def lids_seated(self):
         ok = True
-        for name, xy in [("source", pw.SOURCE_XY), ("dest", pw.DEST_XY)]:
+        for name, xy in [("source", self.source_xy), ("dest", self.dest_xy)]:
             pos = self.get_body_pos("lid_" + name)
             off = math.hypot(pos[0] - xy[0], pos[1] - xy[1])
             if off > 0.002 or abs(pos[2] - (pw.BENCH_Z + pw.PLATE_WALL_TOP)) > 0.002:
@@ -541,8 +556,8 @@ class CyanoSim(LabSim):
             first = next((s for s in samples if s["quadrant"] == k), None)
             if first is None:
                 continue
-            col = (first["pos"][0] - pw.DEST_XY[0]) / meters_per_pixel + size / 2
-            row = size / 2 - (first["pos"][1] - pw.DEST_XY[1]) / meters_per_pixel
+            col = (first["pos"][0] - self.dest_xy[0]) / meters_per_pixel + size / 2
+            row = size / 2 - (first["pos"][1] - self.dest_xy[1]) / meters_per_pixel
             draw.ellipse([col - 16, row - 16, col + 16, row + 16], fill=(255, 255, 255), outline=(30, 30, 30), width=2)
             draw.text((col, row), str(k + 1), fill=(30, 30, 30), anchor="mm", font_size=22)
         path = f"{OUTPUT_DIR}/{filename}"
