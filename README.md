@@ -15,7 +15,7 @@ Simulated lab automation in MuJoCo, part of a sim-to-real / real-to-sim project 
 | Colony PCR (8 per plate) | 31/31 colonies | 31/31 colonies |
 | Sections | [1](#1-reference-version-panda) | [2](#2-build-version-so-101) |
 
-Then **colony PCR** on both robots ([3](#3-colony-pcr-both-robots)), and a warm-up vial demo ([4](#4-vial-rack-pick-and-place-warm-up)).
+Then **colony PCR** on both robots ([3](#3-colony-pcr-both-robots)), the **connected lab version** that follows the lab's real protocol ([4](#4-connected-lab-version-the-labs-real-protocol)), and a warm-up vial demo ([5](#5-vial-rack-pick-and-place-warm-up)).
 
 ## 1. Reference version (Panda)
 
@@ -217,7 +217,32 @@ The master mix itself is not simulated (MuJoCo has no liquids). "Dipped" means t
 
 **A fix this surfaced in colony picking:** the camera saw three touching colonies as one big blob, and the robot picked it, touching all three: a mixed clone. Colony detection now flags blobs that are stretched or bigger than a single colony (more than 2.2 mm across) and never picks them. Tested on 6 plates, it flagged 10/10 merged blobs and 0/129 true single colonies. (The restreak trials in sections 1 and 2 ran before this fix. They each pick only the single most isolated colony, which was never a merged blob in those runs.)
 
-## 4. Vial rack pick-and-place (warm-up)
+## 4. Connected lab version (the lab's real protocol)
+
+How colony PCR is actually done in the lab, for 8 colonies:
+
+1. A sticker under the fresh plate divides it into 8 pie slices.
+2. For each colony, one toothpick: poke the colony **heavily with one end**, **flip** the toothpick, poke **lightly with the other end**, so both ends carry cells.
+3. With the heavy end, zigzag in that colony's slice **from the rim toward the center** (not a quadrant streak).
+4. With the light end, dip into PCR tube k and **roll** the toothpick to release cells. The master mix should turn **very slightly green**: that's the right amount.
+5. Discard, repeat 8 times.
+
+### Finding: neither robot can flip the toothpick in its hand
+
+A person flips the toothpick between their fingers. A robot gripper normally points straight down, so the top end can never touch anything. Flipping in-hand means holding the toothpick **sideways** (gripper horizontal, toothpick vertical) and rolling the wrist 180°. Tested in the sim:
+
+| | SO-101 | Panda |
+|---|---|---|
+| Can it hold the gripper sideways near the bench? | **No.** With 5 joints its gripper always points along the vertical plane through its base. Pointing sideways and outward puts the wrist about 16 cm back, over its own base. Every target (plates, PCR tubes, a regrasp stand) failed to solve | **Yes.** With 7 joints it reaches every spot sideways, with either toothpick end down |
+| Does the hand fit? | (not reachable) | **No.** The fingers are 22 mm thick, but the hand behind them is 88 mm thick (44 mm above and below the grip point). With a 6.5 cm toothpick held in the middle, the hand would sit about 1 cm *below* the bench top and the plate walls while poking a colony |
+
+Human fingers are thin; robot hands aren't. Ways around it:
+
+- **A flip station:** a printed clip on a hinge, turned 180° by one cheap servo. The clip holds the toothpick's middle, so neither tip touches anything. This keeps the exact protocol.
+- **A thinner gripper or a longer stick**, so the hand clears the bench while held sideways.
+- **Change the protocol** so no flip is needed (tested below).
+
+## 5. Vial rack pick-and-place (warm-up)
 
 ![Franka Panda placing three vials into a rack](outputs/pick_and_place.gif)
 
