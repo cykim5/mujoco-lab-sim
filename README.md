@@ -1,7 +1,89 @@
-# MuJoCo Lab Sim: vial rack pick-and-place
+# MuJoCo Lab Sim
 
-A simulated Franka Panda arm moves vials from a lab bench into a rack.
-Step 1 of a sim-to-real / real-to-sim project inspired by Gemini 4 Hydrogen for robotics.
+Simulated lab automation with a Franka Panda arm in MuJoCo, part of a sim-to-real / real-to-sim project inspired by Gemini 4 Hydrogen for robotics.
+
+1. **Cyanobacteria colony picking and quadrant restreaking** (main project): a workflow a cyano researcher wants automated. Today's colony pickers (like the QPix) are built for E. coli and no robot streaks from plate to plate.
+2. **Vial rack pick-and-place**: the warm-up demo.
+
+## 1. Cyano colony pick and restreak
+
+![Robot taking lids off, picking a colony with a plastic loop and quadrant streaking a fresh plate](outputs/cyano_loop.gif)
+
+| Colony finder (red = chosen, most isolated) | Streak on the fresh plate (green = touching agar) |
+|---|---|
+| ![Detected colonies](outputs/cyano_loop_colonies.png) | ![Quadrant streak path](outputs/cyano_toothpick_streak.png) |
+
+### What the robot does
+
+1. Lifts the lids off both plates and parks them on the bench.
+2. Photographs the source plate from above and finds every colony (green dot).
+3. Chooses the colony with the most empty space around it, so it picks a single clean colony.
+4. Picks up the tool: a **plastic loop** or a **wooden toothpick** (you choose).
+5. Lowers the tool slowly until it feels the agar, touching down on the chosen colony. This also measures the agar height, which changes from plate to plate.
+6. Quadrant streaks the fresh plate, pressing about 0.3 mm into the agar the whole way so it never digs in.
+7. Drops the tool in the waste bin and puts both lids back.
+
+### Run it
+
+```bash
+~/.venvs/mujoco-lab/bin/python streak_plate.py
+```
+
+It asks which tool to use (1 = plastic loop, 2 = wooden toothpick). Or pass it directly:
+
+```bash
+~/.venvs/mujoco-lab/bin/python streak_plate.py --tool toothpick --seed 3
+```
+
+`--seed` changes the colony layout and agar thickness. To test many random plates with both tools:
+
+```bash
+~/.venvs/mujoco-lab/bin/python run_trials.py --trials 10
+```
+
+### Results
+
+10 random plates per tool (different colony layouts and agar thickness every time). Full table: [`outputs/trials.csv`](outputs/trials.csv).
+
+| | Plastic loop | Wooden toothpick |
+|---|---|---|
+| Full workflow success | 10/10 | 10/10 |
+| Touched a single clean colony | 10/10 | 10/10 |
+| Worst miss from colony center | 0.12 mm | 0.12 mm |
+| Streak in contact with agar | 100% | 100% |
+| Deepest press into agar (limit 1 mm) | 0.43 mm | 0.36 mm |
+| Peak streaking force | 0.27 to 0.52 N | 0.06 to 0.12 N |
+| Agar height found by touch, error | within 0.2 mm | within 0.21 mm |
+| Time per plate (lids off to lids back on) | about 170 s | about 170 s |
+
+The colony finder caught 21 to 28 colonies per plate. The ones it missed were dots touching inside clumps, which merge into one blob. That's fine here, because the robot only picks isolated colonies.
+
+**What this means:** in simulation, nothing in the motion, vision or contact control blocks a robot from doing plate-to-plate cyano restreaking with either tool. The sim is idealized, though: perfect lighting, a perfectly calibrated camera, colonies that are always clean dots, and a tool that never slips. Real plates will be harder, so these numbers are an upper bound.
+
+Getting here surfaced real hardware requirements:
+- **Gravity compensation is required.** Without it, the arm landed about 5 mm off, which is enough to miss every colony.
+- **A 90 mm lid needs suction.** It's wider than a standard parallel gripper opens.
+- **A toothpick needs an adapter.** A standard gripper can't hold a bare 2 mm stick securely.
+- **Touch-sensing the agar is needed.** Agar thickness varies by more than 1.5 mm between plates.
+
+### What the sim does and does not show
+
+The sim tests whether **a robot can physically do the steps** reliably: see the colonies, touch a 1 mm target, follow a varying agar surface without gouging, and handle lids. It cannot test the biology: whether cyano cells actually stick to the tool, transfer, and grow. That needs real plates.
+
+Modeling choices worth knowing:
+
+| Choice | Why |
+|---|---|
+| Plate: 89 mm across, 15 mm tall. Agar 5.5 to 7.2 mm thick (up to about half the plate height), random per plate | Standard round microbial plate |
+| Colonies: green dots 0.8 to 2 mm across, some scattered, some in clumps | "Visible dots," with real crowding so isolation matters |
+| Lids are lifted with a small suction pad at the fingertips | A 90 mm lid is wider than the Panda gripper opens (80 mm). Real plate-handling robots use suction or a delidder |
+| The tool is locked to the gripper once grasped (a tool adapter) | The simulated fingers do not grip thin sticks well, and real cells use adapters anyway |
+| The toothpick sits in a 4 mm sleeve | The Panda fingertips cannot close tightly on a bare 2 mm toothpick. A real setup would need the same kind of adapter |
+| Plates are fixed in nests on the bench | Plates would slide while being streaked otherwise |
+| Arm uses gravity compensation | Without it the arm sags about 5 mm, too much for 1 mm colonies. Real Franka arms compensate too |
+| Grading uses hidden "truth" (real colony positions, real agar height) that the robot never sees | So the numbers measure what the robot actually achieved |
+
+## 2. Vial rack pick-and-place (warm-up)
 
 ![Franka Panda placing three vials into a rack](outputs/pick_and_place.gif)
 
@@ -9,7 +91,13 @@ Step 1 of a sim-to-real / real-to-sim project inspired by Gemini 4 Hydrogen for 
 |---|---|
 | ![Vials on the bench](outputs/before_lab_cam.png) | ![Vials in the rack](outputs/after_lab_cam.png) |
 
-## Setup (already done on this Mac)
+```bash
+~/.venvs/mujoco-lab/bin/python pick_and_place.py
+```
+
+Result: 3/3 vials placed, each within 0.4 mm of the slot center.
+
+## Setup
 
 The Python environment lives outside OneDrive so it does not sync thousands of files:
 
@@ -18,15 +106,7 @@ python3 -m venv ~/.venvs/mujoco-lab
 ~/.venvs/mujoco-lab/bin/pip install -r requirements.txt
 ```
 
-## Run
-
-Scripted pick-and-place (saves images and a GIF to `outputs/`):
-
-```bash
-~/.venvs/mujoco-lab/bin/python pick_and_place.py
-```
-
-Open the scene in the interactive 3D viewer (drag to rotate, double-click to select, Ctrl+drag to push things):
+Interactive 3D viewer for the vial scene (drag to rotate, Ctrl+drag to push things):
 
 ```bash
 ~/.venvs/mujoco-lab/bin/python -m mujoco.viewer --mjcf=models/lab_scene.xml
@@ -36,19 +116,17 @@ Open the scene in the interactive 3D viewer (drag to rotate, double-click to sel
 
 | File | What it is |
 |---|---|
-| `models/lab_scene.xml` | The lab: bench, 2x3 vial rack, three capped vials, two cameras |
-| `models/panda_lab.xml` | Menagerie's Panda with a `grip` site added between the fingertips and its keyframe removed |
+| `plate_world.py` | Builds the cyano plate scene: plates, lids, agar, random colonies, tool, holder, waste bin, cameras |
+| `cyano_sim.py` | The cyano workflow: lids, colony finder, touch-down, quadrant streak, grading |
+| `streak_plate.py` | Runs one plate with the tool you choose and saves pictures and a GIF |
+| `run_trials.py` | Runs many random plates per tool and writes `outputs/trials.csv` |
+| `lab_sim.py` | Shared helpers: inverse kinematics, smooth motion, images |
+| `pick_and_place.py`, `models/lab_scene.xml` | The vial demo |
+| `models/panda_lab.xml` | Menagerie's Panda with a `grip` site, gravity compensation, and its keyframe removed |
 | `assets/franka_emika_panda/` | Unchanged copy of the Panda from MuJoCo Menagerie (meshes, license) |
-| `lab_sim.py` | Helpers: reset, inverse kinematics, smooth motion, success check, image/GIF saving |
-| `pick_and_place.py` | Hand-written baseline plan: red to A1, blue to A2, green to A3 |
-| `outputs/` | Rendered images and GIF |
-
-## Baseline result
-
-3/3 vials placed, each about 5 mm off the slot center (inside the 5 mm clearance).
 
 ## Next steps
 
-1. Domain randomization: shuffle vial positions, friction, mass, lighting, camera pose. Measure success rate over many runs.
-2. Gemini in the loop: send the `lab_cam` image to `gemini-4-hydrogen`, have it find the vials and pick slots, compare to the baseline.
-3. Real-to-sim: rebuild this scene from a photo of a real bench.
+1. Colony PCR: pick colonies into a 96-well PCR plate.
+2. Real-to-sim: run the colony finder on photos of real cyano plates.
+3. Gemini in the loop: let `gemini-4-hydrogen` choose colonies from the camera image and compare with the hand-written finder.

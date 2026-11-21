@@ -41,8 +41,8 @@ SAFE_Z = 0.30  # height to travel at so we never hit anything
 
 
 class LabSim:
-    def __init__(self, record_video=True, video_camera="lab_cam", video_size=(320, 240), video_fps=10):
-        self.model = mujoco.MjModel.from_xml_path(SCENE_PATH)
+    def __init__(self, record_video=True, video_camera="lab_cam", video_size=(320, 240), video_fps=10, scene_path=SCENE_PATH):
+        self.model = mujoco.MjModel.from_xml_path(scene_path)
         self.data = mujoco.MjData(self.model)
         self.ik_data = mujoco.MjData(self.model)  # scratch copy so IK never disturbs the real sim
 
