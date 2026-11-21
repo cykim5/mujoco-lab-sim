@@ -1,0 +1,65 @@
+<mujoco model="vial rack lab">
+  <!-- The robot arm (Franka Panda from MuJoCo Menagerie, with a "grip" site added) -->
+  <include file="panda_lab.xml"/>
+
+  <visual>
+    <headlight diffuse="0.5 0.5 0.5" ambient="0.3 0.3 0.3" specular="0 0 0"/>
+    <global azimuth="150" elevation="-25" offwidth="1280" offheight="960"/>
+  </visual>
+
+  <asset>
+    <texture type="skybox" builtin="gradient" rgb1="0.85 0.88 0.92" rgb2="0.55 0.6 0.65" width="512" height="3072"/>
+    <texture type="2d" name="floor_tex" builtin="checker" rgb1="0.75 0.75 0.75" rgb2="0.68 0.68 0.68" width="300" height="300"/>
+    <material name="floor_mat" texture="floor_tex" texuniform="true" texrepeat="4 4"/>
+    <material name="bench_mat" rgba="0.25 0.27 0.3 1"/>
+    <material name="rack_mat" rgba="0.95 0.95 0.95 1"/>
+    <material name="glass" rgba="0.75 0.9 1.0 0.55" specular="0.9" shininess="0.9"/>
+  </asset>
+
+  <worldbody>
+    <light pos="0.5 0 2" dir="0 0 -1" directional="true" diffuse="0.6 0.6 0.6"/>
+    <light pos="1.5 -1 1.5" dir="-1 0.7 -1" diffuse="0.3 0.3 0.3"/>
+    <geom name="floor" size="0 0 0.05" type="plane" material="floor_mat"/>
+
+    <!-- Cameras. lab_cam is the "robot's eye" image we will later send to Gemini. -->
+    <camera name="lab_cam" pos="1.15 0 0.75" xyaxes="0 1 0 -0.55 0 0.84" fovy="50"/>
+    <camera name="top_cam" pos="0.5 0 1.0" xyaxes="0 -1 0 1 0 0" fovy="55"/>
+
+    <!-- Lab bench: top surface is at z = 0.10 m -->
+    <body name="bench" pos="0.5 0 0.05">
+      <geom name="bench_top" type="box" size="0.25 0.35 0.05" material="bench_mat"/>
+    </body>
+
+    <!-- Vial rack: 2 rows x 3 columns of slots, 4 cm apart, 3.4 cm wide inside.
+         Slot centers: x in {0.48, 0.52}, y in {0.11, 0.15, 0.19}. -->
+    <body name="rack" pos="0 0 0">
+      <geom name="rack_base" type="box" pos="0.50 0.15 0.103" size="0.043 0.063 0.003" material="rack_mat"/>
+      <!-- walls running along y (fixed x) -->
+      <geom type="box" pos="0.46 0.15 0.121" size="0.003 0.063 0.015" material="rack_mat"/>
+      <geom type="box" pos="0.50 0.15 0.121" size="0.003 0.063 0.015" material="rack_mat"/>
+      <geom type="box" pos="0.54 0.15 0.121" size="0.003 0.063 0.015" material="rack_mat"/>
+      <!-- walls running along x (fixed y) -->
+      <geom type="box" pos="0.50 0.09 0.121" size="0.043 0.003 0.015" material="rack_mat"/>
+      <geom type="box" pos="0.50 0.13 0.121" size="0.043 0.003 0.015" material="rack_mat"/>
+      <geom type="box" pos="0.50 0.17 0.121" size="0.043 0.003 0.015" material="rack_mat"/>
+      <geom type="box" pos="0.50 0.21 0.121" size="0.043 0.003 0.015" material="rack_mat"/>
+    </body>
+
+    <!-- Three vials (7 cm tall, 2.4 cm wide, about 15 g) standing on the bench -->
+    <body name="vial_red" pos="0.45 -0.20 0.136">
+      <freejoint/>
+      <geom name="vial_red_glass" type="cylinder" size="0.012 0.035" mass="0.012" material="glass" friction="1.2 0.01 0.001"/>
+      <geom name="vial_red_cap" type="cylinder" pos="0 0 0.041" size="0.013 0.006" mass="0.003" rgba="0.85 0.15 0.15 1"/>
+    </body>
+    <body name="vial_blue" pos="0.45 -0.12 0.136">
+      <freejoint/>
+      <geom name="vial_blue_glass" type="cylinder" size="0.012 0.035" mass="0.012" material="glass" friction="1.2 0.01 0.001"/>
+      <geom name="vial_blue_cap" type="cylinder" pos="0 0 0.041" size="0.013 0.006" mass="0.003" rgba="0.15 0.35 0.85 1"/>
+    </body>
+    <body name="vial_green" pos="0.45 -0.04 0.136">
+      <freejoint/>
+      <geom name="vial_green_glass" type="cylinder" size="0.012 0.035" mass="0.012" material="glass" friction="1.2 0.01 0.001"/>
+      <geom name="vial_green_cap" type="cylinder" pos="0 0 0.041" size="0.013 0.006" mass="0.003" rgba="0.15 0.7 0.3 1"/>
+    </body>
+  </worldbody>
+</mujoco>

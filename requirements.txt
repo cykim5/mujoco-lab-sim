@@ -1,0 +1,6 @@
+mujoco==4.0.1
+mujoco-core==4.0.1
+mujoco-studio==4.0.1
+mujoco-studio-wasm==4.0.1
+numpy==2.5.5
+pillow==13.0.0
