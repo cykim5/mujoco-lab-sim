@@ -1,16 +1,16 @@
-"""Connected lab version: the lab's real colony-PCR protocol, adapted so no toothpick flip is needed.
+"""Connected lab version: the lab's colony PCR protocol, adapted so the toothpick need not be inverted.
 
-The lab protocol pokes a colony with both ends of one toothpick (heavy, flip, light). Neither robot can
-flip a toothpick in its hand at bench height (see README), so this version uses ONE end for everything:
+The lab protocol loads cells on both ends of one toothpick (heavy pick, invert, light touch). Neither robot can
+invert a toothpick in-hand at bench height (see README), so this version uses one end for everything:
 
 For colony k (k = 1..8), with one fresh toothpick:
-  1. poke the colony once,
-  2. zigzag inside pie slice k of the fresh plate, from the rim toward the center,
-  3. swirl the same end in PCR tube k, releasing whatever cells are left over,
+  1. pick the colony once,
+  2. streak a zigzag within sector k of the fresh plate, from the rim toward the center,
+  3. resuspend the remaining cells in PCR tube k with the same end,
   4. discard.
 
 Cell amounts are a simple model, not simulated biology:
-  - a clean poke loads 1.0 (relative units) onto the tip,
+  - a single-colony pick loads 1.0 (relative units) onto the tip,
   - streaking deposits cells as it goes: the tip keeps exp(-contact length / STREAK_DECAY) of its load,
   - swirling 3 circles in the master mix releases 1 - 0.5**3 = 87.5% of what is left,
   - the master mix turns green in proportion to the cells released. The lab says it should be VERY slightly
@@ -60,7 +60,7 @@ def sector_path(dest_xy, k):
 
 
 def sector_streak(sim, k):
-    """Touch down at the rim end of slice k and zigzag to the center at about 2 cm/s, pressing lightly."""
+    """Touch down at the rim end of sector k and streak a zigzag to the center at about 2 cm/s, pressing lightly."""
     path = sector_path(sim.dest_xy, k)
     start_z = pw.BENCH_Z + pw.PLATE_WALL_TOP + 0.002
     pcr.go_tip(sim, path[0], start_z + 0.01)
@@ -134,12 +134,12 @@ def run_connected(sim, centers):
             row.update({"ok": False, "error": str(e)})
             rows.append(row)
             continue
-        # 1. poke once
+        # 1. pick the colony once
         touch_xy, _ = sim.pick_colony(colony)
         grade = sim.grade_pick(touch_xy, colony)
         load = 1.0 if grade["picked"] == True else 0.0
         row.update({"picked": grade["picked"], "clean_pick": grade["clean_pick"], "miss_mm": grade["miss_mm"]})
-        # 2. zigzag in slice k, rim to center
+        # 2. streak within sector k, rim to center
         samples, contact_length = sector_streak(sim, k)
         all_samples.extend(samples)
         contact_pct = 100.0 * sum(1 for s in samples if s["force"] > 0.0005) / max(len(samples), 1)
@@ -150,7 +150,7 @@ def run_connected(sim, centers):
         row.update({"streak_contact_pct": round(contact_pct, 1), "streak_length_mm": round(contact_length * 1000),
                     "streak_max_depth_mm": round(max_depth * 1000, 2), "stayed_in_slice": bool(inside),
                     "leftover_on_tip": round(leftover, 3)})
-        # 3. swirl the leftover in tube k
+        # 3. resuspend the remaining cells in tube k
         d = pcr.dip(sim, k, centers, tube_geoms)
         released = leftover * SWIRL_RELEASE if d["dipped"] == True else 0.0
         tint_tube(sim, k, released)
@@ -161,8 +161,8 @@ def run_connected(sim, centers):
         row["ok"] = (row["clean_pick"] == True and contact_pct >= 90 and max_depth <= 0.001 and inside == True
                      and d["dipped"] == True and len(d["touched_other_tubes"]) == 0
                      and row["tube_color"] == "slight green")
-        sim.say(f"colony {k + 1}: clean poke {row['clean_pick']} ({row['miss_mm']} mm), slice {k + 1} zigzag "
-                f"{contact_pct:.0f}% contact, {row['streak_length_mm']} mm long, leftover {leftover:.2f}, "
+        sim.say(f"colony {k + 1}: single-colony pick {row['clean_pick']} ({row['miss_mm']} mm), sector {k + 1} streak "
+                f"{contact_pct:.0f}% contact, {row['streak_length_mm']} mm, remaining on tip {leftover:.2f}, "
                 f"tube {k + 1}: {row['tube_color']} ({released:.2f})")
         rows.append(row)
 
@@ -177,7 +177,7 @@ def run_connected(sim, centers):
 
 
 def save_pictures(sim, samples, name):
-    """Fresh plate with the 8 slice zigzags drawn on it, and the PCR strip with each tube's color."""
+    """Fresh plate with the 8 sector streaks drawn on it, and the PCR strip with each tube's color."""
     renderer = mujoco.Renderer(sim.model, height=800, width=800, max_geom=20000)
     renderer.update_scene(sim.data, camera="dest_cam")
     scene = renderer.scene

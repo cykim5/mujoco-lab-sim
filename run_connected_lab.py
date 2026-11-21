@@ -1,4 +1,4 @@
-"""Connected lab version: 8 colonies, one poke each, zigzag in its pie slice, swirl leftover in its PCR tube.
+"""Connected lab version: 8 colonies, each picked once, streaked in its sector, and resuspended in its PCR tube.
 
 Run:
   ~/.venvs/mujoco-lab/bin/python run_connected_lab.py --robot so101 --seeds 0 1 2 3

@@ -1,146 +1,135 @@
 # MuJoCo Lab Sim
 
-Simulated lab automation in MuJoCo, part of a sim-to-real / real-to-sim project inspired by Gemini 4 Hydrogen for robotics.
+Simulation of robotic colony picking, restreaking and colony PCR for cyanobacteria, built in MuJoCo as part of a sim-to-real / real-to-sim project inspired by Gemini 4 Hydrogen for robotics.
 
-**Main project: cyanobacteria colony picking and quadrant restreaking**, a workflow a cyano researcher wants automated. Today's colony pickers (like the QPix) are built for E. coli, and no robot streaks from plate to plate. Two versions:
+Commercial colony pickers (e.g. QPix) are optimized for *E. coli*, and no current system restreaks from plate to plate. This project asks whether a robot can perform the cyanobacterial strain workflow, and what hardware it would need. Two robots are compared:
 
-| | **Reference** (Panda) | **Build** (SO-101) |
+| | **Reference** (Franka Panda) | **Build** (SO-101) |
 |---|---|---|
-| Robot | Franka Panda, a lab-grade 7-joint research arm | SO-101, a cheap 3D-printed 5-joint arm |
-| Question | Can a robot do this workflow at all? | Can something you could actually build do it? |
-| Lids | Suction pad | Our printed jaw with a V-shaped lid hook |
-| Tools | Loop or toothpick from a 24-slot rack | Toothpicks jumbled in a cup (shake to free one), or a printed 24-hole rack |
-| Motors | Ideal (gravity compensated) | Realistic: weak servos, no gravity compensation, hidden calibration error fixed by touch calibration |
-| Full restreak success | 20/20 | Cup 2/8, **rack 8/8** |
-| Colony PCR (8 per plate) | 31/31 colonies | 31/31 colonies |
-| Sections | [1](#1-reference-version-panda) | [2](#2-build-version-so-101) |
+| Robot | Lab-grade 7-joint research arm | Low-cost 3D-printed 5-joint arm |
+| Question | Is the workflow feasible for a robot? | Is it feasible with hardware a lab could build? |
+| Lid handling | Suction pad | Custom printed jaw with a V-shaped lid hook |
+| Tools | Loop or toothpick, 24-slot rack | Toothpicks in a cup (agitated to free one) or a printed 24-hole rack |
+| Motors | Ideal, gravity compensated | Realistic servo torque, no gravity compensation, joint calibration error corrected by touch calibration |
+| Restreak success | 20/20 | Cup 2/8, rack **8/8** |
+| Colony PCR | 31/31 colonies | 31/31 colonies |
 
-Then **colony PCR** on both robots ([3](#3-colony-pcr-both-robots)), the **connected lab version** that follows the lab's real protocol ([4](#4-connected-lab-version-the-labs-real-protocol)), and a warm-up vial demo ([5](#5-vial-rack-pick-and-place-warm-up)).
+Sections: [1. Reference version](#1-reference-version-franka-panda), [2. Build version](#2-build-version-so-101), [3. Colony PCR](#3-colony-pcr), [4. Connected lab version](#4-connected-lab-version-lab-protocol), [5. Vial pick-and-place](#5-vial-pick-and-place-warm-up).
 
-## 1. Reference version (Panda)
+## 1. Reference version (Franka Panda)
 
-![Robot taking lids off, picking a colony with a plastic loop and quadrant streaking a fresh plate](outputs/cyano_loop.gif)
+![Panda removing lids, picking a colony with a plastic loop and quadrant streaking a fresh plate](outputs/cyano_loop.gif)
 
-| Colony finder (red = chosen, most isolated) | Streak on the fresh plate (numbers = quadrant start, light to dark = stroke order, red would mean lifted off) |
+| Colony detection (red: selected, most isolated) | Streak path (numbers: quadrant start; light to dark: stroke order; red: loss of contact) |
 |---|---|
 | ![Detected colonies](outputs/cyano_loop_colonies.png) | ![Quadrant streak path](outputs/cyano_toothpick_streak.png) |
 
-### What the robot does
+### Workflow
 
-1. Lifts the lids off both plates and parks them on the bench.
-2. Photographs the source plate from above and finds every colony (green dot).
-3. Chooses the colony with the most empty space around it, so it picks a single clean colony.
-4. Takes the next tool from a **24-slot rack** (like a pipette tip box): a **plastic loop** or a **wooden toothpick** (you choose). It opens the fingers only 3 mm wider than the handle and lifts the tool straight up by its full length, so it never touches the neighbors.
-5. Lowers the tool slowly until it feels the agar, touching down on the chosen colony. This also measures the agar height, which changes from plate to plate.
-6. Quadrant streaks the fresh plate. In each quadrant it zigzags from the rim in toward the center, and each new quadrant starts by dragging out of the previous one. It presses about 0.3 mm into the agar the whole way so it never digs in.
-7. Drops the tool in the waste bin and puts both lids back.
+1. Remove both lids and set them aside.
+2. Image the source plate from above and detect colonies.
+3. Select the most isolated colony to ensure a single-colony pick.
+4. Take the next tool from a 24-slot rack: plastic loop or wooden toothpick. The gripper opens only 3 mm wider than the handle and lifts the tool its full length before moving, so neighboring tools are never touched.
+5. Lower the tool onto the selected colony until contact is sensed. This also measures the agar surface height, which varies between plates.
+6. Quadrant streak the fresh plate. Each quadrant is streaked from the rim toward the center, starting from the previous quadrant, at about 0.3 mm press depth.
+7. Discard the tool and replace both lids.
 
-### Run it
-
-```bash
-~/.venvs/mujoco-lab/bin/python streak_plate.py
-```
-
-It asks which tool to use (1 = plastic loop, 2 = wooden toothpick). Or pass it directly:
+### Usage
 
 ```bash
+~/.venvs/mujoco-lab/bin/python streak_plate.py                       # prompts for loop or toothpick
 ~/.venvs/mujoco-lab/bin/python streak_plate.py --tool toothpick --seed 3
+~/.venvs/mujoco-lab/bin/python run_trials.py --trials 10             # randomized plates, both tools
 ```
 
-`--seed` changes the colony layout and agar thickness. To test many random plates with both tools:
-
-```bash
-~/.venvs/mujoco-lab/bin/python run_trials.py --trials 10
-```
+`--seed` changes the colony layout and agar thickness.
 
 ### Results
 
-10 random plates per tool (different colony layouts, agar thickness and rack slot every time). Full table: [`outputs/trials.csv`](outputs/trials.csv).
+10 randomized plates per tool (colony layout, agar thickness and rack slot vary). Data: [`outputs/trials.csv`](outputs/trials.csv).
 
 | | Plastic loop | Wooden toothpick |
 |---|---|---|
-| Full workflow success | 10/10 | 10/10 |
-| Took a tool from the rack without touching a neighbor | 10/10 | 10/10 |
-| Touched a single clean colony | 10/10 | 10/10 |
-| Worst miss from colony center | 0.12 mm | 0.13 mm |
-| Streak in contact with agar | 100% | 100% |
-| Deepest press into agar (limit 1 mm) | 0.49 mm | 0.36 mm |
+| Full workflow | 10/10 | 10/10 |
+| Tool retrieved without contacting neighbors | 10/10 | 10/10 |
+| Single-colony pick | 10/10 | 10/10 |
+| Maximum distance from colony center | 0.12 mm | 0.13 mm |
+| Streak contact with agar | 100% | 100% |
+| Maximum press depth (limit 1 mm) | 0.49 mm | 0.36 mm |
 | Peak streaking force | 0.30 to 0.58 N | 0.06 to 0.12 N |
-| Agar height found by touch, error | within 0.26 mm | within 0.21 mm |
-| Time per plate (lids off to lids back on) | about 175 s | about 174 s |
+| Agar height error (touch sensing) | ≤ 0.26 mm | ≤ 0.21 mm |
+| Time per plate | ~175 s | ~174 s |
 
-The colony finder caught 21 to 28 colonies per plate. The ones it missed were dots touching inside clumps, which merge into one blob. That's fine here, because the robot only picks isolated colonies.
+Colony detection found 21 to 28 colonies per plate. Missed colonies were contiguous colonies merged into one object; only isolated colonies are picked.
 
-**What this means:** in simulation, nothing in the motion, vision or contact control blocks a robot from doing plate-to-plate cyano restreaking with either tool. The sim is idealized, though: perfect lighting, a perfectly calibrated camera, colonies that are always clean dots, and a tool that never slips. Real plates will be harder, so these numbers are an upper bound.
+**Interpretation:** motion, vision and contact control do not limit plate-to-plate restreaking with either tool. The simulation is idealized (uniform lighting, calibrated camera, round colonies, no tool slip), so these results are an upper bound.
 
-Getting here surfaced real hardware requirements:
-- **Gravity compensation is required.** Without it, the arm landed about 5 mm off, which is enough to miss every colony.
-- **A 90 mm lid needs suction.** It's wider than a standard parallel gripper opens.
-- **A toothpick needs an adapter.** A standard gripper can't hold a bare 2 mm stick securely.
-- **Touch-sensing the agar is needed.** Agar thickness varies by more than 1.5 mm between plates.
-- **The tool rack has design rules.** Tools need about 3 cm of space in the direction the fingers close, tall loops need a deep rack, and the arm has to lift each tool its full length before moving sideways. With those rules, all 48 test picks (every slot, both tools) came out without touching a neighbor.
+**Hardware requirements identified:**
+- **Gravity compensation.** Without it, the tool landed ~5 mm off target.
+- **Suction for lids.** A 90 mm lid exceeds the 80 mm gripper stroke.
+- **A toothpick adapter.** The gripper cannot hold a bare 2 mm toothpick securely.
+- **Agar surface sensing.** Agar thickness varies by more than 1.5 mm between plates.
+- **Tool rack geometry.** ~3 cm spacing along the gripper's closing axis, a deep rack for 12 cm loops, and a full-length vertical lift before lateral motion. With these, all 48 test retrievals (every slot, both tools) were contact-free.
 
-### What the sim does and does not show
+### Scope and assumptions
 
-The sim tests whether **a robot can physically do the steps** reliably: see the colonies, touch a 1 mm target, follow a varying agar surface without gouging, and handle lids. It cannot test the biology: whether cyano cells actually stick to the tool, transfer, and grow. That needs real plates.
+The simulation tests whether a robot can perform the physical steps reliably: locating colonies, contacting a 1 mm target, following the agar surface without gouging, and handling lids. Biological transfer and growth are not modeled.
 
-Modeling choices worth knowing:
-
-| Choice | Why |
+| Assumption | Rationale |
 |---|---|
-| Plate: 89 mm across, 15 mm tall. Agar 5.5 to 7.2 mm thick (up to about half the plate height), random per plate | Standard round microbial plate |
-| Colonies: green dots 0.8 to 2 mm across, some scattered, some in clumps | "Visible dots," with real crowding so isolation matters |
-| Lids are lifted with a small suction pad at the fingertips | A 90 mm lid is wider than the Panda gripper opens (80 mm). Real plate-handling robots use suction or a delidder |
-| The tool is locked to the gripper once grasped (a tool adapter) | The simulated fingers do not grip thin sticks well, and real cells use adapters anyway |
-| The toothpick sits in a 4 mm sleeve | The Panda fingertips cannot close tightly on a bare 2 mm toothpick. A real setup would need the same kind of adapter |
-| Tools stand in a 3 x 8 rack: 3 cm apart where the fingers close, 2 cm apart the other way. The loop rack is 6 cm deep, the toothpick rack 3.5 cm | At 2 cm spacing the Panda's thick fingers hit neighbors. In a shallow rack the 12 cm loops lean into the fingers' path. A bump counts whenever the robot or its tool touches another tool |
-| Plates are fixed in nests on the bench | Plates would slide while being streaked otherwise |
-| Arm uses gravity compensation | Without it the arm sags about 5 mm, too much for 1 mm colonies. Real Franka arms compensate too |
-| Grading uses hidden "truth" (real colony positions, real agar height) that the robot never sees | So the numbers measure what the robot actually achieved |
+| 89 mm × 15 mm plate; agar 5.5 to 7.2 mm thick, randomized | Standard round Petri dish, filled to about half height |
+| Colonies 0.8 to 2 mm, scattered and clustered | Visible colonies, with crowding so isolation matters |
+| Lids lifted by a fingertip suction pad | Lid wider than the gripper stroke; commercial plate handlers use suction or delidders |
+| Tool locked to the gripper once grasped | Represents a tool adapter; simulated fingers do not hold thin sticks reliably |
+| Toothpick held in a 4 mm sleeve | Panda fingertips cannot close on a bare 2 mm toothpick |
+| 3 × 8 tool rack: 3 cm pitch along the closing axis, 2 cm across; 6 cm deep for loops, 3.5 cm for toothpicks | Tighter spacing caused finger contact; shallow racks let 12 cm loops lean into the gripper path |
+| Plates fixed in nests | Prevents plates sliding during streaking |
+| Gravity compensation enabled | Without it the arm sags ~5 mm; Franka arms compensate in practice |
+| Grading against hidden ground truth (true colony positions and agar height) | Metrics reflect actual performance, not the robot's own estimate |
 
 ## 2. Build version (SO-101)
 
-![SO-101 with printed jaw: calibrating on pins, lid hook, picking one toothpick from the cup, streaking](outputs/so101_toothpick.gif)
+![SO-101 with printed jaw: pin calibration, lid hook, toothpick pick from a cup, streaking](outputs/so101_toothpick.gif)
 
-| Colony finder | Streak on the fresh plate |
+| Colony detection | Streak path |
 |---|---|
-| ![SO-101 colony finder](outputs/so101_toothpick_colonies.png) | ![SO-101 streak](outputs/so101_toothpick_streak.png) |
+| ![SO-101 colony detection](outputs/so101_toothpick_colonies.png) | ![SO-101 streak](outputs/so101_toothpick_streak.png) |
 
 ```bash
 ~/.venvs/mujoco-lab/bin/python streak_plate.py --robot so101 --seed 2
 ~/.venvs/mujoco-lab/bin/python run_so101_trials.py --trials 8
 ```
 
-### What is different
+### Design
 
-1. **Our printed two-zone jaw** ([`build_so101_model.py`](build_so101_model.py)). Slim fingertips (4 mm thick, 6 mm wide) pick a single toothpick. A V-shaped hook on the swinging jaw grips the lid by its rim when the jaw is opened 1.70 rad. No suction.
-2. **Calibration by touch.** At startup the arm touches 4 pins at known spots (2 short, 2 tall), from the top and all four sides: 20 touches. It then solves for each joint's error. This cut the tool error from 0.4 to 2.3 mm down to 0.07 to 0.16 mm. It takes about 3 minutes, once per session.
-3. **Lids by touch.** The fixed fingertip comes down 4 mm outside the rim and slides in until it feels the rim (servo load). Then the V-hook closes, which also centers the lid sideways. To put a lid back, the arm lowers it, and if it stops high (resting on the rim) it does a small spiral search until it drops in.
-4. **Toothpicks from a cup, the way a person keeps them.** 24 toothpicks lean together in a 3.2 cm holder with a printed grab tab. A depth camera finds toothpick tops (local high points) and works out each stick's lean and direction. The robot picks one where the fingertips fit between the neighbors, pulls straight up, and checks that no other toothpick came with it. **If none has room, the arm pinches the cup's tab and swirls it gently**, a little stronger each round (1.5 to 3.5 mm), then looks again.
-5. **Never sweep low.** Every sideways move first rises to a safe height, higher when carrying a toothpick, and arcs around the robot base. Before this, the open lid hook was knocking 1 to 3 toothpicks out of the cup every run.
-6. **Look before touching.** The toothpick hovers 4.5 mm over the colony, the plate camera finds the tip's lowest point, and the robot corrects before it touches.
-7. **Realistic motors.** Menagerie's SO-101 servo strength (2.94 N*m), no gravity compensation, and a hidden calibration error of up to 0.5 degrees per joint, different for every seed.
+1. **Two-zone printed jaw** ([`build_so101_model.py`](build_so101_model.py)). Slim fingertips (4 × 6 mm) pick a single toothpick; a V-shaped hook on the moving jaw grips the lid rim at a jaw angle of 1.70 rad. No suction.
+2. **Touch calibration.** At startup the arm touches 4 pins at known positions (2 short, 2 tall) from above and from four sides, 20 contacts in total, and solves for each joint's offset. Tool position error drops from 0.4 to 2.3 mm to 0.07 to 0.16 mm. Takes ~3 min per session.
+3. **Lid handling by touch.** The fixed fingertip descends 4 mm outside the rim and advances until contact is sensed (servo load); the V-hook then closes and centers the lid. On replacement, if the lid rests on the rim, a spiral search seats it.
+4. **Toothpicks from a cup**, as kept by hand. 24 toothpicks in a 3.2 cm holder with a printed tab. A depth camera locates toothpick tops and estimates each one's tilt; the robot picks one with clearance for the fingertips, lifts vertically and verifies that no neighbor came with it. If none has clearance, the arm grips the tab and swirls the cup gently (1.5 to 3.5 mm, increasing each round), then re-images.
+5. **Safe travel height.** Lateral moves are made at a safe height (higher when holding a toothpick) along an arc around the base. Low moves previously let the open lid hook knock 1 to 3 toothpicks out of the cup per run.
+6. **Visual correction before contact.** The toothpick hovers 4.5 mm above the colony, the plate camera locates the tip, and the position is corrected before contact.
+7. **Realistic actuators.** SO-101 servo torque (2.94 Nm), no gravity compensation, and an unknown calibration error of up to 0.5° per joint, randomized per seed.
 
-### Results (cup version)
+### Results: cup
 
-8 random plates. Each seed changes the colonies, agar, how the toothpicks fall, and the arm's hidden calibration error. Full table: [`outputs/so101_trials.csv`](outputs/so101_trials.csv). Watch a run step by step with `run_so101_trials.py`: it prints every action live.
+8 randomized plates (colonies, agar, toothpick arrangement and calibration error vary). Data: [`outputs/so101_trials.csv`](outputs/so101_trials.csv).
 
 | Step | Success | Notes |
 |---|---|---|
 | Calibration | 8/8 | Tool error 0.4 to 2.3 mm before, 0.07 to 0.16 mm after |
-| One toothpick out of the cup | 5/8 | 0 to 7 gentle shakes when it works. 3 plates had no free toothpick even after 14 shakes |
-| Clean colony touch | 5/5 picked | **0.08 to 0.33 mm** from the colony center (was up to 3.5 mm before calibration) |
-| Streak (no gouging, limit 1 mm) | 5/5 | 100% contact, deepest 0.86 mm |
-| Lids back on | 2/5 | The lid could not be picked back up from its parking spot ("hook never closed"). Not yet diagnosed |
-| **Full workflow** | **2/8** | About 7 minutes per plate including calibration |
+| Single toothpick retrieved | 5/8 | 0 to 7 agitation rounds when successful; 3 plates yielded none after 14 rounds |
+| Single-colony pick | 5/5 | 0.08 to 0.33 mm from colony center (up to 3.5 mm before calibration) |
+| Streak (press depth limit 1 mm) | 5/5 | 100% contact, maximum depth 0.86 mm |
+| Lids replaced | 2/5 | Lid not re-gripped from its parking position |
+| **Full workflow** | **2/8** | ~7 min per plate, including calibration |
 
-**What this means:** calibration fixed the cheap arm's accuracy. Colony touches and streaks are now as good as the Panda's. What's left is the cup itself: **in a jumbled cup the toothpick tops stay crowded together, and gentle shaking rarely frees one** (side-to-side, tapping and swirling were tested; none reliably did). That's the motivation for the rack variant: a printed rack that holds each toothpick on its own, the same idea as the Panda's tool rack.
+Calibration brings the SO-101's accuracy to the Panda's level. The limiting step is the cup: toothpick tops remain crowded, and gentle agitation (lateral, tapping and swirling were tested) rarely isolates one.
 
-### Rack variant: a printed toothpick rack
+### Results: printed rack
 
-In a jumbled cup the toothpick tops stay crowded, so the robot often has nothing it can grab. The fix is the same idea as the Panda's tool rack: **print a rack that holds each toothpick on its own.** Two rows of 12 holes, 7 mm apart along a row (room for the 6 mm fingertips), rows 2.5 cm apart (the fingertip behind the toothpick and the lid hook clear the other row), holes 2.5 cm deep so 4 cm of each toothpick sticks up.
+A printed rack holds each toothpick separately: two rows of 12 holes, 7 mm pitch (clearance for the 6 mm fingertips), rows 2.5 cm apart (clearance for the trailing fingertip and lid hook), holes 2.5 cm deep, leaving 4 cm of each toothpick exposed.
 
-![SO-101 taking toothpicks from the printed rack, touching a colony and streaking](outputs/so101_rack.gif)
+![SO-101 retrieving a toothpick from the printed rack, picking a colony and streaking](outputs/so101_rack.gif)
 
 ```bash
 ~/.venvs/mujoco-lab/bin/python streak_plate.py --robot so101 --holder rack --seed 0
@@ -150,49 +139,49 @@ In a jumbled cup the toothpick tops stay crowded, so the robot often has nothing
 | Step | Cup | **Rack** |
 |---|---|---|
 | Calibration (tool error after) | 0.07 to 0.16 mm | 0.07 to 0.16 mm |
-| One toothpick, first try | 2/8 (3 never) | **8/8**, zero neighbors touched |
-| Clean colony touch | 5/5 picked, 0.08 to 0.33 mm | **8/8, 0.07 to 0.17 mm** |
-| Streak (limit 1 mm deep) | 5/5 | **8/8**, deepest 0.92 mm |
-| Lids back on | 2/5 | **8/8** |
+| Toothpick retrieved on first attempt | 2/8 (3 never) | **8/8**, no neighbor contact |
+| Single-colony pick | 5/5, 0.08 to 0.33 mm | **8/8**, 0.07 to 0.17 mm |
+| Streak (depth limit 1 mm) | 5/5 | **8/8**, maximum 0.92 mm |
+| Lids replaced | 2/5 | **8/8** |
 | **Full workflow** | **2/8** | **8/8** |
 
-Full table: [`outputs/so101_rack_trials.csv`](outputs/so101_rack_trials.csv). With a rack, the cheap printed arm matches the lab-grade Panda on this workflow. The other change between the two runs was moving the waste bin within reach. Before that, the arm ended its drop in an awkward pose, and that also caused the lid failures.
+Data: [`outputs/so101_rack_trials.csv`](outputs/so101_rack_trials.csv). With a rack, the SO-101 matches the Panda on this workflow. Relocating the waste bin within reach also resolved the lid failures, which followed from an awkward arm pose after discarding.
 
-### What building it in the sim taught us
+### Design lessons
 
-Every one of these came from the sim failing first:
+Each came from a failure in simulation:
 
-- **The SO-101 needs an 8 cm riser.** Pointing straight down, it can only reach about 7 cm above its own base, too low to lift a toothpick out of a cup.
-- **12 cm loops do not work** with this arm and a cup. A loop held upright is too tall to lift out. Toothpicks only.
-- **A narrow, deep cup.** In a wide cup, 6.5 cm toothpicks fall flat. In a 3.2 cm by 4.5 cm holder they lean on the rim and their tops fan out about 6 mm apart.
-- **Fingertips narrower than 6 mm.** Wider tips never fit between toothpick tops.
-- **Stop squeezing at first contact.** Full servo force squirts a tilted toothpick out sideways. A real fingertip needs a small groove to catch the stick. The sim models that groove as a hold that switches on when both fingertips touch the same stick.
-- **Where the lid hook sits matters.** The hook swings down as the jaw opens a little, so with the jaw gripping a toothpick it hangs 5.7 cm behind the fingertips at fingertip height. It must face away from the cup, or it lands on the toothpicks and blocks the jaw.
-- **Remove the wrist camera mount.** It hits the SO-101's shoulder when the arm folds in to reach colonies near the base.
-- **Use a V-shaped hook.** A flat hook holds the round lid wherever it lands, up to 7 mm sideways. A V centers it.
-- **Calibration error is the cheap arm's real problem**, and touch calibration fixes it. 0.5 degrees per joint becomes 1 to 3 mm at the tool tip. Touching 4 pins brings it under 0.2 mm. Use pins of different heights: with same-height pins the shoulder, elbow and wrist errors look alike and cannot be separated.
-- **Travel high.** An open lid hook reaches 10 cm past the fingertips. Moving low across the bench, it knocked toothpicks out of the cup every run.
-- **Give the cup a grab tab, and keep the bench ring low.** The fingertips cannot reach the cup wall through the fanned-out toothpicks, so the arm shakes the cup by a tab sticking out toward it. A tab resting on the ring tilted the cup 4.6 degrees.
-- **Shaking does not spread a crowded cup.** Side-to-side, tapping and swirling all left about one pickable toothpick per look, often none.
+- **8 cm riser.** Pointing straight down, the SO-101 reaches only ~7 cm above its base, too low to lift a toothpick out of a cup.
+- **No 12 cm loops.** An upright loop is too tall to lift out of a cup; toothpicks only.
+- **Narrow, deep cup.** In a wide cup, 6.5 cm toothpicks fall flat; in a 3.2 × 4.5 cm holder they rest against the rim with tops ~6 mm apart.
+- **Fingertips under 6 mm wide**, to fit between toothpick tops.
+- **Stop at first contact.** Full servo force ejects a tilted toothpick sideways; a grooved fingertip is needed (modeled as a hold that engages when both fingertips contact the same toothpick).
+- **Lid hook orientation.** With the jaw nearly closed, the hook sits 5.7 cm behind the fingertips at fingertip height. It must face away from the cup or it contacts the toothpicks.
+- **Remove the wrist camera mount.** It collides with the shoulder when the arm folds in toward the base.
+- **V-shaped hook.** A flat hook holds the lid up to 7 mm off center; a V centers it.
+- **Touch calibration.** 0.5° per joint becomes 1 to 3 mm at the tool tip, enough to miss a 1 mm colony; calibration brings it under 0.2 mm. Pins of different heights are required, otherwise shoulder, elbow and wrist offsets cannot be distinguished.
+- **Travel high.** The open lid hook extends 10 cm past the fingertips and dislodged toothpicks during low moves.
+- **Cup tab and a low bench ring.** Fanned toothpicks block access to the cup wall, so the cup is agitated by a tab; a tab resting on the ring tilted the cup 4.6°.
+- **Agitation does not decongest a crowded cup.** All three motions left about one pickable toothpick per image, often none.
 
-### Known limits
+### Known limitations
 
-- Cup version: 3 of 8 cups never gave up a free toothpick. Use the rack variant.
-- When the gripper blocks the camera's view of the toothpick tip, the robot skips the camera correction. With calibration this matters much less (touches still within 0.33 mm).
+- Cup holder: 3 of 8 plates yielded no isolated toothpick. Use the rack.
+- When the gripper occludes the toothpick tip, visual correction is skipped; with calibration, picks remain within 0.33 mm.
 
-## 3. Colony PCR (both robots)
+## 3. Colony PCR
 
-The third step of the cyano workflow. For each of up to 8 colonies, the robot:
+For each of up to 8 colonies:
 
-1. takes a fresh toothpick (Panda rack or SO-101 printed rack),
-2. touches a different isolated, single colony,
-3. **patches** it onto spot k of the fresh plate, so a living copy of that clone is kept,
-4. **dips** it into PCR tube k of an 8-tube strip and swirls three small circles in the master mix,
-5. drops the toothpick in the waste bin.
+1. Take a fresh toothpick from the rack.
+2. Pick a different isolated colony.
+3. Patch it onto position k of the fresh plate, retaining a viable copy of the clone.
+4. Resuspend the remaining cells in PCR tube k of an 8-tube strip (three small swirls in the master mix).
+5. Discard the toothpick.
 
-Colony k -> patch k -> tube k, so every PCR result traces back to a clone you still have.
+Colony k → patch k → tube k, so each PCR result traces to a retained clone.
 
-![SO-101 doing colony PCR: pick, patch, dip into the PCR strip (sped up)](outputs/pcr_so101.gif)
+![SO-101 performing colony PCR: pick, patch, resuspend in the PCR strip (accelerated)](outputs/pcr_so101.gif)
 
 ```bash
 ~/.venvs/mujoco-lab/bin/python run_pcr.py --robot so101 --seeds 0 1 2 3
@@ -201,88 +190,86 @@ Colony k -> patch k -> tube k, so every PCR result traces back to a clone you st
 
 | | Panda | SO-101 (rack) |
 |---|---|---|
-| Colonies done correctly (pick + patch + dip) | **31/31** | **31/31** |
-| Colony touch, distance from center | 0.01 to 0.13 mm | 0.07 to 0.22 mm |
-| Patch contact with the agar | 100% every time | 100% every time |
-| Tip below the master-mix level, right tube | 31/31, 2.5 mm deep | 31/31, 2.7 to 2.8 mm deep |
-| Touched another tube (cross-contamination) | never | never |
-| Lids back on | 3/4 plates | 4/4 plates |
-| Time for 8 colonies | about 8 minutes | about 12 minutes (incl. 3 min calibration) |
+| Colonies completed (pick, patch, resuspend) | **31/31** | **31/31** |
+| Distance from colony center | 0.01 to 0.13 mm | 0.07 to 0.22 mm |
+| Patch contact with agar | 100% | 100% |
+| Tip below master-mix level, correct tube | 31/31, 2.5 mm deep | 31/31, 2.7 to 2.8 mm deep |
+| Contact with another tube | none | none |
+| Lids replaced | 3/4 | 4/4 |
+| Time for 8 colonies | ~8 min | ~12 min (incl. 3 min calibration) |
 
-4 random plates per robot. One plate had only 7 isolated single colonies, hence 31. Full results: [`outputs/pcr_panda_results.json`](outputs/pcr_panda_results.json), [`outputs/pcr_so101_results.json`](outputs/pcr_so101_results.json).
+4 randomized plates per robot; one plate had only 7 isolated colonies (31 total). Data: [`outputs/pcr_panda_results.json`](outputs/pcr_panda_results.json), [`outputs/pcr_so101_results.json`](outputs/pcr_so101_results.json).
 
-The Panda's one lid miss: on one plate the source lid stuck to the fingertips as the suction let go at its parking spot, and it flipped over. It did not happen again on a rerun of the same plate, so it's an occasional flaw in the simple suction model, not the PCR steps.
+Notes:
+- The Panda's lid failure occurred once: the lid adhered to the fingertips when suction was released and flipped. It did not recur on a rerun and reflects the simplified suction model.
+- Liquids are not simulated. Resuspension is scored as the tip reaching at least 1 mm below the master-mix level in the correct tube.
+- **Merged colonies.** Three contiguous colonies were detected as one object and picked together, which would yield a mixed clone. Detection now rejects objects that are elongated or larger than a single colony (> 2.2 mm). On 6 plates, it rejected 10/10 merged objects and 0/129 single colonies. The restreak trials in sections 1 and 2 predate this change; all of their picks were confirmed single-colony.
 
-The master mix itself is not simulated (MuJoCo has no liquids). "Dipped" means the toothpick tip went at least 1 mm below the liquid level inside the right tube.
+## 4. Connected lab version (lab protocol)
 
-**A fix this surfaced in colony picking:** the camera saw three touching colonies as one big blob, and the robot picked it, touching all three: a mixed clone. Colony detection now flags blobs that are stretched or bigger than a single colony (more than 2.2 mm across) and never picks them. Tested on 6 plates, it flagged 10/10 merged blobs and 0/129 true single colonies. (The restreak trials in sections 1 and 2 ran before this fix. They each pick only the single most isolated colony, which was never a merged blob in those runs.)
+The colony PCR protocol as performed in the lab, for 8 colonies:
 
-## 4. Connected lab version (the lab's real protocol)
+1. A sticker beneath the fresh plate divides it into 8 sectors.
+2. For each colony, using one toothpick: pick a generous amount of cells with one end, invert the toothpick, and lightly touch the colony with the other end, so both ends carry cells.
+3. With the heavily loaded end, streak a zigzag within the colony's sector, from the rim toward the center.
+4. With the lightly loaded end, resuspend cells in PCR tube k by rolling the toothpick in the master mix. A very slight green tint indicates the right amount of cells.
+5. Discard and repeat for all 8 colonies.
 
-How colony PCR is actually done in the lab, for 8 colonies:
+### Finding: neither robot can invert the toothpick in-hand
 
-1. A sticker under the fresh plate divides it into 8 pie slices.
-2. For each colony, one toothpick: poke the colony **heavily with one end**, **flip** the toothpick, poke **lightly with the other end**, so both ends carry cells.
-3. With the heavy end, zigzag in that colony's slice **from the rim toward the center** (not a quadrant streak).
-4. With the light end, dip into PCR tube k and **roll** the toothpick to release cells. The master mix should turn **very slightly green**: that's the right amount.
-5. Discard, repeat 8 times.
-
-### Finding: neither robot can flip the toothpick in its hand
-
-A person flips the toothpick between their fingers. A robot gripper normally points straight down, so the top end can never touch anything. Flipping in-hand means holding the toothpick **sideways** (gripper horizontal, toothpick vertical) and rolling the wrist 180°. Tested in the sim:
+A person inverts the toothpick between their fingers. A gripper normally points straight down, so the upper end can never be used. In-hand inversion requires holding the toothpick horizontally across the gripper (gripper horizontal, toothpick vertical) and rotating the wrist 180°.
 
 | | SO-101 | Panda |
 |---|---|---|
-| Can it hold the gripper sideways near the bench? | **No.** With 5 joints its gripper always points along the vertical plane through its base. Pointing sideways and outward puts the wrist about 16 cm back, over its own base. Every target (plates, PCR tubes, a regrasp stand) failed to solve | **Yes.** With 7 joints it reaches every spot sideways, with either toothpick end down |
-| Does the hand fit? | (not reachable) | **No.** The fingers are 22 mm thick, but the hand behind them is 88 mm thick (44 mm above and below the grip point). With a 6.5 cm toothpick held in the middle, the hand would sit about 1 cm *below* the bench top and the plate walls while poking a colony |
+| Horizontal gripper near the bench? | **No.** With 5 joints, the gripper axis is confined to the vertical plane through the base. A horizontal, outward-facing gripper places the wrist ~16 cm back, over the base; no target (plates, PCR tubes, regrasp stand) was reachable | **Yes.** With 7 joints, all targets are reachable horizontally with either end down |
+| Does the hand clear the bench? | (not reachable) | **No.** The fingers are 22 mm thick, but the hand is 88 mm thick (44 mm on each side of the grip point). Holding a 6.5 cm toothpick at its midpoint, the hand would sit ~1 cm below the bench and plate walls |
 
-Human fingers are thin; robot hands aren't. Ways around it:
+Possible solutions:
+- **Inversion station:** a printed clip on a hinge, rotated 180° by a servo, holding the toothpick at its midpoint so neither end makes contact. Preserves the protocol exactly.
+- **A thinner gripper or longer toothpick**, so the hand clears the bench when held horizontally.
+- **A protocol without inversion** (tested below).
 
-- **A flip station:** a printed clip on a hinge, turned 180° by one cheap servo. The clip holds the toothpick's middle, so neither tip touches anything. This keeps the exact protocol.
-- **A thinner gripper or a longer stick**, so the hand clears the bench while held sideways.
-- **Change the protocol** so no flip is needed (tested below).
+### Single-pick protocol
 
-### Tested: one poke, no flip
+The colony is picked once, and the same end is used for both the streak and the PCR, so the PCR receives the cells remaining after streaking. For each of 8 colonies:
 
-Your suggestion: poke the colony **once**, zigzag with that end, then swirl **the same end** in the PCR tube. Whatever cells are left on the tip after the streak go into the master mix. For each of 8 colonies:
-
-1. fresh toothpick from the rack,
-2. poke the colony once,
-3. zigzag inside pie slice k (between the sticker lines), **from the rim toward the center**,
-4. swirl the same end in PCR tube k (3 small circles in the master mix),
-5. discard.
+1. Take a fresh toothpick from the rack.
+2. Pick the colony.
+3. Streak a zigzag within sector k, from the rim toward the center.
+4. Resuspend the remaining cells in PCR tube k (three swirls in the master mix).
+5. Discard.
 
 ```bash
 ~/.venvs/mujoco-lab/bin/python run_connected_lab.py --robot so101 --seeds 0 1 2 3
 ~/.venvs/mujoco-lab/bin/python run_connected_lab.py --robot panda --seeds 0 1 2 3
 ```
 
-| Fresh plate: 8 slices, each zigzag rim to center | PCR strip: master mix tinted by the cells released |
+| Fresh plate: 8 sectors, each streaked rim to center | PCR strip: master mix tinted by the cells released |
 |---|---|
-| ![Fresh plate with 8 pie-slice zigzags](outputs/connected_so101_plate.png) | ![PCR strip colors](outputs/connected_so101_tubes.png) |
+| ![Fresh plate with 8 sector streaks](outputs/connected_so101_plate.png) | ![PCR strip](outputs/connected_so101_tubes.png) |
 
-4 random plates per robot. One plate had only 7 isolated single colonies, hence 31 rather than 32. Full results: [`outputs/connected_so101_results.json`](outputs/connected_so101_results.json), [`outputs/connected_panda_results.json`](outputs/connected_panda_results.json).
+4 randomized plates per robot; one plate had only 7 isolated colonies (31 total). Data: [`outputs/connected_so101_results.json`](outputs/connected_so101_results.json), [`outputs/connected_panda_results.json`](outputs/connected_panda_results.json).
 
 | | Panda | SO-101 (rack) |
 |---|---|---|
-| **Colonies fully right** (clean poke, zigzag in its own slice, slight-green tube, no other tube touched) | **31/31** | **31/31** |
-| Poke, distance from the colony center | 0 to 0.13 mm | 0.07 to 0.22 mm |
-| Zigzag contact with the agar | 100% | 99 to 100% |
-| Deepest press into the agar (limit 1 mm) | 0.38 mm | 0.92 mm |
-| Zigzag stayed inside its slice | 31/31 | 31/31 |
-| Tube color | 31/31 "slight green" | 31/31 "slight green" |
-| Lids back on | 4/4 | 4/4 |
-| Time for 8 colonies | about 9 minutes | about 13 minutes (incl. 3 min calibration) |
+| **Colonies completed** (single-colony pick, streak within its sector, slight-green tube, no other tube contacted) | **31/31** | **31/31** |
+| Distance from colony center | 0 to 0.13 mm | 0.07 to 0.22 mm |
+| Streak contact with agar | 100% | 99 to 100% |
+| Maximum press depth (limit 1 mm) | 0.38 mm | 0.92 mm |
+| Streak confined to its sector | 31/31 | 31/31 |
+| Tube color | 31/31 slight green | 31/31 slight green |
+| Lids replaced | 4/4 | 4/4 |
+| Time for 8 colonies | ~9 min | ~13 min (incl. 3 min calibration) |
 
-![SO-101 running the connected lab version (sped up)](outputs/connected_so101.gif)
+![SO-101 running the connected lab version (accelerated)](outputs/connected_so101.gif)
 
-**So the one-poke version works for the robot:** every step lands where it should, on both arms, with no flip needed.
+The single-pick protocol is feasible on both robots without inversion.
 
-One thing these runs exposed: discarded toothpicks sometimes leaned out over the 3 cm waste bin and ended up on the bench. The SO-101 now lowers each toothpick deep into a **tall, narrow waste cup** (5 cm wide, 8 cm tall) before letting go. The cup also has to stay clear of where the lid hook hangs while dipping: the first spot tried blocked 7 of 8 dips. In the final SO-101 runs above, all 31 used toothpicks landed in the cup.
+These runs also showed discarded toothpicks leaning out of the 3 cm waste bin onto the bench. The SO-101 now lowers each toothpick into a tall, narrow waste cup (5 cm wide, 8 cm tall) before release, positioned clear of the lid hook's path during resuspension (the first position blocked 7 of 8 resuspensions). In the final runs, all 31 toothpicks landed in the cup.
 
-**Is there enough left over?** Probably yes, but it depends on one number the sim cannot know: how fast the toothpick loses cells while it streaks. The sim models this as the tip keeping `exp(-streak length / d)` of its load. With the 122 mm zigzag:
+**Are enough cells left for the PCR?** This depends on how quickly the toothpick loses cells during streaking, which the simulation cannot determine. The model assumes the tip retains `exp(-L / d)` of its load after streaking a length `L`. For the 122 mm streak:
 
-| Assumed d (how far the tip streaks before 63% of its cells are gone) | Cells into the tube | Tube | Zigzag length that would hit the middle of the "slight green" band |
+| Assumed d (streak length at which 63% of cells are deposited) | Cells released | Tube | Streak length for mid-band tint |
 |---|---|---|---|
 | 30 mm | 0.01 | too little | 53 mm |
 | 40 mm | 0.04 | too little | 71 mm |
@@ -291,9 +278,9 @@ One thing these runs exposed: discarded toothpicks sometimes leaned out over the
 | 100 mm | 0.26 | slight green | 176 mm |
 | 120 mm | 0.32 | too green | 212 mm |
 
-So the leftover lands in the "very slight green" band for a wide middle range, from about d = 45 mm to 115 mm. If the real tip loses cells faster, the fix is simply a **shorter zigzag** (fewer strokes), and the right zigzag length can be read off this table. **One real experiment would pin this down:** do the one-poke protocol on a few colonies, photograph the tubes, and compare their green with tubes made the normal way. The green level gives d, and the robot's zigzag length follows.
+The remaining cells fall within the target range for d ≈ 45 to 115 mm. If cells are depleted faster, a shorter streak (fewer strokes) compensates, with the required length given above. **Calibration experiment:** perform the single-pick protocol on several colonies, photograph the tubes, and compare their tint with tubes prepared by the standard protocol. The tint gives d, which sets the streak length.
 
-## 5. Vial rack pick-and-place (warm-up)
+## 5. Vial pick-and-place (warm-up)
 
 ![Franka Panda placing three vials into a rack](outputs/pick_and_place.gif)
 
@@ -305,18 +292,16 @@ So the leftover lands in the "very slight green" band for a wide middle range, f
 ~/.venvs/mujoco-lab/bin/python pick_and_place.py
 ```
 
-Result: 3/3 vials placed, each within 0.4 mm of the slot center.
+3/3 vials placed, each within 0.4 mm of the slot center.
 
 ## Setup
-
-The Python environment lives outside OneDrive so it does not sync thousands of files:
 
 ```bash
 python3 -m venv ~/.venvs/mujoco-lab
 ~/.venvs/mujoco-lab/bin/pip install -r requirements.txt
 ```
 
-Interactive 3D viewer for the vial scene (drag to rotate, Ctrl+drag to push things):
+The environment is kept outside the synced project folder. Interactive viewer for the vial scene (drag to rotate, Ctrl+drag to apply force):
 
 ```bash
 ~/.venvs/mujoco-lab/bin/python -m mujoco.viewer --mjcf=models/lab_scene.xml
@@ -324,26 +309,26 @@ Interactive 3D viewer for the vial scene (drag to rotate, Ctrl+drag to push thin
 
 ## Files
 
-| File | What it is |
+| File | Contents |
 |---|---|
-| `plate_world.py` | Builds the Panda cyano scene: plates, lids, agar, random colonies, 24-tool rack, waste bin, cameras |
-| `cyano_sim.py` | The cyano workflow (Panda): lids, colony finder, touch-down, quadrant streak, grading |
-| `so101_world.py` | Builds the SO-101 bench: compact layout, riser, toothpick cup on a shaker |
-| `so101_sim.py` | The SO-101 workflow: lid hook by touch, shake and pick, look before touching, calibration error |
-| `build_so101_model.py` | Builds `models/so101_lab.xml`: the Menagerie SO-101 with our printed jaw |
-| `streak_plate.py` | Runs one plate (`--robot panda` or `--robot so101`) and saves pictures and a GIF |
-| `run_trials.py`, `run_so101_trials.py` | Run many random plates (`--holder cup` or `rack` for the SO-101) |
-| `pcr.py`, `run_pcr.py` | Colony PCR: pick, patch, dip into an 8-tube PCR strip, for either robot |
-| `connected_lab.py`, `run_connected_lab.py` | Connected lab version: one poke, zigzag in pie slice k, swirl leftover in tube k, with the cell-amount model |
-| `lab_sim.py` | Shared helpers: inverse kinematics, smooth motion, images |
-| `pick_and_place.py`, `models/lab_scene.xml` | The vial demo |
-| `models/panda_lab.xml` | Menagerie's Panda with a `grip` site, gravity compensation, and its keyframe removed |
-| `assets/franka_emika_panda/`, `assets/robotstudio_so101/` | Unchanged copies of the Panda and SO-101 from MuJoCo Menagerie (meshes, licenses) |
+| `plate_world.py` | Panda scene: plates, lids, agar, randomized colonies, 24-tool rack, waste bin, cameras |
+| `cyano_sim.py` | Panda workflow: lid handling, colony detection, surface sensing, quadrant streak, grading |
+| `so101_world.py` | SO-101 scene: compact layout, riser, toothpick cup or rack, calibration pins, waste cup |
+| `so101_sim.py` | SO-101 workflow: touch calibration, lid hook, toothpick retrieval, visual correction |
+| `build_so101_model.py` | Generates `models/so101_lab.xml`: Menagerie SO-101 with the custom printed jaw |
+| `streak_plate.py` | Runs one plate (`--robot panda` or `--robot so101`) and saves images and a GIF |
+| `run_trials.py`, `run_so101_trials.py` | Randomized trials (`--holder cup` or `rack` for the SO-101) |
+| `pcr.py`, `run_pcr.py` | Colony PCR: pick, patch, resuspend in an 8-tube PCR strip |
+| `connected_lab.py`, `run_connected_lab.py` | Connected lab version: single pick, sector streak, resuspension, cell-amount model |
+| `lab_sim.py` | Shared inverse kinematics, motion and rendering |
+| `pick_and_place.py`, `models/lab_scene.xml` | Vial demo |
+| `models/panda_lab.xml` | Menagerie Panda with a grip site and gravity compensation |
+| `assets/franka_emika_panda/`, `assets/robotstudio_so101/` | Unmodified MuJoCo Menagerie models (meshes, licenses) |
 
 ## Next steps
 
-1. Build the real SO-101 with the printed jaw and rack, and compare real success rates with the sim (the sim-to-real gap).
-2. Measure how fast a real toothpick loses cells while streaking (photograph the tubes after the one-poke protocol) and set the robot's zigzag length from it.
-3. After PCR: read results (gel or plate reader images), then pick the confirmed patches into liquid culture.
-4. Real-to-sim: run the colony finder on photos of real cyano plates.
-5. Gemini in the loop: let `gemini-4-hydrogen` choose colonies from the camera image and compare with the hand-written finder.
+1. Build the SO-101 with the printed jaw and rack, and compare real and simulated success rates (sim-to-real gap).
+2. Measure cell depletion during streaking (tube tint after the single-pick protocol) to set the streak length.
+3. Analyze PCR results (gel images), then inoculate confirmed patches into liquid culture.
+4. Real-to-sim: evaluate colony detection on photographs of real cyanobacterial plates.
+5. Compare colony selection by `gemini-4-hydrogen` from camera images against the current detector.
