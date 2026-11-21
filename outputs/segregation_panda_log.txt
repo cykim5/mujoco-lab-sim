@@ -1,0 +1,91 @@
+[panda week 1]      0 s  taking lids off
+[panda week 1]     26 s  found 22 colonies, 7 isolated single colonies to test
+[panda week 1]     32 s  picked up the toothpick from rack slot 1 of 24 (tilt 0.0 deg, neighbors bumped: 0)
+[panda week 1]     86 s  dropped tool in waste bin
+[panda week 1]     86 s  colony 1: single-colony pick True (0.02 mm), sector 1 streak 100% contact, 122 mm, remaining on tip 0.13, tube 1: slight green (0.11)
+[panda week 1]     92 s  picked up the toothpick from rack slot 2 of 24 (tilt 0.1 deg, neighbors bumped: 0)
+[panda week 1]    148 s  dropped tool in waste bin
+[panda week 1]    148 s  colony 2: single-colony pick True (0.04 mm), sector 2 streak 100% contact, 122 mm, remaining on tip 0.13, tube 2: slight green (0.11)
+[panda week 1]    154 s  picked up the toothpick from rack slot 3 of 24 (tilt 0.0 deg, neighbors bumped: 0)
+[panda week 1]    207 s  dropped tool in waste bin
+[panda week 1]    207 s  colony 3: single-colony pick True (0.02 mm), sector 3 streak 100% contact, 122 mm, remaining on tip 0.13, tube 3: slight green (0.11)
+[panda week 1]    213 s  picked up the toothpick from rack slot 4 of 24 (tilt 0.0 deg, neighbors bumped: 0)
+[panda week 1]    267 s  dropped tool in waste bin
+[panda week 1]    267 s  colony 4: single-colony pick True (0.0 mm), sector 4 streak 100% contact, 122 mm, remaining on tip 0.13, tube 4: slight green (0.11)
+[panda week 1]    273 s  picked up the toothpick from rack slot 5 of 24 (tilt 0.0 deg, neighbors bumped: 0)
+[panda week 1]    327 s  dropped tool in waste bin
+[panda week 1]    327 s  colony 5: single-colony pick True (0.03 mm), sector 5 streak 100% contact, 122 mm, remaining on tip 0.13, tube 5: slight green (0.11)
+[panda week 1]    333 s  picked up the toothpick from rack slot 6 of 24 (tilt 0.0 deg, neighbors bumped: 2)
+[panda week 1]    387 s  dropped tool in waste bin
+[panda week 1]    387 s  colony 6: single-colony pick True (0.05 mm), sector 6 streak 100% contact, 122 mm, remaining on tip 0.13, tube 6: slight green (0.11)
+[panda week 1]    393 s  picked up the toothpick from rack slot 7 of 24 (tilt 0.0 deg, neighbors bumped: 3)
+[panda week 1]    447 s  dropped tool in waste bin
+[panda week 1]    447 s  colony 7: single-colony pick True (0.02 mm), sector 7 streak 100% contact, 122 mm, remaining on tip 0.13, tube 7: slight green (0.11)
+[panda week 1]    447 s  putting lids back
+[panda week 1] colony PCR  1: WT 0.73   2: WT 0.43   3: WT 0.51   4: WT 0.58   5: WT 0.85   6: WT 0.77   7: WT 0.62   8: -
+[panda week 2]      0 s  taking lids off
+[panda week 2]     26 s  found 148 colonies, 8 isolated single colonies to test
+[panda week 2]     32 s  picked up the toothpick from rack slot 1 of 24 (tilt 0.0 deg, neighbors bumped: 0)
+[panda week 2]     85 s  dropped tool in waste bin
+[panda week 2]     85 s  colony 1: single-colony pick True (0.02 mm), sector 1 streak 100% contact, 122 mm, remaining on tip 0.13, tube 1: slight green (0.11)
+[panda week 2]     91 s  picked up the toothpick from rack slot 2 of 24 (tilt 0.1 deg, neighbors bumped: 0)
+[panda week 2]    145 s  dropped tool in waste bin
+[panda week 2]    145 s  colony 2: single-colony pick True (0.03 mm), sector 2 streak 100% contact, 122 mm, remaining on tip 0.13, tube 2: slight green (0.11)
+[panda week 2]    151 s  picked up the toothpick from rack slot 3 of 24 (tilt 0.0 deg, neighbors bumped: 1)
+[panda week 2]    204 s  dropped tool in waste bin
+[panda week 2]    204 s  colony 3: single-colony pick True (0.02 mm), sector 3 streak 100% contact, 122 mm, remaining on tip 0.13, tube 3: slight green (0.11)
+[panda week 2]    210 s  picked up the toothpick from rack slot 4 of 24 (tilt 0.0 deg, neighbors bumped: 1)
+[panda week 2]    264 s  dropped tool in waste bin
+[panda week 2]    264 s  colony 4: single-colony pick True (0.05 mm), sector 4 streak 100% contact, 122 mm, remaining on tip 0.13, tube 4: slight green (0.11)
+[panda week 2]    270 s  picked up the toothpick from rack slot 5 of 24 (tilt 0.0 deg, neighbors bumped: 1)
+[panda week 2]    324 s  dropped tool in waste bin
+[panda week 2]    324 s  colony 5: single-colony pick True (0.06 mm), sector 5 streak 100% contact, 122 mm, remaining on tip 0.13, tube 5: slight green (0.11)
+[panda week 2]    330 s  picked up the toothpick from rack slot 6 of 24 (tilt 0.0 deg, neighbors bumped: 1)
+[panda week 2]    383 s  dropped tool in waste bin
+[panda week 2]    383 s  colony 6: single-colony pick True (0.02 mm), sector 6 streak 100% contact, 122 mm, remaining on tip 0.13, tube 6: slight green (0.11)
+[panda week 2]    389 s  picked up the toothpick from rack slot 7 of 24 (tilt 0.0 deg, neighbors bumped: 3)
+[panda week 2]    443 s  dropped tool in waste bin
+[panda week 2]    443 s  colony 7: single-colony pick True (0.02 mm), sector 7 streak 100% contact, 122 mm, remaining on tip 0.13, tube 7: slight green (0.11)
+[panda week 2]    443 s  putting lids back
+[panda week 2] colony PCR  1: WT 0.17   2: WT 0.06   3: WT 0.28   4: WT 0.08   5: WT 0.26   6: WT 0.32   7: WT 0.15   8: -
+[panda week 3]      0 s  taking lids off
+[panda week 3]     26 s  found 143 colonies, 8 isolated single colonies to test
+[panda week 3]     32 s  picked up the toothpick from rack slot 1 of 24 (tilt 0.0 deg, neighbors bumped: 0)
+[panda week 3]     86 s  dropped tool in waste bin
+[panda week 3]     86 s  colony 1: single-colony pick True (0.02 mm), sector 1 streak 100% contact, 122 mm, remaining on tip 0.13, tube 1: slight green (0.11)
+[panda week 3]     92 s  picked up the toothpick from rack slot 2 of 24 (tilt 0.1 deg, neighbors bumped: 0)
+[panda week 3]    146 s  dropped tool in waste bin
+[panda week 3]    146 s  colony 2: single-colony pick True (0.04 mm), sector 2 streak 100% contact, 122 mm, remaining on tip 0.13, tube 2: slight green (0.11)
+[panda week 3]    152 s  picked up the toothpick from rack slot 3 of 24 (tilt 0.0 deg, neighbors bumped: 1)
+[panda week 3]    205 s  dropped tool in waste bin
+[panda week 3]    205 s  colony 3: single-colony pick True (0.03 mm), sector 3 streak 100% contact, 122 mm, remaining on tip 0.13, tube 3: slight green (0.11)
+[panda week 3]    211 s  picked up the toothpick from rack slot 4 of 24 (tilt 0.0 deg, neighbors bumped: 1)
+[panda week 3]    265 s  dropped tool in waste bin
+[panda week 3]    265 s  colony 4: single-colony pick True (0.05 mm), sector 4 streak 100% contact, 122 mm, remaining on tip 0.13, tube 4: slight green (0.11)
+[panda week 3]    271 s  picked up the toothpick from rack slot 5 of 24 (tilt 0.0 deg, neighbors bumped: 1)
+[panda week 3]    325 s  dropped tool in waste bin
+[panda week 3]    325 s  colony 5: single-colony pick True (0.02 mm), sector 5 streak 100% contact, 122 mm, remaining on tip 0.13, tube 5: slight green (0.11)
+[panda week 3]    331 s  picked up the toothpick from rack slot 6 of 24 (tilt 0.0 deg, neighbors bumped: 1)
+[panda week 3]    385 s  dropped tool in waste bin
+[panda week 3]    385 s  colony 6: single-colony pick True (0.02 mm), sector 6 streak 100% contact, 122 mm, remaining on tip 0.13, tube 6: slight green (0.11)
+[panda week 3]    391 s  picked up the toothpick from rack slot 7 of 24 (tilt 0.0 deg, neighbors bumped: 1)
+[panda week 3]    444 s  dropped tool in waste bin
+[panda week 3]    444 s  colony 7: single-colony pick True (0.03 mm), sector 7 streak 100% contact, 122 mm, remaining on tip 0.13, tube 7: slight green (0.11)
+[panda week 3]    444 s  putting lids back
+[panda week 3] colony PCR  1: insert only   2: insert only   3: WT 0.18   4: insert only   5: WT 0.14   6: WT 0.13   7: insert only   8: -
+[panda week 4]      0 s  taking lids off
+[panda week 4]     26 s  found 155 colonies, 8 isolated single colonies to test
+[panda week 4]     32 s  picked up the toothpick from rack slot 3 of 24 (tilt 0.0 deg, neighbors bumped: 0)
+[panda week 4]     86 s  dropped tool in waste bin
+[panda week 4]     86 s  colony 3: single-colony pick True (0.03 mm), sector 3 streak 100% contact, 122 mm, remaining on tip 0.13, tube 3: slight green (0.11)
+[panda week 4]     92 s  picked up the toothpick from rack slot 5 of 24 (tilt 0.0 deg, neighbors bumped: 0)
+[panda week 4]    147 s  dropped tool in waste bin
+[panda week 4]    147 s  colony 5: single-colony pick True (0.03 mm), sector 5 streak 100% contact, 122 mm, remaining on tip 0.13, tube 5: slight green (0.11)
+[panda week 4]    153 s  picked up the toothpick from rack slot 6 of 24 (tilt 0.0 deg, neighbors bumped: 0)
+[panda week 4]    208 s  dropped tool in waste bin
+[panda week 4]    208 s  colony 6: single-colony pick True (0.04 mm), sector 6 streak 100% contact, 122 mm, remaining on tip 0.13, tube 6: slight green (0.11)
+[panda week 4]    208 s  putting lids back
+[panda week 4] colony PCR  1: -   2: -   3: insert only   4: -   5: WT 0.06   6: WT 0.06   7: -   8: -
+
+Segregation (panda): fully segregated by week [3, 3, 4, 3, None, None, 3, None] (None = not yet)
+Saved /Users/clairekim/Library/CloudStorage/OneDrive-Personal/Claire/8. Coding/mujoco-lab-sim/outputs/segregation_panda_gel.png

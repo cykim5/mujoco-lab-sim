@@ -101,7 +101,9 @@ def green_label(amount):
     return "slight green"
 
 
-def run_connected(sim, centers):
+def run_connected(sim, centers, choose=None, on_pick=None):
+    """choose(sim, detections) picks the colonies to test (default: 8 isolated colonies).
+    on_pick(k, colony, touch_xy) is called after each pick (used by the segregation rounds)."""
     m = sim.model
     tube_geoms = {}
     for k in range(pcr.N_TUBES):
@@ -115,13 +117,17 @@ def run_connected(sim, centers):
         sim.lift_lid("dest", sim.dest_xy, sim.lid_park_xy["dest"], put_back=False)
     sim.move_arm(sim.park_arm, sim.gripper_closed, duration=1.5)
     detections, image, _ = sim.find_colonies()
-    colonies = pcr.choose_colonies(sim, detections, N_COLONIES)
+    colonies = pcr.choose_colonies(sim, detections, N_COLONIES) if choose is None else choose(sim, detections)
     sim.say(f"found {len(detections)} colonies, {len(colonies)} isolated single colonies to test")
 
     rows = []
     all_samples = []
     for k, colony in enumerate(colonies):
         row = {"colony": k + 1, "sector": k + 1, "tube": k + 1}
+        if colony is None:  # nothing to test in this sector this round
+            row.update({"ok": None, "skipped": True})
+            rows.append(row)
+            continue
         try:
             if hasattr(sim, "pick_from_rack"):
                 sim.slot = (sim.slot + (1 if k > 0 else 0)) % 24
@@ -137,6 +143,8 @@ def run_connected(sim, centers):
         # 1. pick the colony once
         touch_xy, _ = sim.pick_colony(colony)
         grade = sim.grade_pick(touch_xy, colony)
+        if on_pick is not None:
+            on_pick(k, colony, touch_xy)
         load = 1.0 if grade["picked"] == True else 0.0
         row.update({"picked": grade["picked"], "clean_pick": grade["clean_pick"], "miss_mm": grade["miss_mm"]})
         # 2. streak within sector k, rim to center
@@ -170,7 +178,8 @@ def run_connected(sim, centers):
     back = sim.lift_lid("dest", sim.lid_park_xy["dest"], sim.dest_xy, put_back=True) and \
         sim.lift_lid("source", sim.lid_park_xy["source"], sim.source_xy, put_back=True)
     sim.move_arm(sim.park_arm, sim.gripper_open, duration=1.5)
-    report = {"colonies_ok": sum(1 for r in rows if r.get("ok") == True), "colonies_tried": len(rows),
+    report = {"colonies_ok": sum(1 for r in rows if r.get("ok") == True),
+              "colonies_tried": sum(1 for r in rows if r.get("skipped") != True),
               "lids_off": bool(lids_off), "lids_back": bool(back and sim.lids_seated()),
               "time_s": round(sim.data.time, 1), "streak_decay_assumed_m": STREAK_DECAY, "rows": rows}
     return report, detections, colonies, image, all_samples

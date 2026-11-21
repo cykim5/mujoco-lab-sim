@@ -225,10 +225,12 @@ def bin_xml():
 PCR_ORIGIN = (0.555, -0.0315)  # first PCR tube; the 8-tube strip runs along +y, between the plates and the parked lids
 
 
-def build_plate_scene(tool_name, seed, pcr=False, sectors=False):
+def build_plate_scene(tool_name, seed, pcr=False, sectors=False, source_colonies=None):
     """Write the scene XML and return (path, truth). truth holds the hidden facts we grade against."""
     rng = np.random.default_rng(seed)
     colonies = random_colonies(rng)
+    if source_colonies is not None:  # a plate grown from an earlier round (positions relative to the plate center)
+        colonies = source_colonies
     agar_source = float(rng.uniform(AGAR_MIN, AGAR_MAX))
     agar_dest = float(rng.uniform(AGAR_MIN, AGAR_MAX))
 

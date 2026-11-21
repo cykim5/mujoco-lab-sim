@@ -171,12 +171,14 @@ def bin_xml():
 PCR_ORIGIN = (0.168, -0.17)  # first PCR tube; the strip runs along +x between the source plate and the bin side
 
 
-def build_so101_scene(tool_name, seed, holder="cup", pcr=False, sectors=False):
+def build_so101_scene(tool_name, seed, holder="cup", pcr=False, sectors=False, source_colonies=None):
     if tool_name != "toothpick":
         raise ValueError("The SO-101 build version uses toothpicks only. A 12 cm loop held upright is too tall for "
                          "the SO-101 to lift out of a cup while pointing straight down.")
     rng = np.random.default_rng(seed)
     colonies = pw.random_colonies(rng)
+    if source_colonies is not None:  # a plate grown from an earlier round (positions relative to the plate center)
+        colonies = source_colonies
     agar_source = float(rng.uniform(pw.AGAR_MIN, pw.AGAR_MAX))
     agar_dest = float(rng.uniform(pw.AGAR_MIN, pw.AGAR_MAX))
 

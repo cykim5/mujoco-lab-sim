@@ -1,0 +1,236 @@
+{
+ "robot": "panda",
+ "seed": 0,
+ "segregated_week": [
+  3,
+  3,
+  4,
+  3,
+  null,
+  null,
+  3,
+  null
+ ],
+ "rounds": [
+  {
+   "week": 1,
+   "lanes": [
+    {
+     "insert": 0.265,
+     "wt": 0.735
+    },
+    {
+     "insert": 0.568,
+     "wt": 0.432
+    },
+    {
+     "insert": 0.489,
+     "wt": 0.511
+    },
+    {
+     "insert": 0.42,
+     "wt": 0.58
+    },
+    {
+     "insert": 0.153,
+     "wt": 0.847
+    },
+    {
+     "insert": 0.233,
+     "wt": 0.767
+    },
+    {
+     "insert": 0.379,
+     "wt": 0.621
+    },
+    null
+   ],
+   "lineage_f": [
+    0.265,
+    0.568,
+    0.489,
+    0.42,
+    0.153,
+    0.233,
+    0.379,
+    null
+   ],
+   "segregated": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "colonies_ok": 7,
+   "colonies_tried": 7,
+   "time_s": 472.3,
+   "lids_back": true
+  },
+  {
+   "week": 2,
+   "lanes": [
+    {
+     "insert": 0.833,
+     "wt": 0.167
+    },
+    {
+     "insert": 0.944,
+     "wt": 0.056
+    },
+    {
+     "insert": 0.719,
+     "wt": 0.281
+    },
+    {
+     "insert": 0.923,
+     "wt": 0.077
+    },
+    {
+     "insert": 0.743,
+     "wt": 0.257
+    },
+    {
+     "insert": 0.678,
+     "wt": 0.322
+    },
+    {
+     "insert": 0.845,
+     "wt": 0.155
+    },
+    null
+   ],
+   "lineage_f": [
+    0.833,
+    0.944,
+    0.719,
+    0.923,
+    0.743,
+    0.678,
+    0.845,
+    null
+   ],
+   "segregated": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "colonies_ok": 7,
+   "colonies_tried": 7,
+   "time_s": 468.4,
+   "lids_back": true
+  },
+  {
+   "week": 3,
+   "lanes": [
+    {
+     "insert": 0.957,
+     "wt": 0.043
+    },
+    {
+     "insert": 1.0,
+     "wt": 0.0
+    },
+    {
+     "insert": 0.818,
+     "wt": 0.182
+    },
+    {
+     "insert": 1.0,
+     "wt": 0.0
+    },
+    {
+     "insert": 0.865,
+     "wt": 0.135
+    },
+    {
+     "insert": 0.87,
+     "wt": 0.13
+    },
+    {
+     "insert": 0.952,
+     "wt": 0.048
+    },
+    null
+   ],
+   "lineage_f": [
+    0.957,
+    1.0,
+    0.818,
+    1.0,
+    0.865,
+    0.87,
+    0.952,
+    null
+   ],
+   "segregated": [
+    true,
+    true,
+    false,
+    true,
+    false,
+    false,
+    true,
+    false
+   ],
+   "colonies_ok": 7,
+   "colonies_tried": 7,
+   "time_s": 469.9,
+   "lids_back": true
+  },
+  {
+   "week": 4,
+   "lanes": [
+    null,
+    null,
+    {
+     "insert": 0.955,
+     "wt": 0.045
+    },
+    null,
+    {
+     "insert": 0.945,
+     "wt": 0.055
+    },
+    {
+     "insert": 0.943,
+     "wt": 0.057
+    },
+    null,
+    null
+   ],
+   "lineage_f": [
+    0.957,
+    1.0,
+    0.955,
+    1.0,
+    0.945,
+    0.943,
+    0.952,
+    null
+   ],
+   "segregated": [
+    true,
+    true,
+    true,
+    true,
+    false,
+    false,
+    true,
+    false
+   ],
+   "colonies_ok": 3,
+   "colonies_tried": 3,
+   "time_s": 234.1,
+   "lids_back": true
+  }
+ ]
+}

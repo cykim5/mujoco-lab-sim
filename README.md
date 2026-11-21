@@ -13,8 +13,9 @@ Commercial colony pickers (e.g. QPix) are optimized for *E. coli*, and no curren
 | Motors | Ideal, gravity compensated | Realistic servo torque, no gravity compensation, joint calibration error corrected by touch calibration |
 | Restreak success | 20/20 | Cup 2/8, rack **8/8** |
 | Colony PCR | 31/31 colonies | 31/31 colonies |
+| Segregation rounds (4 weeks) | All rounds completed | All rounds completed |
 
-Sections: [1. Reference version](#1-reference-version-franka-panda), [2. Build version](#2-build-version-so-101), [3. Colony PCR](#3-colony-pcr), [4. Connected lab version](#4-connected-lab-version-lab-protocol), [5. Vial pick-and-place](#5-vial-pick-and-place-warm-up).
+Sections: [1. Reference version](#1-reference-version-franka-panda), [2. Build version](#2-build-version-so-101), [3. Colony PCR](#3-colony-pcr), [4. Connected lab version](#4-connected-lab-version-lab-protocol), [5. Segregation rounds](#5-segregation-rounds), [6. Vial pick-and-place](#6-vial-pick-and-place-warm-up).
 
 ## 1. Reference version (Franka Panda)
 
@@ -280,7 +281,38 @@ These runs also showed discarded toothpicks leaning out of the 3 cm waste bin on
 
 The remaining cells fall within the target range for d ≈ 45 to 115 mm. If cells are depleted faster, a shorter streak (fewer strokes) compensates, with the required length given above. **Calibration experiment:** perform the single-pick protocol on several colonies, photograph the tubes, and compare their tint with tubes prepared by the standard protocol. The tint gives d, which sets the streak length.
 
-## 5. Vial pick-and-place (warm-up)
+## 5. Segregation rounds
+
+Cyanobacteria are polyploid, so a fresh transformant carries the insert on only some chromosome copies. Lineages are restreaked on selective medium each week until colony PCR shows only the insert band.
+
+1. **Week 1:** pick 8 isolated transformants from the transformation plate; streak each into sector k of a selective plate and run colony PCR (as in section 4).
+2. **Each following week:** for every lineage not yet segregated, pick the isolated colony nearest the center of its sector (the inner end of the streak, where single colonies grow), streak it into sector k of a new plate, and run colony PCR.
+3. **Stop** when the wild-type band is no longer detected.
+
+```bash
+~/.venvs/mujoco-lab/bin/python run_segregation.py --robot so101 --seed 0 --rounds 4
+~/.venvs/mujoco-lab/bin/python run_segregation.py --robot panda --seed 0 --rounds 4
+```
+
+| Simulated colony PCR, weeks 1 to 4 (upper band: insert; lower band: wild type) | Week 2 plate: isolated colony selected in each sector (red); merged growth near the rim (gray) is excluded |
+|---|---|
+| ![Simulated gel across four weeks](outputs/segregation_so101_gel.png) | ![Week 2 sector plate with selected colonies](outputs/segregation_so101_week2_plate.png) |
+
+| Lineage | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |
+|---|---|---|---|---|---|---|---|---|
+| Fully segregated by week | 3 | 3 | 4 | 3 | not yet (WT 0.06) | not yet (WT 0.06) | 3 | no isolated transformant |
+
+Both robots completed every round without error (all picks single-colony, all streaks within their sectors, all lids replaced): ~8 min per week on the Panda, ~12 min on the SO-101 including calibration. Both reached the same genotype outcome, since they selected the same colonies and the genotype model is deterministic per plate. Data: [`outputs/segregation_so101_results.json`](outputs/segregation_so101_results.json), [`outputs/segregation_panda_results.json`](outputs/segregation_panda_results.json).
+
+**Genotype model (assumed, not simulated biology):**
+- Each colony carries a fraction f of chromosome copies with the insert; transformants start at f = 0.05 to 0.6.
+- Under selection, each colony grown from a restreak has f' = 1 - (1 - f) × r, with r drawn per colony between 0.1 and 0.7.
+- A colony is fully segregated when wild-type copies fall below 3%; the wild-type band is undetectable below 5% of a full band.
+- Each sector streak grows dense, merged colonies near the rim and isolated single colonies toward the center.
+
+The robotics (picking the right colony each week, streaking, PCR setup) is what the simulation tests. The segregation rates are placeholders. Real rates per lineage, from the lab's gels, would calibrate the model and predict how many weeks a construct needs.
+
+## 6. Vial pick-and-place (warm-up)
 
 ![Franka Panda placing three vials into a rack](outputs/pick_and_place.gif)
 
@@ -320,6 +352,7 @@ The environment is kept outside the synced project folder. Interactive viewer fo
 | `run_trials.py`, `run_so101_trials.py` | Randomized trials (`--holder cup` or `rack` for the SO-101) |
 | `pcr.py`, `run_pcr.py` | Colony PCR: pick, patch, resuspend in an 8-tube PCR strip |
 | `connected_lab.py`, `run_connected_lab.py` | Connected lab version: single pick, sector streak, resuspension, cell-amount model |
+| `segregation.py`, `run_segregation.py` | Weekly segregation rounds: colony growth on sector plates, genotype model, simulated gels |
 | `lab_sim.py` | Shared inverse kinematics, motion and rendering |
 | `pick_and_place.py`, `models/lab_scene.xml` | Vial demo |
 | `models/panda_lab.xml` | Menagerie Panda with a grip site and gravity compensation |
