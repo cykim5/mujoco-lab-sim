@@ -3,7 +3,7 @@
 The scene is regenerated for every run because the colonies, agar thickness
 and tool are random or user-chosen. Layout on the bench (top view, robot at x = 0):
 
-    tool holder (0.30, 0.00)     source plate (0.45, -0.12)    source lid parking (0.63, -0.12)
+    tool rack   (0.32, 0.00)     source plate (0.45, -0.12)    source lid parking (0.63, -0.12)
     waste bin   (0.30, -0.25)    fresh plate  (0.45,  0.12)    fresh lid parking  (0.63,  0.12)
 
 Sizes are for a standard 90 mm round Petri dish (about 89 mm across, 15 mm tall).
@@ -35,7 +35,11 @@ LID_TOP_THICKNESS = 0.0012
 SOURCE_XY = (0.45, -0.12)
 DEST_XY = (0.45, 0.12)
 LID_PARK_XY = {"source": (0.63, -0.12), "dest": (0.63, 0.12)}
-TOOL_HOLDER_XY = (0.30, 0.0)
+TOOL_RACK_XY = (0.32, 0.0)  # center of the 24-tool rack
+RACK_ROWS = 3  # rows run along x, the direction the Panda fingers close
+RACK_COLS = 8
+RACK_PITCH_X = 0.03  # 3 cm apart where the fingers close (the fingers are thick that way)
+RACK_PITCH_Y = 0.02  # 2 cm apart the other way
 BIN_XY = (0.30, -0.25)
 
 CAMERA_HEIGHT = 0.35  # overhead cameras sit 35 cm above the bench
@@ -48,6 +52,7 @@ TOOLS = {
         "handle_half": 0.002,
         "tip_radius": 0.00125,  # ring about 2.5 mm across
         "rgba": "0.35 0.6 0.95 1",
+        "rack_depth": 0.06,  # tall tool, so a deep rack keeps it from leaning into the fingers
     },
     # Wooden toothpick: round 2 mm shaft with a tapered point. The Panda fingertips cannot close tightly
     # enough on a bare 2 mm stick, so the top 25 mm sits in a 4 mm printed sleeve the gripper holds.
@@ -58,6 +63,7 @@ TOOLS = {
         "sleeve_length": 0.025,
         "tip_radius": 0.0004,
         "rgba": "0.82 0.66 0.42 1",
+        "rack_depth": 0.035,
     },
 }
 
@@ -134,40 +140,62 @@ def plate_xml(name, xy, agar_thickness, colonies, rng):
 """
 
 
-def tool_xml(tool_name):
+def rack_slot_xy(slot):
+    """Center of rack slot 0..23. Rows run along x (away from the robot), columns along y."""
+    row = slot // RACK_COLS
+    col = slot % RACK_COLS
+    x = TOOL_RACK_XY[0] + (row - (RACK_ROWS - 1) / 2) * RACK_PITCH_X
+    y = TOOL_RACK_XY[1] + (col - (RACK_COLS - 1) / 2) * RACK_PITCH_Y
+    return x, y
+
+
+def one_tool_xml(tool_name, i):
     t = TOOLS[tool_name]
     L = t["length"]
     h = t["handle_half"]
-    hx, hy = TOOL_HOLDER_XY
+    x, y = rack_slot_xy(i)
     if tool_name == "loop":
         geoms = f"""
-        <geom name="tool_handle" type="box" pos="0 0 {(0.012 + L) / 2:.4f}" size="{h} {h} {(L - 0.012) / 2:.4f}" mass="0.003" rgba="{t['rgba']}" friction="1.5 0.01 0.001" {GRIP_CONTACT}/>
-        <geom name="tool_neck" type="capsule" fromto="0 0 0.0006 0 0 0.012" size="0.0006" mass="0.0001" rgba="{t['rgba']}"/>
-        <geom name="tool_tip" type="cylinder" pos="0 0 0.0003" size="{t['tip_radius']} 0.0003" mass="0.0001" rgba="{t['rgba']}" friction="0.5 0.005 0.0001"/>"""
+        <geom name="tool{i}_handle" type="box" pos="0 0 {(0.012 + L) / 2:.4f}" size="{h} {h} {(L - 0.012) / 2:.4f}" mass="0.003" rgba="{t['rgba']}" friction="1.5 0.01 0.001" {GRIP_CONTACT}/>
+        <geom name="tool{i}_neck" type="capsule" fromto="0 0 0.0006 0 0 0.012" size="0.0006" mass="0.0001" rgba="{t['rgba']}"/>
+        <geom name="tool{i}_tip" type="cylinder" pos="0 0 0.0003" size="{t['tip_radius']} 0.0003" mass="0.0001" rgba="{t['rgba']}" friction="0.5 0.005 0.0001"/>"""
     else:
         geoms = f"""
-        <geom name="tool_handle" type="box" pos="0 0 {L - t['sleeve_length'] / 2:.4f}" size="{h} {h} {t['sleeve_length'] / 2:.4f}" mass="0.003" rgba="0.3 0.3 0.3 1" friction="1.5 0.01 0.001" {GRIP_CONTACT}/>
-        <geom name="tool_shaft" type="capsule" fromto="0 0 0.006 0 0 {L - t['sleeve_length']:.4f}" size="{t['shaft_radius']}" mass="0.0002" rgba="{t['rgba']}"/>
-        <geom name="tool_taper" type="capsule" fromto="0 0 0.0004 0 0 0.006" size="0.0007" mass="0.0001" rgba="{t['rgba']}"/>
-        <geom name="tool_tip" type="sphere" pos="0 0 {t['tip_radius']}" size="{t['tip_radius']}" mass="0.0001" rgba="{t['rgba']}" friction="0.7 0.005 0.0001"/>"""
-    hole = h + 0.0007
-    wall = 0.004
-    holder_h = 0.035
-    off = hole + wall / 2
-    holder = f"""
-    <body name="tool_holder" pos="{hx} {hy} {BENCH_Z}">
-        <geom type="box" pos="{off} 0 {holder_h / 2}" size="{wall / 2} {hole + wall} {holder_h / 2}" rgba="0.3 0.3 0.35 1"/>
-        <geom type="box" pos="{-off} 0 {holder_h / 2}" size="{wall / 2} {hole + wall} {holder_h / 2}" rgba="0.3 0.3 0.35 1"/>
-        <geom type="box" pos="0 {off} {holder_h / 2}" size="{hole} {wall / 2} {holder_h / 2}" rgba="0.3 0.3 0.35 1"/>
-        <geom type="box" pos="0 {-off} {holder_h / 2}" size="{hole} {wall / 2} {holder_h / 2}" rgba="0.3 0.3 0.35 1"/>
-    </body>"""
-    tool = f"""
-    <body name="tool" pos="{hx} {hy} {BENCH_Z + 0.0002}">
+        <geom name="tool{i}_handle" type="box" pos="0 0 {L - t['sleeve_length'] / 2:.4f}" size="{h} {h} {t['sleeve_length'] / 2:.4f}" mass="0.003" rgba="0.3 0.3 0.3 1" friction="1.5 0.01 0.001" {GRIP_CONTACT}/>
+        <geom name="tool{i}_shaft" type="capsule" fromto="0 0 0.006 0 0 {L - t['sleeve_length']:.4f}" size="{t['shaft_radius']}" mass="0.0002" rgba="{t['rgba']}"/>
+        <geom name="tool{i}_taper" type="capsule" fromto="0 0 0.0004 0 0 0.006" size="0.0007" mass="0.0001" rgba="{t['rgba']}"/>
+        <geom name="tool{i}_tip" type="sphere" pos="0 0 {t['tip_radius']}" size="{t['tip_radius']}" mass="0.0001" rgba="{t['rgba']}" friction="0.7 0.005 0.0001"/>"""
+    return f"""
+    <body name="tool_{i}" pos="{x:.4f} {y:.4f} {BENCH_Z + 0.0002}">
         <freejoint/>
-        <site name="tool_tip_site" pos="0 0 0" size="0.0005"/>
+        <site name="tool_tip_site_{i}" pos="0 0 0" size="0.0005"/>
         {geoms}
     </body>"""
-    return holder + tool
+
+
+def tool_xml(tool_name):
+    """A rack of 24 tools (3 x 8), like a pipette tip box. One tool per hole."""
+    h = TOOLS[tool_name]["handle_half"]
+    hole = h + 0.0005  # 0.5 mm of play around the handle
+    wall_x = RACK_PITCH_X - 2 * hole  # solid material between neighboring holes
+    wall_y = RACK_PITCH_Y - 2 * hole
+    height = TOOLS[tool_name]["rack_depth"]
+    cx, cy = TOOL_RACK_XY
+    half_x = RACK_ROWS * RACK_PITCH_X / 2
+    half_y = RACK_COLS * RACK_PITCH_Y / 2
+    walls = []
+    for r in range(RACK_ROWS + 1):  # walls running along y
+        x = cx - half_x + r * RACK_PITCH_X
+        walls.append(f'<geom type="box" pos="{x:.4f} {cy:.4f} {height / 2}" size="{wall_x / 2:.4f} {half_y + wall_y / 2:.4f} {height / 2}" rgba="0.3 0.3 0.35 1"/>')
+    for c in range(RACK_COLS + 1):  # walls running along x
+        y = cy - half_y + c * RACK_PITCH_Y
+        walls.append(f'<geom type="box" pos="{cx:.4f} {y:.4f} {height / 2}" size="{half_x + wall_x / 2:.4f} {wall_y / 2:.4f} {height / 2}" rgba="0.3 0.3 0.35 1"/>')
+    rack = f"""
+    <body name="tool_rack" pos="0 0 {BENCH_Z}">
+        {chr(10).join("        " + w for w in walls)}
+    </body>"""
+    tools = "".join(one_tool_xml(tool_name, i) for i in range(RACK_ROWS * RACK_COLS))
+    return rack + tools
 
 
 def bin_xml():
@@ -188,6 +216,9 @@ def build_plate_scene(tool_name, seed):
     agar_source = float(rng.uniform(AGAR_MIN, AGAR_MAX))
     agar_dest = float(rng.uniform(AGAR_MIN, AGAR_MAX))
 
+    TOOL_LOCKS = "\n    ".join(
+        f'<weld name="tool_lock_{i}" body1="hand" body2="tool_{i}" active="false" solref="0.002 1" solimp="0.99 0.999 0.0001"/>'
+        for i in range(RACK_ROWS * RACK_COLS))
     xml = f"""<mujoco model="cyano plates">
   <include file="panda_lab.xml"/>
   <option timestep="0.001"/>
@@ -217,7 +248,7 @@ def build_plate_scene(tool_name, seed):
   </worldbody>
   <equality>
     <!-- Tool adapter: switched on when the gripper closes on the tool, so the tool cannot slip in the fingers. -->
-    <weld name="tool_lock" body1="hand" body2="tool" active="false" solref="0.002 1" solimp="0.99 0.999 0.0001"/>
+    {TOOL_LOCKS}
   </equality>
   <actuator>
     <!-- Lid lifting is modeled as a small suction pad at the fingertips (MuJoCo adhesion).

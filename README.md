@@ -9,7 +9,7 @@ Simulated lab automation with a Franka Panda arm in MuJoCo, part of a sim-to-rea
 
 ![Robot taking lids off, picking a colony with a plastic loop and quadrant streaking a fresh plate](outputs/cyano_loop.gif)
 
-| Colony finder (red = chosen, most isolated) | Streak on the fresh plate (green = touching agar) |
+| Colony finder (red = chosen, most isolated) | Streak on the fresh plate (numbers = quadrant start, light to dark = stroke order, red would mean lifted off) |
 |---|---|
 | ![Detected colonies](outputs/cyano_loop_colonies.png) | ![Quadrant streak path](outputs/cyano_toothpick_streak.png) |
 
@@ -18,9 +18,9 @@ Simulated lab automation with a Franka Panda arm in MuJoCo, part of a sim-to-rea
 1. Lifts the lids off both plates and parks them on the bench.
 2. Photographs the source plate from above and finds every colony (green dot).
 3. Chooses the colony with the most empty space around it, so it picks a single clean colony.
-4. Picks up the tool: a **plastic loop** or a **wooden toothpick** (you choose).
+4. Takes the next tool from a **24-slot rack** (like a pipette tip box): a **plastic loop** or a **wooden toothpick** (you choose). It opens the fingers only 3 mm wider than the handle and lifts the tool straight up by its full length, so it never touches the neighbors.
 5. Lowers the tool slowly until it feels the agar, touching down on the chosen colony. This also measures the agar height, which changes from plate to plate.
-6. Quadrant streaks the fresh plate, pressing about 0.3 mm into the agar the whole way so it never digs in.
+6. Quadrant streaks the fresh plate. In each quadrant it zigzags from the rim in toward the center, and each new quadrant starts by dragging out of the previous one. It presses about 0.3 mm into the agar the whole way so it never digs in.
 7. Drops the tool in the waste bin and puts both lids back.
 
 ### Run it
@@ -43,18 +43,19 @@ It asks which tool to use (1 = plastic loop, 2 = wooden toothpick). Or pass it d
 
 ### Results
 
-10 random plates per tool (different colony layouts and agar thickness every time). Full table: [`outputs/trials.csv`](outputs/trials.csv).
+10 random plates per tool (different colony layouts, agar thickness and rack slot every time). Full table: [`outputs/trials.csv`](outputs/trials.csv).
 
 | | Plastic loop | Wooden toothpick |
 |---|---|---|
 | Full workflow success | 10/10 | 10/10 |
+| Took a tool from the rack without touching a neighbor | 10/10 | 10/10 |
 | Touched a single clean colony | 10/10 | 10/10 |
-| Worst miss from colony center | 0.12 mm | 0.12 mm |
+| Worst miss from colony center | 0.12 mm | 0.13 mm |
 | Streak in contact with agar | 100% | 100% |
-| Deepest press into agar (limit 1 mm) | 0.43 mm | 0.36 mm |
-| Peak streaking force | 0.27 to 0.52 N | 0.06 to 0.12 N |
-| Agar height found by touch, error | within 0.2 mm | within 0.21 mm |
-| Time per plate (lids off to lids back on) | about 170 s | about 170 s |
+| Deepest press into agar (limit 1 mm) | 0.49 mm | 0.36 mm |
+| Peak streaking force | 0.30 to 0.58 N | 0.06 to 0.12 N |
+| Agar height found by touch, error | within 0.26 mm | within 0.21 mm |
+| Time per plate (lids off to lids back on) | about 175 s | about 174 s |
 
 The colony finder caught 21 to 28 colonies per plate. The ones it missed were dots touching inside clumps, which merge into one blob. That's fine here, because the robot only picks isolated colonies.
 
@@ -65,6 +66,7 @@ Getting here surfaced real hardware requirements:
 - **A 90 mm lid needs suction.** It's wider than a standard parallel gripper opens.
 - **A toothpick needs an adapter.** A standard gripper can't hold a bare 2 mm stick securely.
 - **Touch-sensing the agar is needed.** Agar thickness varies by more than 1.5 mm between plates.
+- **The tool rack has design rules.** Tools need about 3 cm of space in the direction the fingers close, tall loops need a deep rack, and the arm has to lift each tool its full length before moving sideways. With those rules, all 48 test picks (every slot, both tools) came out without touching a neighbor.
 
 ### What the sim does and does not show
 
@@ -79,6 +81,7 @@ Modeling choices worth knowing:
 | Lids are lifted with a small suction pad at the fingertips | A 90 mm lid is wider than the Panda gripper opens (80 mm). Real plate-handling robots use suction or a delidder |
 | The tool is locked to the gripper once grasped (a tool adapter) | The simulated fingers do not grip thin sticks well, and real cells use adapters anyway |
 | The toothpick sits in a 4 mm sleeve | The Panda fingertips cannot close tightly on a bare 2 mm toothpick. A real setup would need the same kind of adapter |
+| Tools stand in a 3 x 8 rack: 3 cm apart where the fingers close, 2 cm apart the other way. The loop rack is 6 cm deep, the toothpick rack 3.5 cm | At 2 cm spacing the Panda's thick fingers hit neighbors. In a shallow rack the 12 cm loops lean into the fingers' path. A bump counts whenever the robot or its tool touches another tool |
 | Plates are fixed in nests on the bench | Plates would slide while being streaked otherwise |
 | Arm uses gravity compensation | Without it the arm sags about 5 mm, too much for 1 mm colonies. Real Franka arms compensate too |
 | Grading uses hidden "truth" (real colony positions, real agar height) that the robot never sees | So the numbers measure what the robot actually achieved |

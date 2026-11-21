@@ -12,7 +12,7 @@ import os
 from cyano_sim import CyanoSim
 from lab_sim import OUTPUT_DIR
 
-COLUMNS = ["tool", "seed", "success", "lids_off", "picked", "clean_pick", "miss_mm", "streak_ok",
+COLUMNS = ["tool", "seed", "rack_slot", "neighbors_bumped", "success", "lids_off", "picked", "clean_pick", "miss_mm", "streak_ok",
            "contact_pct", "max_depth_mm", "max_force_N", "lids_back", "hit_plate_wall",
            "colonies_found", "colonies_total", "source_agar_error_mm", "dest_agar_error_mm", "cycle_time_s"]
 
@@ -54,6 +54,7 @@ def main():
         misses = [r["miss_mm"] for r in mine if r["miss_mm"] is not None]
         print(f"  {tool:9s}  full success {count('success')}/{n}   clean pick {count('clean_pick')}/{n}   "
               f"streak ok {count('streak_ok')}/{n}   lids ok {count('lids_back')}/{n}   "
+              f"no rack bumps {sum(1 for r in mine if r['neighbors_bumped'] == 0)}/{n}   "
               f"worst miss {max(misses) if misses else '-'} mm   avg cycle {sum(times) / max(len(times), 1):.0f} s")
     print("Saved", path)
 

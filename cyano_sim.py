@@ -4,7 +4,7 @@ Workflow the robot runs:
   1. Take the lids off both plates (suction at the fingertips) and park them.
   2. Photograph the source plate from above and find colonies (green dots).
   3. Choose a well-isolated colony.
-  4. Pick up the tool (plastic loop or wooden toothpick) from its holder.
+  4. Pick up the next tool (plastic loop or wooden toothpick) from a 24-slot rack.
   5. Lower the tool until it touches the agar (this also finds the agar height) on the chosen colony.
   6. Quadrant streak onto the fresh plate, pressing lightly so it never digs in.
   7. Drop the tool in the waste bin and put both lids back.
@@ -33,8 +33,11 @@ STROKES_PER_QUADRANT = 6
 
 
 class CyanoSim(LabSim):
-    def __init__(self, tool_name, seed=0, record_video=True):
+    def __init__(self, tool_name, seed=0, record_video=True, slot=None):
         scene_path, self.truth = pw.build_plate_scene(tool_name, seed)
+        # Which of the 24 rack slots to take the tool from. Different seeds use different slots.
+        self.slot = (seed * 7) % (pw.RACK_ROWS * pw.RACK_COLS) if slot is None else slot
+        self.tool_body_name = f"tool_{self.slot}"
         self.tool_name = tool_name
         self.tool = pw.TOOLS[tool_name]
         # Video: one frame every 0.25 s of sim time, played back at 2x speed.
@@ -43,8 +46,8 @@ class CyanoSim(LabSim):
         os.remove(scene_path)  # the generated file is only needed while loading
 
         m = self.model
-        self.tool_tip_site = m.site("tool_tip_site").id
-        tool_body = m.body("tool").id
+        self.tool_tip_site = m.site(f"tool_tip_site_{self.slot}").id
+        tool_body = m.body(self.tool_body_name).id
         self.tool_geoms = set(g for g in range(m.ngeom) if m.geom_bodyid[g] == tool_body)
         finger_bodies = [m.body("left_finger").id, m.body("right_finger").id]
         self.finger_geoms = set(g for g in range(m.ngeom) if m.geom_bodyid[g] in finger_bodies)
@@ -59,6 +62,18 @@ class CyanoSim(LabSim):
         for name in ["source", "dest"]:
             lid_body = m.body("lid_" + name).id
             self.lid_geoms[name] = set(g for g in range(m.ngeom) if m.geom_bodyid[g] == lid_body)
+
+        # To check the robot never bumps a neighbor in the rack: any touch between the robot (or the
+        # tool it holds) and another tool counts.
+        robot_bodies = set(m.body(name).id for name in ["link6", "link7", "hand", "left_finger", "right_finger"])
+        self.robot_geoms = set(g for g in range(m.ngeom) if m.geom_bodyid[g] in robot_bodies) | self.tool_geoms
+        self.other_tool_geoms = {}
+        for i in range(pw.RACK_ROWS * pw.RACK_COLS):
+            if i != self.slot:
+                body = m.body(f"tool_{i}").id
+                self.other_tool_geoms[i] = set(g for g in range(m.ngeom) if m.geom_bodyid[g] == body)
+        self.all_other_tool_geoms = set().union(*self.other_tool_geoms.values())
+        self.bumped = set()
 
         self.tip_offset = None  # tool tip position relative to the grip point, measured after grasping
         self.hit_wall = False
@@ -86,6 +101,11 @@ class CyanoSim(LabSim):
 
     def step(self):
         super().step()
+        for i in range(self.data.ncon):
+            c = self.data.contact[i]
+            for a, b in ((c.geom1, c.geom2), (c.geom2, c.geom1)):
+                if a in self.robot_geoms and b in self.all_other_tool_geoms:
+                    self.bumped.add(int(self.model.geom_bodyid[b]))
         if self.hit_wall == False:
             wall_force, _ = self.contact(self.tool_geoms, self.wall_geoms)
             if wall_force > 0.01:
@@ -241,10 +261,10 @@ class CyanoSim(LabSim):
 
     def lock_tool(self, on):
         """Tool adapter. Freezes the tool where it sits in the fingers right now (or releases it)."""
-        weld = self.model.equality("tool_lock").id
+        weld = self.model.equality(f"tool_lock_{self.slot}").id
         if on == True:
             hand = self.data.body("hand")
-            tool = self.data.body("tool")
+            tool = self.data.body(self.tool_body_name)
             hand_rot = hand.xmat.reshape(3, 3)
             rel_pos = hand_rot.T @ (tool.xpos - hand.xpos)
             hand_conj = np.zeros(4)
@@ -258,22 +278,30 @@ class CyanoSim(LabSim):
         self.data.eq_active[weld] = 1 if on == True else 0
 
     def pick_up_tool(self):
-        hx, hy = pw.TOOL_HOLDER_XY
-        top = self.get_body_pos("tool")[2] + self.tool["length"]
-        self.move_grip_to([hx, hy, top + 0.06], GRIPPER_OPEN, duration=1.5)
-        self.move_grip_to([hx, hy, top - 0.012], GRIPPER_OPEN, duration=0.8)
+        hx, hy = pw.rack_slot_xy(self.slot)
+        top = self.get_body_pos(self.tool_body_name)[2] + self.tool["length"]
+        # Open only 3 mm wider than the handle on each side, so the fingers fit between neighbors in the rack.
+        narrow_open = int((self.tool["handle_half"] + 0.003) / 0.04 * 255)
+        self.move_grip_to([hx, hy, top + 0.06], narrow_open, duration=1.5)
+        self.move_grip_to([hx, hy, top - 0.012], narrow_open, duration=0.8)
         # Close the fingers just to the handle's width (255 = 4 cm per finger), so they hold it without fighting the lock.
         hold = int(self.tool["handle_half"] / 0.04 * 255)
         self.set_gripper(hold)
         self.wait(0.2)
         self.lock_tool(True)
-        self.move_grip_to([hx, hy, top + 0.06], hold, duration=1.0)
+        # Lift straight up by the whole tool length (plus 3 cm) so the tip clears the neighbors before moving sideways.
+        self.move_grip_to([hx, hy, top + self.tool["length"] + 0.03], hold, duration=1.5)
         self.wait(0.3)
         # Measure where the tip sits relative to the gripper, once, in free air.
         # (A real cell would do this with a tip-finding camera or a touch plate.)
         self.tip_offset = self.tip_pos() - self.get_grip_pos()
         tilt = math.degrees(math.atan2(math.hypot(self.tip_offset[0], self.tip_offset[1]), -self.tip_offset[2]))
-        self.say(f"picked up the {self.tool_name} (tilt {tilt:.1f} deg)")
+        self.say(f"picked up the {self.tool_name} from rack slot {self.slot + 1} of 24 (tilt {tilt:.1f} deg, "
+                 f"neighbors bumped: {self.neighbors_bumped()})")
+
+    def neighbors_bumped(self):
+        """How many other tools in the rack the robot (or the tool it holds) touched."""
+        return len(self.bumped)
 
     def drop_tool_in_bin(self):
         bx, by = pw.BIN_XY
@@ -288,7 +316,9 @@ class CyanoSim(LabSim):
 
     def pick_colony(self, colony):
         start_z = pw.BENCH_Z + pw.PLATE_WALL_TOP + 0.002
-        self.move_tip_to([colony["x"], colony["y"], start_z + 0.03], duration=1.5)
+        # Travel level, high above the rack, until over the colony, then go down.
+        self.move_tip_to([colony["x"], colony["y"], self.tip_pos()[2]], duration=1.5)
+        self.move_tip_to([colony["x"], colony["y"], start_z + 0.03], duration=1.0)
         surface = self.touch_down((colony["x"], colony["y"]), start_z,
                                   lambda: self.contact(self.tool_geoms, self.agar_geom["source"]), use_tip=True)
         if surface is None:
@@ -299,7 +329,8 @@ class CyanoSim(LabSim):
         return touch_xy, surface
 
     def streak_path(self):
-        """Quadrant streak: four fans of zigzag strokes, each new quadrant starting by dragging through the last."""
+        """Quadrant streak: in each quadrant, zigzag from the rim in toward the center.
+        Each new quadrant starts inside the previous one (near the rim) and drags cells across."""
         cx, cy = pw.DEST_XY
         quadrants = []
         for k in range(4):
@@ -308,9 +339,9 @@ class CyanoSim(LabSim):
             v = np.array([-u[1], u[0]])  # sideways
             points = []
             if k > 0:
-                prev = math.radians(45 + 90 * (k - 1) + 25)
-                points.append(np.array([cx, cy]) + 0.024 * np.array([math.cos(prev), math.sin(prev)]))
-            radii = np.linspace(0.010, 0.034, STROKES_PER_QUADRANT)
+                prev = math.radians(45 + 90 * (k - 1) + 20)
+                points.append(np.array([cx, cy]) + 0.030 * np.array([math.cos(prev), math.sin(prev)]))
+            radii = np.linspace(0.034, 0.010, STROKES_PER_QUADRANT)  # rim first, then inward
             for i, rad in enumerate(radii):
                 half = min(rad * 0.85, math.sqrt(max(STREAK_RADIUS ** 2 - rad ** 2, 0.0))) - 0.002
                 side = 1 if i % 2 == 0 else -1
@@ -363,7 +394,7 @@ class CyanoSim(LabSim):
     # ---------- whole run ----------
 
     def run(self):
-        report = {"tool": self.tool_name, "seed": self.truth["seed"]}
+        report = {"tool": self.tool_name, "seed": self.truth["seed"], "rack_slot": self.slot + 1}
         self.hit_wall = False
 
         self.say("taking lids off")
@@ -403,10 +434,11 @@ class CyanoSim(LabSim):
         self.move_arm(PARK_ARM, GRIPPER_OPEN, duration=1.5)
 
         report["hit_plate_wall"] = self.hit_wall
+        report["neighbors_bumped"] = self.neighbors_bumped()
         report["cycle_time_s"] = round(self.data.time, 1)
         report["success"] = (report["lids_off"] == True and report["picked"] == True and report["clean_pick"] == True
                              and report["streak_ok"] == True and report["lids_back"] == True
-                             and report["hit_plate_wall"] == False)
+                             and report["hit_plate_wall"] == False and report["neighbors_bumped"] == 0)
         return report, detections, chosen, samples, image
 
     # ---------- grading against the hidden truth ----------
@@ -480,17 +512,39 @@ class CyanoSim(LabSim):
         renderer = mujoco.Renderer(self.model, height=size, width=size, max_geom=20000)
         renderer.update_scene(self.data, camera="dest_cam")
         scene = renderer.scene
+        quadrant_sizes = [sum(1 for s in samples if s["quadrant"] == k) for k in range(4)]
+        seen_in_quadrant = [0, 0, 0, 0]
         for s in samples:
             if scene.ngeom >= scene.maxgeom:
                 break
+            k = s["quadrant"]
+            progress = seen_in_quadrant[k] / max(quadrant_sizes[k] - 1, 1)  # 0 at the start, 1 at the end
+            seen_in_quadrant[k] = seen_in_quadrant[k] + 1
             touching = s["force"] > 0.0005
-            rgba = np.array([0.1, 0.55, 0.15, 1.0]) if touching == True else np.array([0.9, 0.1, 0.1, 1.0])
+            if touching == True:
+                rgba = np.array([0.55 - 0.5 * progress, 0.9 - 0.55 * progress, 0.55 - 0.45 * progress, 1.0])
+            else:
+                rgba = np.array([0.9, 0.1, 0.1, 1.0])
             pos = s["pos"].copy()
             pos[2] = pos[2] + 0.0004
             mujoco.mjv_initGeom(scene.geoms[scene.ngeom], mujoco.mjtGeom.mjGEOM_SPHERE,
                                 np.array([0.0006, 0, 0]), pos, np.eye(3).flatten(), rgba.astype(np.float32))
             scene.ngeom = scene.ngeom + 1
-        path = f"{OUTPUT_DIR}/{filename}"
-        Image.fromarray(renderer.render()).save(path)
+        picture = Image.fromarray(renderer.render())
         renderer.close()
+
+        # Label where each quadrant starts.
+        distance = pw.CAMERA_HEIGHT - (self.truth["agar_top"]["dest"] - pw.BENCH_Z)
+        meters_per_pixel = 2 * distance * math.tan(math.radians(pw.CAMERA_FOVY / 2)) / size
+        draw = ImageDraw.Draw(picture)
+        for k in range(4):
+            first = next((s for s in samples if s["quadrant"] == k), None)
+            if first is None:
+                continue
+            col = (first["pos"][0] - pw.DEST_XY[0]) / meters_per_pixel + size / 2
+            row = size / 2 - (first["pos"][1] - pw.DEST_XY[1]) / meters_per_pixel
+            draw.ellipse([col - 16, row - 16, col + 16, row + 16], fill=(255, 255, 255), outline=(30, 30, 30), width=2)
+            draw.text((col, row), str(k + 1), fill=(30, 30, 30), anchor="mm", font_size=22)
+        path = f"{OUTPUT_DIR}/{filename}"
+        picture.save(path)
         return path
